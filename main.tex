@@ -1,0 +1,296 @@
+\documentclass[fleqn,10pt]{wlscirep}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\title{Survey Data and Human Computation for Improved Flu Tracking}
+
+\author[a,1,2,*,+]{Stefan Wojcik}
+\author[b,1,+]{Avleen Bijral} 
+\author[b]{Richard Johnston}
+\author[b]{Juan Miguel Lavista}
+\author[c]{Gary King}
+\author[d]{Ryan Kennedy}
+\author[e]{Alessandro Vespignani}
+\author[c, e]{David Lazer}
+
+\affil[a]{Pew Research Center}
+\affil[b]{Microsoft}
+\affil[c]{Harvard University}
+\affil[d]{University of Houston}
+\affil[e]{Northeastern University}
+\affil[*]{swojcik@pewresearch.org}
+\affil[+]{these authors contributed equally to this work}
+
+%\keywords{Keyword1, Keyword2, Keyword3}
+
+\begin{abstract}
+While digital trace data from sources like search engines holds enormous potential for tracking and understanding human behavior, these streams of data lack information about the actual experiences of those individuals generating the data. Moreover, most current methods ignore or under-utilize human processing capabilities that allow humans to solve problems not yet solvable by computers (human computation). We demonstrate how behavioral research, linking digital and real-world behavior, along with human computation, can be utilized to improve the performance of studies using digital data streams. This study looks at the use of search data to track prevalence of Influenza-Like Illness (ILI). We build a behavioral model of flu search based on survey data linked to users’ online browsing data. We then utilize human computation for classifying search strings. Leveraging these resources, we construct a tracking model of ILI prevalence that outperforms strong historical benchmarks using only a limited stream of search data and lends itself to tracking ILI in smaller geographic units. While this paper only addresses searches related to ILI, the method we describe has potential for tracking a broad set of phenomena in near real-time.
+\end{abstract}
+\begin{document}
+
+\flushbottom
+\maketitle
+% * <john.hammersley@gmail.com> 2015-02-09T12:07:31.197Z:
+%
+%  Click the title above to edit the author information and abstract
+%
+Mining search and social media data for real-time tracking (i.e., "nowcasting") of flu prevalence and other events has become a major focus in public health, computer science, and other disciplines \cite{ginsberg_etal_2009,culotta2010towards,salathe2012digital,bodnar2013validating,nsoesie2014guess,generous2014global,althouse2015enhancing,yang_etal_2015inference,yang_etal_2015,santillana2016perspectives}. One highly-cited example of using search query data to forecast illness is Google Flu Trends (GFT). Many efforts have built upon the early work of GFT, which provided a promising real-time influenza tracking system, based on the idea that searches for the flu will increase when users are ill. While GFT showed the value of using digital streams like search data to forecast important events, it ultimately faced considerable challenges \cite{ginsberg_etal_2009,butler_2013,lazer_etal_2014}. We pick up on two major issues identified by prior research \cite{lazer_etal_2014}, and present methods relying on standard techniques to improve them. 
+
+The central premise underlying the GFT methodology -- and one which still underlies many efforts of its kind today -- was to use the massive amount of search queries produced by users every day to find a few that are the best at predicting CDC flu rates. Researchers pointed out that GFT was a `problematic marriage of big and small data', because the GFT algorithm involved over 50 million search terms narrowed down to predict a little over 1,000 CDC data points \cite{lazer_etal_2014}. This methodology doomed GFT to sweep up some false positive search terms that happened to peak at the right time and place. Rooting out false positive predictors in such a massive predictor space is a central concern in the use of search data and other big data streams. As a consequence, the GFT model missed its CDC target for long stretches of time \cite{lazer_etal_2014}. Later work corrected some of the errors of the GFT approach, by incorporating reports from CDC as the season progresses, adjusting for changes in search behavior, and leveraging the properties of time-series to vastly improve the reliability of the forecast \cite{yang_etal_2015}. But the central approach -- mapping a huge number of search queries to a short series of CDC data -- remains largely the same. 
+For systems like GFT, search query data are the primary instrument for measuring Influenza-like illness (ILI) in the population. However, it is not yet clear that search query data are even a good indicator for ILI symptoms \cite{lazer_etal_2014}. Sparse empirical evidence currently exists to support (or reject) the idea that users experiencing ILI symptoms make more searches for the flu. To generate such evidence, one would need access to a user's online searches and information about any illness symptoms they are currently experiencing. Such data would allow researchers to observe whether the presence of illness symptoms associated with the flu leads to an increased propensity to search for flu-related information.
+
+However, even with high-quality observational data from a user's online searches and reported symptoms, more information is needed. The prior distribution of search propensity is unlikely to be uniform across all demographic groups, and is likely to be
+correlated with Influenza-like Illness (ILI) prevalence within
+groups. In addition, users experiencing Influenza-like illness (ILI) symptoms may make Google searches to find diagnostic information, but only if they cannot access that information through other means. Education levels, parent status, and race may be associated with access to offline resources that may all supplant Internet search for information about the flu. Demographic data about users may be important to partially adjust for such intervening variables.
+
+We describe an approach to flu tracking that uses standard social-scientific methods to build a behavioral model of the relationship between Internet search and flu-like illness. We then leverage this model to create a forecast of ILI in the population. Based on a panel survey of users and their Internet search histories, we tested whether self-reported symptoms of ILI led respondents or members of the household to search for relevant flu information online. Based on the empirical relationship between user behavior and reported ILI symptoms in our survey, we developed an example ILI tracking model that estimates ILI using a limited stream of search query data. We find that this survey-driven approach enabled us to define the demographic differences in search, detect relevant flu searches in a more systematic fashion, and adjust for demographic variance in flu search behavior when building a forecasting model. 
+
+%Rooting out false positive predictors in such a massive predictor space is a central concern in the use of search data and other big data streams. Google flu trends is exemplary in this regard --- a meeting of millions of variables (large-\textit{p}) with a few thousand cases (small-\textit{N}). Any purely correlative approach, even with hold-out data, is doomed to sweep up some detritus searches that happened to peak at the right time and place. Survey data on ILI symptoms linked to search histories can serve as a more reliable 'ground-truth' to discern true-positive (symptomatic) from false-positive (asymptomatic) users based on their search behavior.
+
+%Many efforts to forecast ILI with search queries rely on the following simple model: ILI symptoms uniformly increase the propensity of flu searches in the population, and therefore an increase in certain searches is indicative of a change in underlying ILI prevalance. One problem with this model is that the prior distribution of search propensity is unlikely to be uniform across all demographic groups - not all groups use the Internet, nor use it for search. Search propensity may also be correlated with influenza-like illness (ILI) prevalence within groups. Without adjustments for the demographic correlates of search, ILI might surge in some segments of the population but search-based models may not adequately capture it, or it may surge in one segment of the population and give the false impression that it is surging in the entire population \cite{gostic_etal_2016}.
+
+%Another important consequence of the absence of a behavioral model of search is that it is difficult to track flu prevalence at finer spatial granularities than the Centers for Disease Control and Prevention (CDC). The CDC surveys, even at regional levels, incorporate large swathes of the United States with sharp demographic gradients. If tracking is going to `go local', then it will be necessary to make use of demographic differences to better track the circulation of the flu in the US population. For these reasons, a demographically-sensitive model is highly desirable. 
+
+%The omission of demographic data in models has two important consequences. The first is that it is impossible to know if the sample of queries at hand is representative of a typical user experiencing the flu. 
+%In 2009 the surge in the H1N1 virus was not picked up by GFT, though it is difficult to say whether specific demographically-sensitive flu terms could have detected such a change. Further analysis that incorporates demographic modeling could offer clues.
+
+%In addition to the chronic absence of demographics, there is a more acute problem facing forecasting systems relying on search data - false positives. 
+
+
+\section*{Methods}
+
+Our approach is to directly measure how influenza-like illness (ILI) symptoms affect the propensity of users to make searches associated with the flu. To do so, we tracked the online behavior of a set of users for an entire flu season, and identified user searches and online behaviors pertaining to ILI diagnostic information. Then, we fielded a survey of the same users to measure the presence of ILI symptoms during the flu season. Based on the identified searches and the self-reported symptoms from the survey, we use a case-control design to estimate the observed effect of symptoms on search behavior. We then built a flu tracking model drawing on insights from this empirical model of search. We tested our flu tracking model using data from national and state-level CDC data. 
+
+\subsection*{Survey Data}
+
+We partnered with a survey vendor maintaining a nationally-representative panel of approximately 20,000 individuals with personal computers. Respondents had consented to participate in marketing research in return for monetary compensation - researchers were able to track their web browsing, their search activities, and send questionnaire invites. All survey and panel data were anonymous and purged of any personally identifiable information before they were received for analysis. 
+
+Since users who conduct a higher volume of searches are more likely to generate a flu-related search by chance, we selected subsets of the ongoing panel to participate in flu forecasting research. We sent survey invites to two subsets of participants (N = 1,180 and N = 4,000) from the full 20,000 person panel. One set of participants met the following criteria: 1) they had executed queries in any search engine (including Bing, Google, Yahoo), 2) they had used flu-related keywords (e.g., `flu', `fever', `influenza', `swollen', `cough', `pneumonia', `sore throat'), or they had visited flu-related URLs (e.g., WebMD, CDC, Wikipedia). The second group was a comparison group that did not execute a flu-related query or visit a flu-related web site. We used a case-control approach to select the comparison group, drawing randomly from the panel within bins based on search volume. We did this to maintain balance on search volume since people with flagged searches had higher than average search volumes (SI).
+
+From these individuals, we collected survey responses for a total of 654 individuals (13\% response rate), broadly similar to the invitees, of which 11 did not have any reported search volume in the sample period. This left us with 262 who had searched a flu-related keyword or site and 382 who did not (SI). 
+
+The panel provided access to the entire browsing history of respondents, allowing us to examine web page visits and search queries simultaneously. Incorporating information about flu-related web visits, in addition to queries, allowed us a more complete picture of user behavior in the presence of flu-like symptoms. Table \ref{tab: Descriptives} shows means and standard errors of the main survey variables of interest. `Volume' refers to the logged number of searches by a respondent, and `ILI' (Influenza-like Illness) is defined as when respondents report both fever and cough for themselves or family members.
+
+\begin{table}[!htbp] \centering 
+  \caption{Descriptive Statistics of Survey Data} 
+  \label{tab: Descriptives} 
+\begin{tabular}{@{\extracolsep{5pt}}lccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Max} \\ 
+\hline \\[-1.8ex] 
+Volume & 644 & 5.688 & 1.610 & 0.000 & 9.492 \\ 
+Female & 654 & 0.610 & 0.488 & 0 & 1 \\ 
+Parent & 654 & 0.315 & 0.465 & 0 & 1 \\ 
+Spouse & 654 & 0.509 & 0.500 & 0 & 1 \\ 
+Age & 654 & 4.610 & 1.434 & 1 & 7 \\ 
+Household ILI & 654 & 0.349 & 0.477 & 0 & 1 \\ 
+Respondent ILI & 654 & 0.245 & 0.430 & 0 & 1 \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table} 
+
+We fielded our flu survey in the spring of 2015. Our survey questionnaire asked respondents for demographic, household, and flu-related information. We asked respondents about all symptoms of influenza-like illness since November 2015, followed by a question in which we asked which month these were experienced. We repeated these questions separately, asking about children and other adults in the household (including spouses). We followed up by asking which sources\footnote{Health care provider, health website, search engine, book, friend or none} (if any) these individuals used when seeking information about these symptoms and health care provider diagnoses (if relevant).
+
+\subsection*{Identifying Flu-related Searches}
+
+A central question surrounding the use of query/social media data for flu prediction is how to identify a flu-related query, post, or web page. The traditional approach used by GFT and others is to narrow down searches based on their observed association with flu prevalence, but this method produces a large number of false positives. Instead, we identified flu-related search queries with the aid of trained human coders. This method allowed us to select search queries with a high prior likelihood of being associated with the flu and to exclude closely related yet irrelevant queries. For example, using this method we were able to identify and remove searches associated with news and current events unlikely to reflect underlying symptoms of users, such as 'Obama sore throat', which with other methods may be misleadingly associated with flu prevalence. 
+Broadly, flu-related search activity can be defined as when search text contains key words and cues likely to be relevant to a person experiencing symptoms and/or seeking diagnosis information. These may include simple searches for flu-like symptoms - including fever, cough, sore throat, and other canonical symptoms - as well as more specific searches, such as `what are the symptoms of the flu?', or `continued fever is a symptom of..'. We considered such queries to be highly relevant to user experience and labeled such queries as `A1' type searches. Other types of queries related to research or news-related queries (such as `spanish flu') we labeled as `A2'. We also labeled other types of queries, such as those associated with secondary symptoms of ILI, non-ILI illnesses, and other categories (see SI). 
+
+To identify `A1' flu-like searches and browsing behavior from respondent data, we asked trained human coders to label each search query and web page visited by respondents in a multi-step process (SI). We found 21\% of respondents made an A1 query or page visit, and 14\% made an A2 query or page visit. With these labels in hand, we modeled the relationship between reported flu-like symptoms and online activity.
+
+\subsection*{Behavioral Model of Search}
+
+We identified respondents as having Influenza-like Illness (ILI) symptoms if they reported having both fever and cough at some point during the flu season. The presence of ILI symptoms for the respondent or in the household served as our key explanatory variable linking ILI symptoms to A1 search behavior (our key outcome variable). However, in estimating our model we also included an array of demographic characteristics of the respondents to adjust for variation across demographic groups and for heterogeneous effects of ILI symptoms on search behavior.
+
+To infer the effect of the combination of symptoms on flu-like search activity, we used a `classic' or `cumulative' case-control design to estimate the relative risk of A1 search when flu symptoms are reported \cite{king_and_zeng_2001}. To do so, we paired respondents who made A1 searches (positive cases) with others who did not (negative cases), and estimated the effects of ILI symptoms and demographic variables. Because A1 queries are a relatively small share of all searches made online, we adjusted our estimates for differences between the base rate of flu-like search in our sample and our best estimate of the rate of flu-like search in the population. We used the average flu-like search rate in the Bing search engine to make this adjustment (SI). 
+
+Based on our case-control model, we calculated the relative risk (RR) and risk difference (RD) of A1 search activity given ILI symptoms: $ RR = Pr(Y=1|X_1, \pi) / Pr(Y=1|X_0, \pi) $, $ RD = Pr(Y=1|X_1, \pi) - Pr(Y=1|X_0, \pi) $ \cite{king_and_zeng_2001}. Where $\pi_i$ is the incidence of A1 searches for user $i$, $X_1$ is a k-vector of covariates of a `treatment' group with flu symptoms and $X_0$ indicates a k-vector of covariates of a `control' group lacking flu symptoms. Covariates included search volume, gender, parenthood status, and age (SI). To control for the fact that the population's rate of flu-like (A1) search differed from our sample, we substituted the constant term in the logistic model for a corrected term that matched the observed rate of flu search in the Bing search engine. This corrected term is calculated as: $B_0 - ln[ (\frac{1-\tau}{\tau}) (\frac{\bar{y}}{1-\bar{y}}) ]$, where $B_0$ is the original constant term, $\tau$ is the rate of A1 search in the population (1.2e-5), and $\bar{y}$ is the rate of A1 search in the sample. The coefficients remain unbiased. 
+
+% We labeled cases associated with secondary flu symptoms (e.g. body aches, vomiting) as B1 queries. These are more than conceptual categories, `A1' and `A2' types constitute labels for our data (SI). 
+
+%TO add somewhere else later: We use a combination of human coders and word-embedding algorithms to label queries according to our scheme. We use key words to select a candidate set of flu-related queries, label them, then use word embeddings based on the labels to return other probable candidate queries. In so doing, our query-labeling methodology is designed to weed-out sporadic or seasonal indicators of ILI. We are able to remove queries that are simply user interest, research, or reactions to news events. 
+
+% FOR SI: Once the results of the survey were returned, we developed a strategy for locating candidate A1 queries from search histories, given that each user in our panel executed anywhere from dozens to hundreds of queries during the survey period, and it would be inefficient to code every one of them. To isolate a subsample of queries and pages to label, we start with a simple set of keywords. Using the search history data from our panel, we created a subsample of queries and web pages containing a set of predefined illness-related key words - including terms like: `sick', `flu', `fever', `cough', `ache', `vomiting', `sore throat'. We then tasked trained coders with labeling each of these queries according to our `A1' coding scheme. In this sample of queries, we found 21\% of respondents made an A1 query or page visit, and 14\% made an A2 query or page visit. These queries were used in our survey analysis. We joined the labeled queries back to the survey data over the 2014-2015 flu season. From there, we model the relationship between self-reported flu-like symptoms and whether a respondent executed an A1 query using our classic case-control design \cite{king_and_zeng_2001}. 
+
+%ADD SOMEWHERE ELSE LATER: After building our case-control model, we used word-embedding techniques to generate an expanded set of likely queries and label them according to our scheme (more details below). Based on this expanded query set, we developed a time-series model that statistically smooths and re-weights the rate of A1 searches to account for demographic differences across regions. We then compared the performance of the smoothed search signal, the raw signal (the average of A1 type queries by day), and CDC flu historical rates for predicting flu prevalence. 
+
+\subsection*{Forecasting Methods}
+
+In comparison to existing approaches, our statistical forecasting model tracks ILI prevalence in subregional populations up to two weeks in advance of CDC flu reports. Our goal is to demonstrate the practical application of our behavioral model to a digital search stream, rather than produce a new ground truth. There is a long history of epidemiological models that estimate rates of transmission through populations using a mix of network data, social media data, and clinical data \cite{ginsberg_etal_2009,culotta2010towards,bodnar2013validating,nsoesie2014guess,generous2014global,yang_etal_2015inference,yang_etal_2015,biggerstaff_etal_2016,zhang2017forecasting}. Statistical models use sample data to infer population-level rates of ILI, while mechanistic models use mathematical models of whole populations to simulate ILI spreading and infer rates of ILI infection \cite{biggerstaff_etal_2016}. Both types of modeling approaches estimate rates of ILI in different populations in order to generate advanced warnings of season start time, peaks, or duration; often to substitute for costly and time-consuming clinical measures (like the CDC flu reports). However, common metrics for model evaluation remain a topic of some debate \cite{biggerstaff_etal_2016}. Nonetheless, we focus here on applying our survey results to build a forecasting model that uses search queries effectively to track ILI prevalance. 
+
+With a relatively small sample of users in our panel, we will not observe all possible word combinations of flu-like searches. This is problematic for forecasting, because we may miss positive indicators of flu-like experience. In order to capture a wider array of potentially flu-related queries, we used our labeled sample of queries from the respondent panel and applied an embedding method called `DOC2VEC' \cite{le_and_mikolov_2014} to find other queries in the Bing search engine that were semantically related to labeled A1 queries. The DOC2VEC method creates document representations based on word embeddings learned from a corpus of text. These word embeddings capture deeper co-occurrence relations that are useful when trying to retrieve similar documents. This allowed us to expand our set of candidate queries for purposes of forecasting. Based on our DOC2VEC expanded sample of queries, we tasked human coders with applying the same A1 labeling scheme described earlier. We then tracked queries in the Bing search engine that matched any query from our expanded A1 list.
+
+We collected anonymized search queries from 2011 to 2016 from the Bing search engine, and created a binary variable indicating whether it matched a query from our expanded A1 list. We then geo-located each query to its origin zip code. Search data are unlikely to be perfectly representative of the U.S. population, since some Americans are less likely to use the Internet and subgroups that make searches only rarely will have higher variance than groups that search frequently. 
+
+To correct for these issues, we used a method called `multilevel regression with post-stratification' (MRP) to de-noise and re-weight the data. MRP is a method for making predictions with non-representative and/or non-probability survey data \cite{park_gelman_bafumi_2004}, typically at the sub-national level. The MRP method leverages information from similar observations to reduce variance for groups or areas where A1 searches are rare. MRP then re-weights the smoothed estimates based on the appropriate demographic proportions for each region according to the census. We deploy the following MRP model to smooth and re-weight search queries collected at the zip code level:
+
+$Pr(y_i = 1) = logit^{-1}( \beta_0  + \beta_{1[i]}^{Income}
++ \alpha_{j[i]}^{State}  
++ \alpha_{k[i]}^{Education}  \\
++ \alpha_{p[i]}^{Age} 
++ \alpha_{q[i]}^{Child-per-House}
++ \alpha_{k[i],p[i]}^{Education*Age} $
+\\
+
+Effect are assumed to be drawn from a normal distribution and estimated variance. \\
+
+\noindent
+$\alpha_j^{State} \sim  N (0, \sigma_{State}^2), \forall h = 1, ...., 52  $ \\
+$\alpha_k^{Education} \sim  N (0, \sigma_{Education}^2), \forall q = 1, ..., 4  $ \\
+$\alpha_p^{Age} \sim  N (0, \sigma_{Age}^2), \forall l = 1, ..., 4 $ \\
+$\alpha_q^{Child-per-house} \sim  N (0, \sigma_{Child-per-house}^2), \forall s = 1, ..., 5  $ \\
+$\alpha_{k,p}^{Education*Age} \sim  N (0, \sigma_{Education*Age}^2), \forall k = 1, ..., 4 \textit{ and } p = 1,...,4  $ \\
+
+We applied the MRP model over a rolling three-day window of all search queries possessing a flu-related term, and re-weighted to state and national-level census benchmarks. We then trained different time series models on state and national-level CDC data for the ILI rate between the 2012-2016, using the MRP estimates as an exogenous signal.
+
+As demonstrated in \cite{lazer_etal_2014}, ILI rates have a strong historical and seasonal dependence and a model trained purely on history can be a strong predictor of future influenza rates. So we considered, based on the current literature, different models that incorporate the relevant exogenous signals derived from our survey and compared the results to these models based only on the historical ILI signal \cite{yang_etal_2015}. This included both the popular Lasso method \cite{yang_etal_2015}, as well as the SARIMA-X method. Let $Y^{\text{ILI}}(t)$ be the time series of weekly influenza rates for a geographic entity (US or State), $X_j^{\text{A1}}(t)$ be the time series of logit transformed volumes of A1 labeled search queries and finally $X_{\text{mrp}}(t)$ be the exogenous weekly time series corresponding to the MRP signal aggregated at the national level. We also assumed that $\epsilon(t) \sim \mathcal{N}(0,\sigma^2)$. 
+
+The following models were then considered
+\begin{itemize}
+\item SARIMA-X \\
+$\phi_p(B)\Phi_P(B^s)Y^{\text{ILI}}(t) =  \theta_q(B)\Theta_Q(B^s)\epsilon(t) + I_X\phi_1 X_{\text{mrp}}(t)$
+\item LASSO-A1 \\
+$Y^{\text{ILI}}(t) = \sum_{i=1}^p \theta_i Y^{\text{ILI}}(t-i) +  I_X\sum_{j=1}^m \phi_j X_j^{\text{A1}}(t) + \epsilon(t)$
+\end{itemize}
+for the seasonal ARIMA model with exogenous variables (SARIMA-X) the notation refers to a ARIMA$(p,d,q)\times(P,D,Q)_s$ model in the Box-Jenkins terminology \cite{box_etal_2015}. The LASSO-A1 model was estimated using a Lasso penalty and is essentially a class of models referred to as AR-X (Auto-regressive with exogenous). ARGO \cite{yang_etal_2015inference, yang_etal_2015} is an example in the context of ILI prediction. The indicator variable $I_X$ refers to the inclusion ($I_X=1$) or exclusion ($I_X=0$) of exogenous signals. Pure history based models with $I_X=0$ served as a benchmark to which we compared our models. 
+
+For SARIMA-X we chose the appropriate orders ($p,P,q,Q$) for the model using AIC as a criterion. We set $p=52$ in the Lasso-A1 model to account for the seasonal effect in ILI rates, but, since we were using the Lasso penalty, the coefficients of most of these lags did not appear in the final model. This approach also served to select the appropriate lag in modeling ILI rates. Finally, we provided predictions for the $2015-2017$ seasons by using a rolling three year period to train and predict.
+
+To examine how well our model performed at finer spatial granularities than the national level, we collected flu data on the number of positive influenza swabs from the states of DE, DC, NM, and NY. These states were selected because they 1) collect and publicly post current flu prevalence rates on their official health pages, and 2) make historical flu prevalence data available for long enough time spans to be useful for prediction. However, unlike the CDC data these states do not provide a total number of hospital visits as the denominator to the ILI-rate. Instead, we trained our model using the raw counts of the ILI positive cases reported in the state. 
+Note that state level search signals will be especially noisy due to lower search volumes than the national level. 
+
+We used a rolling $3$ year period to train and test our models. We trained using the MRP smoothed-reweighted signal, and made comparisons against a history-only model and a simple unweighted (non-MRP) A1 series, which we term 'Raw A1'|see table ~\ref{tab:h1results}. To compare the different methods we used RMSE as a metric after selecting the model parameters based on the AIC (Akaike Information Criterion). We tested the performance of our model on rolling $1$ and $2$-week ahead forecasts using exogenous signal at the most predictive lag.
+
+\section*{Results}
+
+\subsection*{Key Survey Findings}
+
+\begin{figure}%[tbhp]
+\centering
+\includegraphics[width=.5\linewidth]{Sim_QI_flu}
+\caption{Estimated population-level search rates based on survey data in the presence of reported household flu (in blue) and absence of reported household flu (in red).}
+\label{fig:A1search}
+\end{figure}
+
+We observed a heightened tendency to search for flu (A1) when there was an occurrence of flu symptoms in the household. Figure ~\ref{fig:A1search} plots the expected values of $Y$, $Pr(Y=1|X, \tau)$, where household flu is present and absent. In figure ~\ref{fig:A1search}, the means of $ = Pr(Y=1|x_1, \pi)$ and $ Pr(Y=1|x_0, \pi) $ are shown with dark vertical lines. The estimated Risk Ratio (RR) is 1.57, meaning that those with flu symptoms execute almost 60\% more A1 searches compared to those exhibiting no symptoms at all. Since the base rate of query activity in the population is relatively low, this amounted to a Risk Difference (RD) of about 5.41e-06. In other words, we found the presence of flu-like symptoms increased the relative rate of flu-like search queries (A1) by more than half, but when calculated as a change in the proportion of all searches, the difference is small. This finding underscores why using individual-level data to build a behavioral model is important - detecting such minor changes using query data alone would be quite challenging. We generally did not find symptoms to positively affect A2 search queries (SI-Table 18).
+
+Searches were noisy indicators for particular subgroups, specifically heavy searchers, women, and mothers. We found that A1 searches were correlated with higher search volumes generally, suggesting that individuals who search for a lot of information online make flu-related searches even in the absence of symptoms. A person in the third quartile of search volume was about 30\% more likely to search for the flu (RR=1.32) in comparison to someone with the first quartile search volume, with a risk difference of RD = 3.09e-06(See SI-Table 13). 
+
+Fathers and mothers had dramatically different behaviors in reaction to perceived child illness. We found fathers to be much more likely to make flu searches when their children were ill with ILI symptoms, whereas mothers tended to have a high baseline tendency to make such searches regardless of child illness. Fathers made more than 8 times as many A1 searches when their children exhibited ILI symptoms compared to when they were symptom-free (RR = 8.75), which amounted to a risk difference of RD=1.95e-05.
+
+We found A1 search rates were not highly distinct across respondent race and education. Differences between self-identified racial categories were not significant. This included individuals self-identifying as White, Black, Asian, Native, or Hispanic. Similarly, education was not a strong differentiator of A1 search among respondents. Individuals who reported having completed high school were not more or less likely to make flu searches compared to individuals who reported completing some college, a bachelor's degree, or a graduate degree. 
+
+\subsection*{Forecasting Results}
+
+ \begin{figure}%[tbhp]
+ \centering
+ \includegraphics[width=.5\linewidth]{USBox_h_1}\\
+ \includegraphics[width=.5\linewidth]{US_Predictions_h_2}
+ \caption{a) The box plot reveals fewer outliers and a smaller median error for the MRP model compared to the historical and the raw signal based models. b) The history based predictions often over-estimate the peaks.}
+  \label{fig:US_Box}
+ \end{figure}
+ 
+%\begin{figure}%[tbhp]
+% \centering
+% \includegraphics[width=.8\linewidth]{NY_h_1}\\
+% \includegraphics[width=.8\linewidth]{DE_h_1}
+% \caption{a) h=1 Step ahead predictions for New York and Delaware. Unless we use the %MRP signal the predictions overshoot.}
+%  \label{fig:State_Preds}
+% \end{figure}
+
+
+% \begin{figure}%[tbhp]
+% \centering
+% \includegraphics[width=.8\linewidth]{DE_NY_fcast_H1}
+% %\includegraphics[width=.8\linewidth]{USBox_h_2}
+% \label{fig:DE_NY}
+% \caption{**NEEDS A CAPTION}
+% \end{figure}
+
+Table ~\ref{mse-national} shows that the MRP signal improves upon both the one-week ahead ahead MAPE (mean average precision), RMSE (root mean squared)  and MAE (mean absolute error) compared to the history based models. Figure \ref{fig:US_Box}-a) shows that the absolute error for the MRP signal has a lower mean and variance than other history or A1-based models. We conjecture that since Bing is only a portion of all search queries, our models would perform better with more search data. Additionally if we look at $2$-week ahead predictions, the MRP signal proves to be even more valuable achieving a RMSE/MAPE/MAE of $0.386/12.85/0.262$ vs $0.456/13.58/0.300$ using only history (SARIMA). Pure history-based models can be very powerful if appropriately trained and tested. To illustrate this, we note that the history-only SARIMA-X model outperforms all other approaches in tracking national CDC estimates, save for our demographically-sensitive MRP-SARIMA-X approach.
+
+Supporting our claims in the previous section, we found that incorporating the MRP signal in the SARIMA-X model often prevents the prediction from overshooting. The historical model anticipates a bigger peak while this is not reflected in the MRP-A1 model predictions. This is clearly seen in the $h=2$-step ahead predictions (Figure \ref{fig:US_Box}-b)). Thus, as a general approach for predicting time dependent metrics, the inclusion of appropriate exogenous signals can have a considerable beneficial impact on the prediction quality.
+
+\begin{table}[tbp]
+\centering
+\caption{National ILI Accuracy (h = 1 week)}
+\label{mse-national}
+\begin{tabular}{|l|l|l|l|}
+\hline
+Method        & RMSE  & MAPE  & MAE \\ \hline
+History       & 0.269 & 8.3  & 0.176\\ \hline
+MRP           & $\mathbf{0.234^*}$ & $\mathbf{8.04^*}$ & $\mathbf{0.157^*}$\\ \hline
+Lasso-History & 0.277 & 11.7 & 0.208\\ \hline
+Lasso-Al      & 0.269 & 9.33 & 0.180\\ \hline
+\end{tabular}
+\end{table}
+
+\subsection*{State Level Findings}
+
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=.4\linewidth]{NM_h_1_Abs_error}\\
+  \includegraphics[width=.4\linewidth]{NY_h_1_Abs_error}\\
+    \includegraphics[width=.4\linewidth]{DC_h_1_Abs_error}
+ \caption{a) h=1 indicates week ahead absolute errors for history against the MRP signal for NM,  NY, and DC. The overshooting becomes more apparent for the history signal. MRP serves as to check this .}
+  \label{fig:State_Abs_Errs}
+ \end{figure}
+
+The MRP-SARIMAX model performed better than history alone in all four states, and in all the cases the MRP-SARIMAX was the outright best model (based on error rates). The improvement of the MRP-SARIMAX model was especially sharp with a two-week horizon. Table \ref{tab:h1results} displays the root mean squared errors for a horizon of one and two weeks in each state. Moreover, Figure \ref{fig:State_Abs_Errs} reveals that the MRP signal based predictions prevented overshooting compared to the history signal. Intuitively, we expected the MRP exogenous signal to closely mimic the underlying influenza metric and hence provide a better prediction.
+
+\begin{table}[tbp]
+\centering
+\caption{(h = 1 week/h = 2 weeks) RMSE}
+\label{tab:h1results}
+\scalebox{0.9}{
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Signal  & NM                   & DC                                        & DE        & NY          \\ \hline
+History & 97.70/146.93         & 27.06/40.41                     & 58.26/90.21     & 643.18/1270.72   \\ \hline
+MRP     & \textbf{78.72/113.73}         & \textbf{26.59/38.88}  & \textbf{54.27/82.07} & \textbf{503.29/952.86}\\ \hline
+Raw-A1     & 82.53/128.41 & 27.42/39.74   & 58.44/88.70     &  513.75/935.47  \\ \hline
+\end{tabular}}
+\end{table}
+
+
+\section*{Discussion and Limitations}
+
+In this paper, we tackled a subset of the problems of ILI prediction in the context of search query data. We offer two primary advances. First, existing work has operated without an underlying behavioral model linking search with illness. Here, we use survey data linked with user behavior to observe the connection between Influenza-like Illness (ILI) symptoms and search behavior more directly than prior research. We find that there is substantial variation in the propensity of users to execute searches in the presence of ILI symptoms based on demographic factors. Next, we leverage these insights and integrate demographic data to account for the uneven propensity of flu search and to build an example ILI forecasting model.
+
+There are important limitations to this approach. First, like any survey that asks respondents to self-report prior events, recall issues will create some measurement error in the reporting of flu-like symptoms. Error may also come from unseen searches using devices not containing the proper tracking software (such as a friend or spouse's device). This is challenging to overcome, though future research using browser-based surveys may be able to mitigate recall issues with targeted outreach. Second, comparison of our ILI forecasting model to the state of the art is challenging, given our smaller sample size and relatively limited search stream. We expect that beginning with a larger survey sample and greater search coverage is likely to yield superior results. Similarly, starting with survey data limits the types of search queries that will be observed, necessitating the use of co-occurrence methods such as the DOC2VEC approach. Here, future research might identify A1 searches separate from the survey using a larger search stream. This would encompass a broader range of queries at the outset and obviate the need for DOC2VEC expansion. 
+
+We tested the practical value of our approach by defining a model to forecast state-level ILI rates and national ILI rates. Our model tracked ILI prevalence at the state and national level using demographically smoothed (noise-reduced) and re-weighted (bias-reduced) estimates of flu-like query volumes. Our results suggest that a combination of demographically re-weighted search signals and human-aided query labeling produces an accurate and near real-time model of flu prevalence at the state level. The results suggest that constructing a behavioral model of search can yield practical improvements in flu tracking relative to history alone. This provides important lessons for query and social media-based flu tracking systems. Specifically, it demonstrates that forecasters need not use the conventional method of combining massive search query data to a relatively small number of CDC data points. This approach has potentially wide applicability to problems of modeling time series of small to medium length using search query or social media data. 
+
+%\matmethods{Please describe your materials and methods here. This can be more than one paragraph, and may contain subsections and equations as required. Authors should include a statement in the methods section describing how readers will be able to access the data in the paper. 
+
+%\subsection*{Subsection for Method}
+%Example text for subsection.
+%}
+
+\section*{Data Availability}
+Authors will deposit replication materials in Harvard Dataverse (\url{https://dataverse.harvard.edu/}) upon publication. 
+
+%\showmatmethods{} % Display the Materials and Methods section
+
+%\acknow{Anonymized for submission.}
+
+
+\bibliography{sample}
+
+\section*{Acknowledgements}
+
+This paper benefited from useful comments and insights from Dr. Devon Brewer and support from John Kahan. IRB approval granted under Northeastern University \# 18-07-03. This research is based upon work supported in part by the Office of the Director of National Intelligence (ODNI),Intelligence Advanced Research Projects Activity (IARPA), via 2017‐17061500006. AV was partially supported by the NIGMS-NIH R01GM130668. The views and conclusions contained herein are those of the authors and should not be interpreted as necessarily representing the official policies, either expressed or implied, of ODNI, IARPA, or the U.S. Government.
+
+\section*{Author contributions statement}
+
+A.B., J.F., R.J., G.K., D.L., and R.K. conceived of survey design, sampling regime, and fielded the survey. G.K. and D.L. both offered substantial input on the analysis plan and paper outline. S.W. analyzed the survey data, worked on M.R.P. modeling, and led writing efforts. A.B. generated and tested time-series forecasting models. A.V. offered substantial input on modeling and writing. All authors reviewed the document and offered feedback and ideas. 
+
+\section*{Accession codes}
+None.
+
+\section*{Competing interests}
+
+The authors declare no competing interests. 
+
+
+\end{document}
