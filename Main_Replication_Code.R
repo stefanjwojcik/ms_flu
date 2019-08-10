@@ -13,7 +13,7 @@ library(data.table)
 
 
 setwd("~/Google Drive/")
-source("papers/Working Projects/Lazer Lab/Flu/Code/Cleaning/Flu_Symptoms_Ready_src_PNAS.R")
+source("~/Documents/ms_flu/Flu_Symptoms_sorethroat_src.R")
 
 # Percent in respondents of age categories:
 Age = factor(d1$age, labels = c("Below 18", 
