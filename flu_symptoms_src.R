@@ -10,11 +10,11 @@ library(stargazer)
 library(effects)
 
 #Load datasets
-setwd("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Clean Data")
-dat <- read.csv("MS556_All_Data_051515_A1Codes_w_sorethroat.csv", na.strings=c("#NULL!", NA))
+setwd("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Clean Data/")
+dat <- read.csv("MS556_All_Data_051515_A1Codes.csv", na.strings=c("#NULL!", NA))
 
 # marking those who responded in the earlier- pre- April 15 wave, compared to those that responded after
-dat$early_response = as.Date(as.character(dat$starttime), format = "%m/%d/%Y %M:%S") > "2015-04-15"
+early_response = as.Date(as.character(dat$starttime), format = "%m/%d/%Y %M:%S") > "2015-04-15"
 
 #Reliability - see reliability_final_codings_09182015.R
 
@@ -58,7 +58,7 @@ r.cough <-  r.symp[, 2]
 #Sick with sore throat
 r.sorethroat <- r.symp[, 3]
 #Full Flu
-r.flu <- 1*(r.fever*r.cough|r.fever*r.sorethroat)
+r.flu <- 1*(r.fever*r.cough)# QIR1_3_M
 #Spouse Symptoms
 s.symp <- dat[, grepl("QIR1b_[0-9]_M|QIR1b_[0-9]{2}_M", names(dat))] #isolate the flu symptoms
 #spouse with Fever only
@@ -68,7 +68,7 @@ s.cough <-  s.symp[, 2]
 #Spouse with sore throat
 s.sorethroat <- s.symp[, 3]
 #spouse with Flu
-s.flu <- 1*(s.fever*s.cough|s.fever*s.sorethroat)
+s.flu <- 1*(s.fever*s.cough) #|s.sorethroat
 #Child Symptoms
 ch.symp <- dat[, grepl("QIR1a", names(dat))] #isolate the flu symptoms
 #Fever only
@@ -76,16 +76,14 @@ ch.fever <- ch.symp[,1]
 #Sick with cough
 ch.cough <-  ch.symp[, 2]
 #Child with Sore Throat
-ch.sorethroat <- ch.symp[, 3]
+ch.sorethrat <- ch.symp[, 3]
 #Flu
-ch.flu <- 1*((ch.fever*ch.cough|ch.fever*ch.sorethroat)>0)
+ch.flu <- 1*((ch.fever*ch.cough)>0) # |ch.sorethrat
 #ch.flu <- factor((ch.fever*ch.cough)>0, labels=c("no", "yes"))
 
-# alternative based on: https://www.influenzanet.eu/en/flu-activity/ (look at sidebar)
-Household.Flu <- 1*(rowSums(data.frame(r.fever*r.cough|r.fever*r.sorethroat, 
-                                       s.fever*s.cough|s.fever*s.sorethroat, 
-                                       ch.fever*ch.cough|ch.fever*ch.sorethroat), na.rm=T)>0)
+Household.Flu <- 1*(rowSums(data.frame(r.fever*r.cough, s.fever*s.cough, ch.fever*ch.cough), na.rm=T)>0)
 #Household.Flu <- factor(rowSums(data.frame(r.fever*r.cough, s.fever*s.cough, ch.fever*ch.cough), na.rm=T)>0, labels=c("no", "yes"))
+
 # Add in other demographics as well:
 education = dat[, grepl("QSEN1_S", names(dat))]
 education = factor(education, labels = c("No HS", "HS", 
@@ -104,8 +102,7 @@ race = factor(race, labels = c("White", "Black",
 #Data for correlation table
 d1 <- data.frame(A1=a1, A2=a2, B1=b1, B2=b2, Any.Flu=anyflu, Volume=volume, Trigger, Female=female, 
                  Parent=parent, Spouse=spouse, Age=dat$QAGE, Household.Flu, r.flu, s.flu, ch.flu, 
-                 prm.user, education = education, race = race)
+                 prm.user, education = education, race = race, early_response = early_response)
 names(d1) = tolower(names(d1))
 
 rm(list=setdiff(ls(), "d1"))
-

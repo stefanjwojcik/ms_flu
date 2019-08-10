@@ -13,7 +13,7 @@ library(data.table)
 
 
 setwd("~/Google Drive/")
-source("~/Documents/ms_flu/Flu_Symptoms_sorethroat_src.R")
+source("~/Documents/ms_flu/flu_symptoms_src.R")
 
 # Percent in respondents of age categories:
 Age = factor(d1$age, labels = c("Below 18", 
@@ -39,7 +39,7 @@ mod_names = names(d1)
 nice_names = c("A1", "A2", "B1", "B2", "Any.Flu.Term", "Search.Volume", 
                "Trigger", "Female", "Parent", "Spouse", "Age", "Household.Flu", 
                "Respondent.Flu", "Spouse.Flu", "Child.Flu", "Primary.User", 
-               "Education", "Race")
+               "Education", "Race", "Early Response")
 names(d1) = nice_names
 stargazer(d1, type="latex", header=F)
 
@@ -189,12 +189,12 @@ stargazer(clean_bing_A1_queries, summary=F, title = "Top Stemmed words in A1 Que
 
 ##
 ## Descriptive Statistics of the Survey Data
-source("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Code/Cleaning/Flu_Symptoms_Ready_src_PNAS.R")
+source("~/Documents/ms_flu/flu_symptoms_src.R")
 mod_names = names(d1)
 nice_names = c("A1", "A2", "B1", "B2", "Any.Flu.Term", "Search.Volume", 
                "Trigger", "Female", "Parent", "Spouse", "Age", "Household.Flu", 
                "Respondent.Flu", "Spouse.Flu", "Child.Flu", "Primary.User", 
-               "Education", "Race")
+               "Education", "Race", "Early Response")
 names(d1) = nice_names
 table(d1$A1, d1$Household.Flu)
 d1 %>% group_by(Household.Flu) %>% summarise(mean(A1))
