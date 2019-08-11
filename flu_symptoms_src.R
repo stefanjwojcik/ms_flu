@@ -21,9 +21,6 @@ early_response = as.Date(as.character(dat$starttime), format = "%m/%d/%Y %M:%S")
 #Flu incidence and flu-like search basic means
 anyflu <- rowSums(dat[, grepl("_q|_p", names(dat))]) #Any type of page or query that was triggered
 
-#Trigger <-  1*(rowSums(dat[, grepl("_q|_p", names(dat))])!=0) #Numeric version for correlation table
-Trigger <-  ifelse(rowSums(dat[, grepl("_q|_p", names(dat))])==0, "No Trigger", "Trigger") 
-
 a1 <- 1*(rowSums(dat[, grepl("A1_q|A1_p", names(dat))])>0) #Searched for flu
 a2 <- 1*(rowSums(dat[, grepl("A2_q|A2_p", names(dat))])>0) #Searched for flu
 b1 <- 1*(rowSums(dat[, grepl("B1_q|B1_p", names(dat))])>0) #Searched for flu
@@ -100,9 +97,11 @@ race = factor(race, labels = c("White", "Black",
                                "Hispanic", "Other", "DK"))
 
 #Data for correlation table
-d1 <- data.frame(A1=a1, A2=a2, B1=b1, B2=b2, Any.Flu=anyflu, Volume=volume, Trigger, Female=female, 
+d1 <- data.frame(A1=a1, A2=a2, B1=b1, B2=b2, Any.Flu=anyflu, Volume=volume, Female=female, 
                  Parent=parent, Spouse=spouse, Age=dat$QAGE, Household.Flu, r.flu, s.flu, ch.flu, 
                  prm.user, education = education, race = race, early_response = early_response)
 names(d1) = tolower(names(d1))
 
 rm(list=setdiff(ls(), "d1"))
+
+saveRDS(d1, "~/Documents/ms_flu/data/main_flu_dat.rds")

@@ -10,10 +10,11 @@ library(dplyr)
 library(tidytext)
 library(SnowballC)
 library(data.table)
+library(irr)
 
 
 setwd("~/Google Drive/")
-source("~/Documents/ms_flu/flu_symptoms_src.R")
+d1 = readRDS("~/Documents/ms_flu/data/main_flu_dat.rds")
 
 # Percent in respondents of age categories:
 Age = factor(d1$age, labels = c("Below 18", 
@@ -37,9 +38,9 @@ table(d1$any.flu > 0)/nrow(d1)
 # OVERALL SUMMARY TABLE
 mod_names = names(d1)
 nice_names = c("A1", "A2", "B1", "B2", "Any.Flu.Term", "Search.Volume", 
-               "Trigger", "Female", "Parent", "Spouse", "Age", "Household.Flu", 
+               "Female", "Parent", "Spouse", "Age", "Household.Flu", 
                "Respondent.Flu", "Spouse.Flu", "Child.Flu", "Primary.User", 
-               "Education", "Race", "Early Response")
+               "Education", "Race", "Early.Response")
 names(d1) = nice_names
 stargazer(d1, type="latex", header=F)
 
@@ -52,15 +53,8 @@ dim(d1)
 rm(d1)
 ##
 
-
-##
-library(irr)
-#Queries:
-queries <- read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Source Data/Coding Sample/Wojcik Coded Flu Files/queries_finalSW_coded.csv", na.strings=c("NA", ""), stringsAsFactors = F)
-queries$Carolina <- as.factor(toupper(queries$Carolina))
-queries$Isys <- as.factor(queries$Isys)
-queries$Final.Code[which(is.na(queries$Final.Code))] <- queries$Carolina[which(is.na(queries$Final.Code))]
-##
+# - Load panel queries here
+queries = readRDS("~/Documents/ms_flu/data/queries.rds")
 
 # Tidying and calculating the word frequencies in the queries for the whole panel
 panelqueries = data.table(text = queries$query, n_query = 1:nrow(queries))
@@ -89,40 +83,24 @@ clean_A1_queries = head(clean_A1_queries, 10)
 
 ##
 
-##
-#Pages
-pages <- read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Source Data/Coding Sample/Wojcik Coded Flu Files/pages_finalSW_coded.csv", na.strings=c("NA", "") )
-pages$Carolina <- as.factor(toupper(pages$Carolina))
-pages$Isys <- as.factor(pages$Isys)
-pages$Final.Code[which(is.na(pages$Final.Code))] <- pages$Carolina[which(is.na(pages$Final.Code))]
-##
-
-##
-#Queries
-dat <- queries
-dat$QID2 <- as.factor(dat$QID2)
-#Overall intercoder reliability, excluding NA's
-dat <- na.omit(dat[, c("QID2", "Carolina", "Isys", "Final.Code")])
-queries_confusion_matrix = table(dat$Carolina, dat$Isys)
-##
+# QUERIES CONFUSION MATRIX
+queries_confusion_matrix = table(queries$Coder2, queries$Coder1)
 
 ##
 #Intercoder Reliability
-queries_kappa = kappa2(dat[,c("Carolina", "Isys")]) #Cohen's Kappa Carolina-Isys
-queries_agree = agree(dat[,c("Carolina", "Isys")]) #Agreement Carolina-Isys
+queries_kappa = kappa2(queries[,c("Coder2", "Coder1")]) #Cohen's Kappa Carolina-Isys
+queries_agree = agree(queries[,c("Coder2", "Coder1")]) #Agreement Carolina-Isys
 ##
 
-## AGREEMENT FOR PAGES
-##
-#PAGES
-dat <- pages
-dat$QID2 <- as.factor(dat$QID2)
-#Overall intercoder reliability, excluding NA's
-dat <- na.omit(dat[, c("QID2", "Carolina", "Isys", "Final.Code")])
-pages_confusion_matrix = table(dat$Carolina, dat$Isys)
+# Read pages 
+pages = readRDS("~/Documents/ms_flu/data/pages.rds")
+
+# PAGES CONFUSION MATRIX
+pages_confusion_matrix = table(pages$Coder2, pages$Coder1)
+
 #Intercoder Reliability
-pages_kappa = kappa2(dat[,c("Carolina", "Isys")]) #Cohen's Kappa Carolina-Isys
-pages_agree = agree(dat[,c("Carolina", "Isys")]) #Agreement Carolina-Isys
+pages_kappa = kappa2(pages[,c("Coder2", "Coder1")]) #Cohen's Kappa Carolina-Isys
+pages_agree = agree(pages[,c("Coder2", "Coder1")]) #Agreement Carolina-Isys
 
 #
 # RELIABILITY OF EXPANDED QUERIES::
@@ -194,7 +172,7 @@ mod_names = names(d1)
 nice_names = c("A1", "A2", "B1", "B2", "Any.Flu.Term", "Search.Volume", 
                "Trigger", "Female", "Parent", "Spouse", "Age", "Household.Flu", 
                "Respondent.Flu", "Spouse.Flu", "Child.Flu", "Primary.User", 
-               "Education", "Race", "Early Response")
+               "Education", "Race", "Early.Response")
 names(d1) = nice_names
 table(d1$A1, d1$Household.Flu)
 d1 %>% group_by(Household.Flu) %>% summarise(mean(A1))
@@ -398,6 +376,9 @@ confusionMatrix(predict(mod_house, newdata=hfull[te, predictors]), hfull$hflu[te
 plot(varImp(mod_house))
 ##
 
+# TESTING FOR WHETHER RESPONDING EARLY IN THE SEASON MATTERS:
+ma1 <- zelig(a1~Early.Response, model="relogit", tau=tau, data=d1) 
+
 ## Alternative models that incorporate sore throat in panel analysis and classification ####
 
 ## ALTERNATIVE
@@ -586,3 +567,5 @@ mod_house = train(hflu~., data=hfull[tr, predictors], method="rf", trControl=trC
 confusionMatrix(predict(mod_house, newdata=hfull[te, predictors]), hfull$hflu[te], positive="flu")
 plot(varImp(mod_house))
 ##
+
+
