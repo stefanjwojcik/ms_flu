@@ -40,3 +40,15 @@ pages$QID2 <- as.factor(pages$QID2)
 pages <- na.omit(pages[, c("QID2", "Coder2", "Coder1", "Final.Code")])
 
 saveRDS(pages, "~/Documents/ms_flu/data/pages.rds")
+
+
+# EXPANDED QUERIES:::
+
+# initial on NYS
+exp_qs = read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Source Data/Expanded Queries/NYSQueries_to_adjudicate.csv")
+names(exp_qs)[which(names(exp_qs)=="castillo")] = "Coder1"
+names(exp_qs)[which(names(exp_qs)=="leyla")] = "Coder2"
+
+# final
+exp_qs_final = read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Source Data/Expanded Queries/Expanded_Queries12_FINAL.csv")
+

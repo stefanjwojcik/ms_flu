@@ -12,7 +12,6 @@ library(SnowballC)
 library(data.table)
 library(irr)
 
-
 setwd("~/Google Drive/")
 d1 = readRDS("~/Documents/ms_flu/data/main_flu_dat.rds")
 
@@ -104,7 +103,6 @@ pages_agree = agree(pages[,c("Coder2", "Coder1")]) #Agreement Carolina-Isys
 
 #
 # RELIABILITY OF EXPANDED QUERIES::
-exp_qs = read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Source Data/Expanded Queries/NYSQueries_to_adjudicate.csv")
 #Intercoder Reliability
 bing_kappa = kappa2(exp_qs[,c("castillo", "leyla")]) #Cohen's Kappa Carolina-Isys
 bing_agree = agree(exp_qs[,c("castillo", "leyla")]) #Agreement Carolina-Isys
@@ -124,7 +122,6 @@ clean_bing_queries = head(clean_bing_queries, 10)
 bing_confusion_matrix = table(exp_qs$castillo, exp_qs$leyla)
 
 # bing queries stemmed - A1
-exp_qs_final = read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Source Data/Expanded Queries/Expanded_Queries12_FINAL.csv")
 bing_A1_queries = data.table(text = as.character(exp_qs_final$query[exp_qs_final$code=="a1"]), n_query = 1:nrow(exp_qs_final[exp_qs_final$code=="a1", ]))
 bing_A1_queries = bing_A1_queries %>% filter(!is.na(text))
 clean_bing_A1_queries <- bing_A1_queries %>%
