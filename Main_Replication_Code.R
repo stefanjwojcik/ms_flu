@@ -375,9 +375,6 @@ confusionMatrix(predict(mod_house, newdata=hfull[te, predictors]), hfull$hflu[te
 plot(varImp(mod_house))
 ##
 
-# TESTING FOR WHETHER RESPONDING EARLY IN THE SEASON MATTERS:
-ma1 <- zelig(a1~Early.Response, model="relogit", tau=tau, data=d1) 
-
 ## Alternative models that incorporate sore throat in panel analysis and classification ####
 
 ## ALTERNATIVE
