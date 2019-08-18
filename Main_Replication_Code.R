@@ -1,5 +1,4 @@
 
-library(foreign)
 library(ggplot2)
 library(stargazer)
 library(effects)
@@ -87,8 +86,8 @@ queries_confusion_matrix = table(queries$Coder2, queries$Coder1)
 
 ##
 #Intercoder Reliability
-queries_kappa = kappa2(queries[,c("Coder2", "Coder1")]) #Cohen's Kappa Carolina-Isys
-queries_agree = agree(queries[,c("Coder2", "Coder1")]) #Agreement Carolina-Isys
+queries_kappa = kappa2(queries[,c("Coder2", "Coder1")]) #Cohen's Kappa 
+queries_agree = agree(queries[,c("Coder2", "Coder1")]) #Agreement 
 ##
 
 # Read pages 
@@ -103,11 +102,13 @@ pages_agree = agree(pages[,c("Coder2", "Coder1")]) #Agreement Carolina-Isys
 
 #
 # RELIABILITY OF EXPANDED QUERIES::
+exp_qs = readRDS("~/Documents/ms_flu/data/expanded_queries.rds")
 #Intercoder Reliability
-bing_kappa = kappa2(exp_qs[,c("castillo", "leyla")]) #Cohen's Kappa Carolina-Isys
-bing_agree = agree(exp_qs[,c("castillo", "leyla")]) #Agreement Carolina-Isys
+bing_kappa = kappa2(exp_qs[,c("Coder1", "Coder2")]) #Cohen's Kappa 
+bing_agree = agree(exp_qs[,c("Coder1", "Coder2")]) #Agreement 
 
-# Get frequency of queries and 1-grams OVERALL
+# Get frequency of queries and 1-grams OVERALL - slight change in number of true words due to 
+# minor change in stopwords in 
 bing_queries = data.table(text = as.character(exp_qs$query), n_query = 1:nrow(exp_qs))
 bing_queries = bing_queries %>% filter(!is.na(text))
 clean_bing_queries <- bing_queries %>%
@@ -119,9 +120,10 @@ clean_bing_queries <- bing_queries %>%
 # Subset to top A1 queries
 clean_bing_queries = head(clean_bing_queries, 10)
 # create confusion matrix
-bing_confusion_matrix = table(exp_qs$castillo, exp_qs$leyla)
+bing_confusion_matrix = table(exp_qs$Coder1, exp_qs$Coder2)
 
 # bing queries stemmed - A1
+exp_qs_final = readRDS("~/Documents/ms_flu/data/expanded_queries_final.rds")
 bing_A1_queries = data.table(text = as.character(exp_qs_final$query[exp_qs_final$code=="a1"]), n_query = 1:nrow(exp_qs_final[exp_qs_final$code=="a1", ]))
 bing_A1_queries = bing_A1_queries %>% filter(!is.na(text))
 clean_bing_A1_queries <- bing_A1_queries %>%
@@ -164,10 +166,10 @@ stargazer(clean_bing_A1_queries, summary=F, title = "Top Stemmed words in A1 Que
 
 ##
 ## Descriptive Statistics of the Survey Data
-source("~/Documents/ms_flu/flu_symptoms_src.R")
+d1 = readRDS("~/Documents/ms_flu/data/main_flu_dat.rds")
 mod_names = names(d1)
 nice_names = c("A1", "A2", "B1", "B2", "Any.Flu.Term", "Search.Volume", 
-               "Trigger", "Female", "Parent", "Spouse", "Age", "Household.Flu", 
+               "Female", "Parent", "Spouse", "Age", "Household.Flu", 
                "Respondent.Flu", "Spouse.Flu", "Child.Flu", "Primary.User", 
                "Education", "Race", "Early.Response")
 names(d1) = nice_names
@@ -182,9 +184,9 @@ d1 %>% group_by(Household.Flu) %>% summarise(mean(A2, na.rm=T))
 d1 %>% group_by(A2) %>% summarise(mean(Household.Flu))
 ##
 
-##
-source("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Code/Cleaning/creating_A1_tau_PNAS.R")
-tau = numer/denom
+## Get tau value based on prior rate of search for an observed season::
+tau = readRDS("~/Documents/ms_flu/data/tau.rds")
+tau = tau$numer/tau$denom
 ##
 
 ##
@@ -209,6 +211,12 @@ texreg(c(ma12, ma22, ma32, ma42))
 
 # Alternative models with race and education
 ma5 <- zelig(a1~household.flu+education+race, model="relogit", tau=tau, data=d1) 
+
+# Alternative models with early response
+ma6a <- zelig(household.flu~volume+female+parent+age+early_response, model = "logit", data=d1)
+ma6b <- zelig(r.flu~volume+female+parent+age+early_response, model = "logit", data=d1)
+ma6c <- zelig(s.flu~volume+female+parent+age+early_response, model = "logit", data=d1)
+ma6a1 <- zelig(a1 ~ household.flu +volume+female+parent+age+early_response, model = "logit", data=d1)
 
 #### Estimating THE EFFECT OF VOLUME
 set.seed(765)
@@ -305,20 +313,14 @@ g + geom_vline(xintercept = mflu) + geom_vline(xintercept = mnoflu)
 ## Classification
 # REOPEN QUERIES AND PAGES
 #Queries:
-queries <- read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Source Data/Coding Sample/Wojcik Coded Flu Files/queries_finalSW_coded.csv", na.strings=c("NA", ""), stringsAsFactors = F)
-queries$Carolina <- as.factor(toupper(queries$Carolina))
-queries$Isys <- as.factor(queries$Isys)
-queries$Final.Code[which(is.na(queries$Final.Code))] <- queries$Carolina[which(is.na(queries$Final.Code))]
+queries <- readRDS("~/Documents/ms_flu/data/queries.rds")
 # Pages:
-pages <- read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Source Data/Coding Sample/Wojcik Coded Flu Files/pages_finalSW_coded.csv", na.strings=c("NA", "") )
-pages$Carolina <- as.factor(toupper(pages$Carolina))
-pages$Isys <- as.factor(pages$Isys)
-pages$Final.Code[which(is.na(pages$Final.Code))] <- pages$Carolina[which(is.na(pages$Final.Code))]
+pages <- readRDS("~/Documents/ms_flu/data/pages.rds")
 ##
 
 ##
 #open panel demographics:
-dat = read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Clean Data/panel_demographics.csv")
+dat = read.csv("~/Documents/ms_flu/data/panel_demographics.csv")
 # the query data
 full = rbind(na.omit(pages[, c("QID2", "Final.Code")]), na.omit(queries[, c("QID2", "Final.Code")]))
 ##
@@ -379,7 +381,7 @@ ma1 <- zelig(a1~Early.Response, model="relogit", tau=tau, data=d1)
 ## Alternative models that incorporate sore throat in panel analysis and classification ####
 
 ## ALTERNATIVE
-source("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Code/Cleaning/Flu_Symptoms_sorethroat_Ready_src_PNAS.R")
+d1 = readRDS("~/Documents/ms_flu/data/main_flu_dat_sorethroat.rds")
 table(d1$a1)/nrow(d1)
 table(d1$a2)/nrow(d1)
 table(d1$b1)/nrow(d1)
@@ -389,10 +391,10 @@ rm(d1)
 
 ## ALTERNATIVE
 ## Descriptive Statistics of the Survey Data
-source("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Code/Cleaning/Flu_Symptoms_sorethroat_Ready_src_PNAS.R")
+d1 = readRDS("~/Documents/ms_flu/data/main_flu_dat_sorethroat.rds")
 mod_names = names(d1)
 nice_names = c("A1", "A2", "B1", "B2", "Any.Flu.Term", "Search.Volume", 
-               "Trigger", "Female", "Parent", "Spouse", "Age", "Household.Flu", 
+                "Female", "Parent", "Spouse", "Age", "Household.Flu", 
                "Respondent.Flu", "Spouse.Flu", "Child.Flu", "Primary.User", 
                "Education", "Race")
 
@@ -406,8 +408,8 @@ stargazer(d1, type="latex", header=F)
 ##
 
 ##ALTERNATIVE
-source("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Code/Cleaning/creating_A1_tau_PNAS.R")
-tau = numer/denom
+tau = readRDS("~/Documents/ms_flu/data/tau.rds")
+tau = tau$numer/tau$denom
 ##
 
 ##ALTERNATIVE
@@ -499,36 +501,18 @@ g + geom_vline(xintercept = mflu) + geom_vline(xintercept = mnoflu)
 ## ALTERNATIVE
 #open panel demographics:
 #Pages
-pages <- read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Source Data/Coding Sample/Wojcik Coded Flu Files/pages_finalSW_coded.csv", na.strings=c("NA", "") )
-pages$Carolina <- as.factor(toupper(pages$Carolina))
-pages$Isys <- as.factor(pages$Isys)
-pages$Final.Code[which(is.na(pages$Final.Code))] <- pages$Carolina[which(is.na(pages$Final.Code))]
+pages <- readRDS("~/Documents/ms_flu/data/pages.rds")
 ##
 
 ## ALTERNATIVE
 #Queries:
-queries <- read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Source Data/Coding Sample/Wojcik Coded Flu Files/queries_finalSW_coded.csv", na.strings=c("NA", ""), stringsAsFactors = F)
-queries$Carolina <- as.factor(toupper(queries$Carolina))
-queries$Isys <- as.factor(queries$Isys)
-queries$Final.Code[which(is.na(queries$Final.Code))] <- queries$Carolina[which(is.na(queries$Final.Code))]
+queries <- readRDS("~/Documents/ms_flu/data/queries.rds")
 ##
 
 ## We re-run the classification model in similar fashion as above
 
-## ALTERNATIVE
-#open panel demographics:
-#Pages
-pages <- read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Source Data/Coding Sample/Wojcik Coded Flu Files/pages_finalSW_coded.csv", na.strings=c("NA", "") )
-pages$Carolina <- as.factor(toupper(pages$Carolina))
-pages$Isys <- as.factor(pages$Isys)
-pages$Final.Code[which(is.na(pages$Final.Code))] <- pages$Carolina[which(is.na(pages$Final.Code))]
-#Queries:
-queries <- read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Source Data/Coding Sample/Wojcik Coded Flu Files/queries_finalSW_coded.csv", na.strings=c("NA", ""), stringsAsFactors = F)
-queries$Carolina <- as.factor(toupper(queries$Carolina))
-queries$Isys <- as.factor(queries$Isys)
-queries$Final.Code[which(is.na(queries$Final.Code))] <- queries$Carolina[which(is.na(queries$Final.Code))]
 # load fresh data
-dat = read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Clean Data/panel_demographics_sorethroat.csv")
+dat = read.csv("~/Documents/ms_flu/data/panel_demographics_sorethroat.csv")
 # the query data
 full = rbind(na.omit(pages[, c("QID2", "Final.Code")]), na.omit(queries[, c("QID2", "Final.Code")]))
 # Initial merge to match respondents to queries

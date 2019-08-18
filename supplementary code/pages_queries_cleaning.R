@@ -48,7 +48,11 @@ saveRDS(pages, "~/Documents/ms_flu/data/pages.rds")
 exp_qs = read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Source Data/Expanded Queries/NYSQueries_to_adjudicate.csv")
 names(exp_qs)[which(names(exp_qs)=="castillo")] = "Coder1"
 names(exp_qs)[which(names(exp_qs)=="leyla")] = "Coder2"
+exp_qs$Coder2 = factor(exp_qs$Coder2, levels = c(levels(exp_qs$Coder2), "b2"))
+exp_qs <- na.omit(exp_qs[, c("query", "Coder1", "Coder2")])
+saveRDS(exp_qs, "~/Documents/ms_flu/data/expanded_queries.rds")
 
 # final
 exp_qs_final = read.csv("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Source Data/Expanded Queries/Expanded_Queries12_FINAL.csv")
+saveRDS(exp_qs_final, "~/Documents/ms_flu/data/expanded_queries_final.rds")
 
