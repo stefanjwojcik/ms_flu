@@ -47,8 +47,11 @@ stargazer(d1, type="latex", header=F)
 
 # Comparing sources where symptom information were sought:
 ggplot(d1, aes(x = info_source)) +  
-  geom_bar(aes(y = (..count..)/sum(..count..))) + xlab("Source") + ylab("Proportion of Respondents") + 
-  ggtitle("Proportion of respondents who looked for information from Health provider or Internet")
+  geom_bar(aes(y = (..count..)/sum(..count..), fill=d1$info_source)) + xlab("Source") + ylab("Proportion of Respondents") + 
+  ggtitle("Proportion of respondents who looked for information from Health provider or Internet") +
+  theme(legend.position = "none")
+# And the averages here:
+round(table(d1$info_source)/nrow(d1), digits=2)
 
 ##
 table(d1$A1)/nrow(d1)
