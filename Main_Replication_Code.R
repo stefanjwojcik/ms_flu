@@ -38,10 +38,17 @@ mod_names = names(d1)
 nice_names = c("A1", "A2", "B1", "B2", "Any.Flu.Term", "Search.Volume", 
                "Female", "Parent", "Spouse", "Age", "Household.Flu", 
                "Respondent.Flu", "Spouse.Flu", "Child.Flu", "Primary.User", 
-               "Education", "Race", "Early.Response")
+               "Education", "Race", "Early.Response", "info_source", 
+               "info_from_internet")
 names(d1) = nice_names
 stargazer(d1, type="latex", header=F)
 
+# Reported seeking information from health care provider versus online source (search or web site)
+
+# Comparing sources where symptom information were sought:
+ggplot(d1, aes(x = info_source)) +  
+  geom_bar(aes(y = (..count..)/sum(..count..))) + xlab("Source") + ylab("Proportion of Respondents") + 
+  ggtitle("Proportion of respondents who looked for information from Health provider or Internet")
 
 ##
 table(d1$A1)/nrow(d1)
@@ -171,7 +178,7 @@ mod_names = names(d1)
 nice_names = c("A1", "A2", "B1", "B2", "Any.Flu.Term", "Search.Volume", 
                "Female", "Parent", "Spouse", "Age", "Household.Flu", 
                "Respondent.Flu", "Spouse.Flu", "Child.Flu", "Primary.User", 
-               "Education", "Race", "Early.Response")
+               "Education", "Race", "Early.Response", "info_from_provider")
 names(d1) = nice_names
 table(d1$A1, d1$Household.Flu)
 d1 %>% group_by(Household.Flu) %>% summarise(mean(A1))
@@ -217,6 +224,11 @@ ma6a <- zelig(household.flu~volume+female+parent+age+early_response, model = "lo
 ma6b <- zelig(r.flu~volume+female+parent+age+early_response, model = "logit", data=d1)
 ma6c <- zelig(s.flu~volume+female+parent+age+early_response, model = "logit", data=d1)
 ma6a1 <- zelig(a1 ~ household.flu +volume+female+parent+age+early_response, model = "logit", data=d1)
+
+# Alternative models with seeking info from healthcare provider
+# the idea that it helps to prove the value of the model
+ma_healh <- zelig(info_from_provider ~ a1, model = "logit", data=d1)
+table(d1$a1, d1$info_from_provider)
 
 #### Estimating THE EFFECT OF VOLUME
 set.seed(765)

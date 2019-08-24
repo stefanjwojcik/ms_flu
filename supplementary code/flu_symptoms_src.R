@@ -16,6 +16,17 @@ dat <- read.csv("MS556_All_Data_051515_A1Codes.csv", na.strings=c("#NULL!", NA))
 # marking those who responded in the earlier- pre- April 15 wave, compared to those that responded after
 early_response = as.Date(as.character(dat$starttime), format = "%m/%d/%Y %M:%S") < "2015-04-15"
 
+# Creating comparison of seeking information from online sources vs. healthcare provider
+info_from_provider = dat$QIR4_1_M
+info_from_internet = 1*(dat$QIR4_3_M==1|dat$QIR4_2_M==1|dat$QIR4_6_M==1)
+info_source = NA
+info_source[info_from_provider==0 & info_from_internet==0] = "Neither"
+info_source[info_from_provider==1 & info_from_internet==0] = "Health provider"
+info_source[info_from_provider==0 & info_from_internet==1] = "Internet"
+info_source[info_from_provider==1 & info_from_internet==1] = "Both"
+info_source[is.na(info_source)] = "DK/Refused"
+info_source = factor(info_source, levels = c("Neither", "Health provider", "Internet", "Both", "DK/Refused"))
+
 #Reliability - see reliability_final_codings_09182015.R
 
 #Flu incidence and flu-like search basic means
@@ -99,7 +110,8 @@ race = factor(race, labels = c("White", "Black",
 #Data for correlation table
 d1 <- data.frame(A1=a1, A2=a2, B1=b1, B2=b2, Any.Flu=anyflu, Volume=volume, Female=female, 
                  Parent=parent, Spouse=spouse, Age=dat$QAGE, Household.Flu, r.flu, s.flu, ch.flu, 
-                 prm.user, education = education, race = race, early_response = early_response)
+                 prm.user, education = education, race = race, early_response = early_response, 
+                 info_source = info_source)
 names(d1) = tolower(names(d1))
 
 rm(list=setdiff(ls(), "d1"))
