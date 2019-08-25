@@ -181,7 +181,7 @@ mod_names = names(d1)
 nice_names = c("A1", "A2", "B1", "B2", "Any.Flu.Term", "Search.Volume", 
                "Female", "Parent", "Spouse", "Age", "Household.Flu", 
                "Respondent.Flu", "Spouse.Flu", "Child.Flu", "Primary.User", 
-               "Education", "Race", "Early.Response", "info_from_provider")
+               "Education", "Race", "Early.Response", "info_source")
 names(d1) = nice_names
 table(d1$A1, d1$Household.Flu)
 d1 %>% group_by(Household.Flu) %>% summarise(mean(A1))
@@ -226,7 +226,7 @@ ma5 <- zelig(a1~household.flu+education+race, model="relogit", tau=tau, data=d1)
 ma6a <- zelig(household.flu~volume+female+parent+age+early_response, model = "logit", data=d1)
 ma6b <- zelig(r.flu~volume+female+parent+age+early_response, model = "logit", data=d1)
 ma6c <- zelig(s.flu~volume+female+parent+age+early_response, model = "logit", data=d1)
-ma6a1 <- zelig(a1 ~ household.flu +volume+female+parent+age+early_response, model = "logit", data=d1)
+texreg(c(ma6a, ma6b, ma6c))
 
 # Alternative models with seeking info from healthcare provider
 # the idea that it helps to prove the value of the model
