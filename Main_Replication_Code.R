@@ -246,10 +246,10 @@ hi_vol = df$expected_value[df$volume==6.661]
 # Relative Rate:
 mean(hi_vol)/mean(lo_vol)
   # adding 95% confidence intervals
-quantile(hi_vol/lo_vol, probs=c(.05, .95))
-# RD: 
+quantile(hi_vol/lo_vol, probs=c(.025, .975))
+# RD: 2
 mean(hi_vol)-mean(lo_vol)
-quantile(hi_vol-lo_vol, probs=c(.05, .95))
+quantile((hi_vol-lo_vol), probs=c(.025, .975))
 ##
 ##
 
@@ -261,19 +261,21 @@ household.flu.r <- c(0, 1)
 ma1X <-setx(ma1, household.flu = household.flu.r)  # Simulate quantities of interest 
 ma1sim <- sim(ma1, x = ma1X)  # Extract expected values from simulations 
 df = zelig_qi_to_df(ma1sim)
-mflu = mean(df$expected_value[df$household.flu==1])
-mnoflu = mean(df$expected_value[df$household.flu==0])
+mflu = df$expected_value[df$household.flu==1]
+mnoflu = df$expected_value[df$household.flu==0]
 df$HouseholdFlu = as.factor(df$household.flu)
 g = ggplot(df, aes(x=expected_value, fill=HouseholdFlu)) 
 g = g + geom_density(alpha=.5) + xlab("Expected A1 Search Rate") + ylab("Density")
-g + geom_vline(xintercept = mflu) + geom_vline(xintercept = mnoflu)
+g + geom_vline(xintercept = mean(mflu)) + geom_vline(xintercept = mean(mnoflu))
 ##
 
 ##
 # RR:
-mflu/mnoflu
+mean(mflu)/mean(mnoflu)
+quantile(mflu/mnoflu, probs=c(.025, .975))
 # RD: 
-mflu-mnoflu
+mean(mflu)-mean(mnoflu)
+quantile(mflu-mnoflu, probs=c(.025, .975))
 ##
 
 # model with race and education
@@ -296,17 +298,19 @@ Parent.Gender = c("Dads")
 ma2X <-setx(ma2, ch.flu = ch.flu, Parent.Gender=Parent.Gender)  # Simulate quantities of interest 
 ma2sim <- sim(ma2, x = ma2X)  # Extract expected values from simulations 
 df = zelig_qi_to_df(ma2sim)
-mflu = mean(df$expected_value[df$ch.flu==1])
-mnoflu = mean(df$expected_value[df$ch.flu==0])
+mflu = df$expected_value[df$ch.flu==1]
+mnoflu = df$expected_value[df$ch.flu==0]
 df$childflu = as.factor(df$ch.flu)
 g = ggplot(df, aes(x=expected_value, fill=childflu)) 
 g = g + geom_density(alpha=.5) + xlab("Expected A1 Search Rate - Fathers") + ylab("Density")
-g = g + geom_vline(xintercept = mflu) + geom_vline(xintercept = mnoflu)
+g = g + geom_vline(xintercept = mean(mflu)) + geom_vline(xintercept = mean(mnoflu))
 g + scale_x_continuous(labels = scientific) # change to labels = comma for non-scientific notation
 # RR:
-mflu/mnoflu
+mean(mflu)/mean(mnoflu)
+quantile(mflu/mnoflu, probs=c(.025, .975))
 # RD: 
-mflu-mnoflu
+mean(mflu)-mean(mnoflu)
+quantile(mflu-mnoflu, probs=c(.025, .975))
 ##
 
 ##
@@ -322,7 +326,7 @@ mnoflu = mean(df$expected_value[df$ch.flu==0])
 df$childflu = as.factor(df$ch.flu)
 g = ggplot(df, aes(x=expected_value, fill=childflu)) 
 g = g + geom_density(alpha=.5) + xlab("Expected A1 Search Rate - Mothers") + ylab("Density")
-g + geom_vline(xintercept = mflu) + geom_vline(xintercept = mnoflu)
+g + geom_vline(xintercept = mean(mflu)) + geom_vline(xintercept = mean(mnoflu))
 ##
 
 ## Classification
@@ -448,17 +452,19 @@ household.flu.r <- c(0, 1)
 ma1X <-setx(ma1, household.flu = household.flu.r)  # Simulate quantities of interest 
 ma1sim <- sim(ma1, x = ma1X)  # Extract expected values from simulations 
 df = zelig_qi_to_df(ma1sim)
-mflu = mean(df$expected_value[df$household.flu==1])
-mnoflu = mean(df$expected_value[df$household.flu==0])
+mflu = df$expected_value[df$household.flu==1]
+mnoflu = df$expected_value[df$household.flu==0]
 df$HouseholdFlu = as.factor(df$household.flu)
 g = ggplot(df, aes(x=expected_value, fill=HouseholdFlu)) 
 g = g + geom_density(alpha=.5) + xlab("Expected A1 Search Rate") + ylab("Density")
-g + geom_vline(xintercept = mflu) + geom_vline(xintercept = mnoflu)
+g + geom_vline(xintercept = mean(mflu)) + geom_vline(xintercept = mean(mnoflu))
 
 # ALTERNATIVE RR:
-mflu/mnoflu
+mean(mflu)/mean(mnoflu)
+quantile(mflu/mnoflu, probs=c(.025, .975))
 # RD: 
-mflu-mnoflu
+mean(mflu)-mean(mnoflu)
+quantile(mflu-mnoflu, probs=c(.025, .975))
 ##
 
 ## ALTERNATIVE
@@ -487,11 +493,13 @@ mnoflu = mean(df$expected_value[df$ch.flu==0])
 df$childflu = as.factor(df$ch.flu)
 g = ggplot(df, aes(x=expected_value, fill=childflu)) 
 g = g + geom_density(alpha=.5) + xlab("Expected A1 Search Rate - Fathers") + ylab("Density")
-g + geom_vline(xintercept = mflu) + geom_vline(xintercept = mnoflu)
+g + geom_vline(xintercept = mean(mflu)) + geom_vline(xintercept = mean(mnoflu))
 # RR:
-mflu/mnoflu
+mean(mflu)/mean(mnoflu)
+quantile(mflu/mnoflu, probs=c(.025, .975))
 # RD: 
-mflu-mnoflu
+mean(mflu)-mean(mnoflu)
+quantile(mflu-mnoflu, probs=c(.025, .975))
 ##
 
 ## ALTERNATIVE
