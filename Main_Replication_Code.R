@@ -230,26 +230,26 @@ texreg(c(ma6a, ma6b, ma6c))
 
 # Alternative models with seeking info from healthcare provider
 # the idea that it helps to prove the value of the model
-ma_healh <- zelig(info_from_provider ~ a1, model = "logit", data=d1)
-table(d1$a1, d1$info_from_provider)
+ma_healh <- zelig(info_source ~ a1, model = "logit", data=d1)
+table(d1$a1, d1$info_source)
 
 #### Estimating THE EFFECT OF VOLUME
 set.seed(765)
-#volume <- c(5.88, 9.49)  #from median to max
 summary(d1$volume)
 volume <- c(4.852, 6.661)  #from third quartile to first
 ma1X <-setx(ma1, volume = volume)  # Simulate quantities of interest 
 ma1sim <- sim(ma1, x = ma1X)  # Extract expected values from simulations 
 df = zelig_qi_to_df(ma1sim)
-#lo_vol = mean(df$expected_value[df$volume==5.88])
-#hi_vol = mean(df$expected_value[df$volume==9.49])
-lo_vol = mean(df$expected_value[df$volume==4.852])
-hi_vol = mean(df$expected_value[df$volume==6.661])
+lo_vol = df$expected_value[df$volume==4.852]
+hi_vol = df$expected_value[df$volume==6.661]
 ##
-# RR:
-hi_vol/lo_vol
+# Relative Rate:
+mean(hi_vol)/mean(lo_vol)
+  # adding 95% confidence intervals
+quantile(hi_vol/lo_vol, probs=c(.05, .95))
 # RD: 
-hi_vol-lo_vol
+mean(hi_vol)-mean(lo_vol)
+quantile(hi_vol-lo_vol, probs=c(.05, .95))
 ##
 ##
 
