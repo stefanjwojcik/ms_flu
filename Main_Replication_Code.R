@@ -38,8 +38,7 @@ mod_names = names(d1)
 nice_names = c("A1", "A2", "B1", "B2", "Any.Flu.Term", "Search.Volume", 
                "Female", "Parent", "Spouse", "Age", "Household.Flu", 
                "Respondent.Flu", "Spouse.Flu", "Child.Flu", "Primary.User", 
-               "Education", "Race", "Early.Response", "info_source", 
-               "info_from_internet")
+               "Education", "Race", "Early.Response", "info_source")
 names(d1) = nice_names
 stargazer(d1, type="latex", header=F)
 
