@@ -487,8 +487,8 @@ Parent.Gender = c("Dads")
 ma2X <-setx(ma2, ch.flu = ch.flu, Parent.Gender=Parent.Gender)  # Simulate quantities of interest 
 ma2sim <- sim(ma2, x = ma2X)  # Extract expected values from simulations 
 df = zelig_qi_to_df(ma2sim)
-mflu = mean(df$expected_value[df$ch.flu==1])
-mnoflu = mean(df$expected_value[df$ch.flu==0])
+mflu = df$expected_value[df$ch.flu==1]
+mnoflu = df$expected_value[df$ch.flu==0]
 df$childflu = as.factor(df$ch.flu)
 g = ggplot(df, aes(x=expected_value, fill=childflu)) 
 g = g + geom_density(alpha=.5) + xlab("Expected A1 Search Rate - Fathers") + ylab("Density")
