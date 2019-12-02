@@ -1,0 +1,26 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}
+\contentsline {section}{\numberline {2}Sources of Data{\color {red}\sout {:}}}{3}{section.2}
+\contentsline {section}{\numberline {3}{\color {red}\sout {Additional Panel }}Survey {\color {red}\sout {Information}}{\color {blue}\uwave {Recruitment and Fielding}}}{3}{section.3}
+\contentsline {subsection}{\numberline {3.1}{\color {red}\sout {Attributes of }}{\color {blue}\uwave {Source Vendor }}Panel {\color {red}\sout {Survey}}{\color {blue}\uwave {and Sampling}}}{3}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}{\color {blue}\uwave {Survey Fielding Timeline}}}{4}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}{\color {blue}\uwave {Survey Questions}}}{6}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}{\color {blue}\uwave {Survey Recall}}}{6}{subsection.3.4}
+\contentsline {section}{\numberline {4}{\color {blue}\uwave {Information from Healthcare Providers vs. the Internet}}}{12}{section.4}
+\contentsline {section}{\numberline {5}Query and Web Page Labeling}{12}{section.5}
+\contentsline {subsection}{\numberline {5.1}{\color {blue}\uwave {Overview of Labeling}}}{12}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}{\color {blue}\uwave {Labeling Scheme}}}{13}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}{\color {blue}\uwave {Codebook: Descriptions of Labels}}}{14}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}{\color {blue}\uwave {Labeling Queries and Pages from Respondent Browsing History}}}{15}{subsection.5.4}
+\contentsline {section}{\numberline {6}{\color {blue}\uwave {Query Data Geographic and Temporal Coverage}}}{19}{section.6}
+\contentsline {subsection}{\numberline {6.1}Predicting Internet Behavior Based on Reported Symptoms}{21}{subsection.6.1}
+\contentsline {subsubsection}{\numberline {6.1.1}Descriptive Relationship}{21}{subsubsection.6.1.1}
+\contentsline {subsubsection}{\numberline {6.1.2}Regression Model and Case-Control Design}{21}{subsubsection.6.1.2}
+\contentsline {subsection}{\numberline {6.2}Demographic Groups and Queries}{24}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Classifying Flu Cases}{28}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}Robustness Checks: Alternative Panel Models}{30}{subsection.6.4}
+\contentsline {subsection}{\numberline {6.5}Takeaways from Panel Analysis}{31}{subsection.6.5}
+\contentsline {subsection}{\numberline {6.6}Accounting for Demographics: Query Smoothing and Re-weighting}{34}{subsection.6.6}
+\contentsline {subsection}{\numberline {6.7}More Discussion of Forecasting Results}{35}{subsection.6.7}
+\contentsline {subsection}{\numberline {6.8}State Flu Data Preprocessing and Setup}{36}{subsection.6.8}
+\contentsline {section}{\numberline {7}{\color {red}\sout {Limitations}}}{37}{section.7}
+\contentsline {section}{\numberline {7}{\color {red}\sout {Discussion}}}{37}{section.7}

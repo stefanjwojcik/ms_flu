@@ -1,0 +1,1040 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  1 DEC 2019 13:22
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**diff.tex
+(./diff.tex
+LaTeX2e <2015/01/01>
+Babel <3.9l> and hyphenation patterns for 79 languages loaded.
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks14
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2013/01/14 v2.14 AMS math features
+\@mathmargin=\skip43
+
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks15
+\ex@=\dimen103
+))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen104
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count87
+LaTeX Info: Redefining \frac on input line 210.
+\uproot@=\count88
+\leftroot@=\count89
+LaTeX Info: Redefining \overline on input line 306.
+\classnum@=\count90
+\DOTSCASE@=\count91
+LaTeX Info: Redefining \ldots on input line 378.
+LaTeX Info: Redefining \dots on input line 381.
+LaTeX Info: Redefining \cdots on input line 466.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
+\macc@depth=\count92
+\c@MaxMatrixCols=\count93
+\dotsspace@=\muskip10
+\c@parentequation=\count94
+\dspbrk@lvl=\count95
+\tag@help=\toks16
+\row@=\count96
+\column@=\count97
+\maxfields@=\count98
+\andhelp@=\toks17
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks18
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks19
+LaTeX Info: Redefining \[ on input line 2665.
+LaTeX Info: Redefining \] on input line 2666.
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2014/10/28 v1.1c Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup6
+\symboldletters=\mathgroup7
+\symboldsymbols=\mathgroup8
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
+LaTeX Info: Redefining \bm on input line 207.
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/tools/dcolumn.sty
+Package: dcolumn 2014/10/28 v1.06 decimal alignment package (DPC)
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/tools/array.sty
+Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
+\col@sep=\dimen112
+\extrarowheight=\dimen113
+\NC@list=\toks20
+\extratabsurround=\skip46
+\backup@length=\skip47
+))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen114
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
+\subfigtopskip=\skip48
+\subfigcapskip=\skip49
+\subfigcaptopadj=\dimen115
+\subfigbottomskip=\skip50
+\subfigcapmargin=\dimen116
+\subfiglabelskip=\skip51
+\c@subfigure=\count99
+\c@lofdepth=\count100
+\c@subtable=\count101
+\c@lotdepth=\count102
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+(/usr/local/texlive/2015/texmf-dist/tex/latex/subfigure/subfigure.cfg)
+\subfig@top=\skip52
+\subfig@bottom=\skip53
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/subfloat/subfloat.sty
+Package: subfloat 2003/08/21 version 2.14
+
+Package `subfloat', Version 2.14 of 2003/08/21.
+
+Package subfloat Warning: Numbers of floats not counted:
+(subfloat)                If you use one of the counters subfloatfiguremax or
+(subfloat)                subfloattablemax you will get strange error messages
+(subfloat)                containing \c@subfloatfiguremax or
+(subfloat)                \c@subfloattablemax:
+(subfloat)                Please switch on countmax or remove the code using
+(subfloat)                the counter then..
+
+) (/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks21
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2014/10/28 v1.0p Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 94.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count103
+))
+\Gin@req@height=\dimen117
+\Gin@req@width=\dimen118
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count104
+\float@exts=\toks22
+\float@box=\box28
+\@float@everytoks=\toks23
+\@floatcapt=\box29
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/anysize/anysize.sty
+Package: anysize 1994/08/13 setting margin sizes
+
+document style option `anysize' loaded
+Michael Salzenberg, Thomas Esser, Dirk Hillbrecht
+Version 1.0, Aug 13, 1994
+\@Leftmargin=\dimen119
+\@Rightmargin=\dimen120
+\@Topmargin=\dimen121
+\@Bottommargin=\dimen122
+) (/usr/local/texlive/2015/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks24
+\verbatim@line=\toks25
+\verbatim@in@stream=\read1
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/rotating/rotating.sty
+Package: rotating 2009/03/28 v2.16a rotated objects in LaTeX
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\c@r@tfl@t=\count105
+\rotFPtop=\skip54
+\rotFPbot=\skip55
+\rot@float@box=\box30
+\rot@mess@toks=\toks26
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/paralist/paralist.sty
+Package: paralist 2013/06/09 v2.4 Extended list environments
+\pltopsep=\skip56
+\plpartopsep=\skip57
+\plitemsep=\skip58
+\plparsep=\skip59
+\pl@lab=\toks27
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen123
+\WF@size=\dimen124
+\c@WF@wrappedlines=\count106
+\WF@box=\box31
+\WF@everypar=\toks28
+Package: wrapfig 2003/01/31  v 3.6
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/endnotes/endnotes.sty
+\c@endnote=\count107
+\endnotesep=\dimen125
+\@enotes=\write3
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
+
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+Package: hobsub-hyperref 2012/05/28 v1.13 Bundle oberdiek, subset hyperref (HO)
+
+
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+Package: hobsub-generic 2012/05/28 v1.13 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2012/05/28 v1.13 Construct package bundles (HO)
+Package hobsub Info: Skipping package `infwarerr' (already loaded).
+Package hobsub Info: Skipping package `ltxcmds' (already loaded).
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2007/09/27 v1.1 Expandable calculations with integers (HO)
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2011/11/25 v1.13 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2012/04/08 v1.3 Expandable calculations on big integers (HO
+)
+Package: bitset 2011/01/30 v1.1 Handle bit-vector datatype (HO)
+Package: uniquecounter 2011/01/30 v1.2 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
+Package: hopatch 2012/05/28 v1.2 Wrapper for package hooks (HO)
+Package: xcolor-patch 2011/01/30 xcolor patch
+Package: atveryend 2011/06/30 v1.8 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
+Package: refcount 2011/10/16 v3.4 Data extraction from label references (HO)
+Package: hycolor 2011/01/30 v1.7 Color options for hyperref/bookmark (HO)
+)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/auxhook.sty
+Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+)
+\@linkdim=\dimen126
+\Hy@linkcounter=\count108
+\Hy@pagecounter=\count109
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
+)
+\Hy@SavedSpaceFactor=\count110
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4443.
+Package hyperref Info: Link nesting OFF on input line 4448.
+Package hyperref Info: Hyper index ON on input line 4451.
+Package hyperref Info: Plain pages OFF on input line 4458.
+Package hyperref Info: Backreferencing OFF on input line 4463.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4688.
+\c@Hy@tempcnt=\count111
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip11
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 5041.
+\XeTeXLinkMargin=\dimen127
+\Fld@menulength=\count112
+\Field@Width=\dimen128
+\Fld@charsize=\dimen129
+Package hyperref Info: Hyper figures OFF on input line 6295.
+Package hyperref Info: Link nesting OFF on input line 6300.
+Package hyperref Info: Hyper index ON on input line 6303.
+Package hyperref Info: backreferencing OFF on input line 6310.
+Package hyperref Info: Link coloring OFF on input line 6315.
+Package hyperref Info: Link coloring with OCG OFF on input line 6320.
+Package hyperref Info: PDF/A mode OFF on input line 6325.
+LaTeX Info: Redefining \ref on input line 6365.
+LaTeX Info: Redefining \pageref on input line 6369.
+\Hy@abspage=\count113
+\c@Item=\count114
+\c@Hfootnote=\count115
+)
+
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
+\Fld@listcount=\count116
+\c@bookmark@seq@number=\count117
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip60
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/hypcap.sty
+Package: hypcap 2011/02/16 v1.11 Adjusting the anchors of captions (HO)
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2014/10/28 v1.1a Standard LaTeX Color (DPC)
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 142.
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip61
+\bibsep=\skip62
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count118
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2012/02/13 v1.0a Color table columns (DPC)
+\everycr=\toks29
+\minrowclearance=\skip63
+)
+LaTeX Info: Redefining \color on input line 702.
+\rownum=\count119
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
+Package xcolor Info: Model `RGB' extended on input line 1353.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count120
+\lst@gtempboxa=\box32
+\lst@token=\toks30
+\lst@length=\count121
+\lst@currlwidth=\dimen130
+\lst@column=\count122
+\lst@pos=\count123
+\lst@lostspace=\dimen131
+\lst@width=\dimen132
+\lst@newlines=\count124
+\lst@lineno=\count125
+\lst@maxwidth=\dimen133
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2014/09/06 1.5e (Carsten Heinz)
+\c@lstnumber=\count126
+\lst@skipnumbers=\count127
+\lst@framebox=\box33
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2014/09/06 1.5e listings configuration
+))
+Package: listings 2014/09/06 1.5e (Carsten Heinz)
+
+(/usr/local/texlive/2015/texmf-dist/tex/generic/ulem/ulem.sty
+\UL@box=\box34
+\UL@hyphenbox=\box35
+\UL@skip=\skip64
+\UL@hook=\toks31
+\UL@height=\dimen134
+\UL@pe=\count128
+\UL@pixel=\dimen135
+\ULC@box=\box36
+Package: ulem 2012/05/18
+\ULdepth=\dimen136
+)
+No file diff.aux.
+\openout1 = `diff.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+(/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count129
+\scratchdimen=\dimen137
+\scratchbox=\box37
+\nofMPsegments=\count130
+\nofMParguments=\count131
+\everyMPshowfont=\toks32
+\MPscratchCnt=\count132
+\MPscratchDim=\dimen138
+\MPnumerator=\count133
+\makeMPintoPDFobject=\count134
+\everyMPtoPDFconversion=\toks33
+) (/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+)
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+\AtBeginShipoutBox=\box38
+Package hyperref Info: Link coloring OFF on input line 63.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
+
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
+)
+\c@section@level=\count135
+)
+LaTeX Info: Redefining \ref on input line 63.
+LaTeX Info: Redefining \pageref on input line 63.
+LaTeX Info: Redefining \nameref on input line 63.
+\@outlinefile=\write4
+\openout4 = `diff.out'.
+
+\c@lstlisting=\count136
+LaTeX Font Info:    Try loading font information for U+msa on input line 66.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 66.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 66.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 66.
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <7> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 66.
+ [1
+
+{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+\tf@toc=\write5
+\openout5 = `diff.toc'.
+
+ [2
+
+]
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 84.
+ [3
+
+]
+
+LaTeX Warning: Reference `tab: Descriptives' on page 4 undefined on input line 
+103.
+
+[4] [5]
+
+LaTeX Warning: Reference `tab: Descriptives' on page 6 undefined on input line 
+200.
+
+[6] [7]
+Missing character: There is no ‚ in font cmr12!
+ [8
+
+] [9] [10] [11] <info_source.pdf, id=88, 794.97pt x 614.295pt>
+File: info_source.pdf Graphic file (type pdf)
+
+<use info_source.pdf>
+Package pdftex.def Info: info_source.pdf used on input line 430.
+(pdftex.def)             Requested size: 271.7835pt x 210.01982pt.
+
+
+LaTeX Warning: Reference `intercoder_ag' on page 12 undefined on input line 443
+.
+
+[12 <./info_source.pdf>]
+
+LaTeX Warning: Reference `intercoder_bing' on page 13 undefined on input line 4
+45.
+
+Missing character: There is no ‚ in font cmr12!
+[13]
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+
+Overfull \hbox (183.97644pt too wide) in paragraph at lines 462--464
+|   [][]\OT1/cmr/m/n/12 ; web pages - []|   [][][][]Home Reme-dies for Flu Symp
+-toms (WebMD)[]|   [][][][]; http://www.rxwiki.com/slideshow/surprising-
+ []
+
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ì in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+
+Overfull \hbox (86.18062pt too wide) in paragraph at lines 480--481
+\OT1/cmr/m/n/12 ``cdc ebola''; web pages []|   []   [][][][]$\OT1/cmtt/m/n/12 h
+ttp : / / www . webmd . com / digestive-[]disorders / diarrhea-[]stomach-[]flu$
+[]\OT1/cmr/m/n/12 ,
+ []
+
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ì in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ú in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ì in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ù in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+Missing character: There is no ¯ in font cmr12!
+Missing character: There is no √ in font cmr12!
+Missing character: There is no ∏ in font cmr12!
+Missing character: There is no ‚ in font cmr12!
+
+Overfull \hbox (24.80667pt too wide) in paragraph at lines 489--489
+[][]|   []   |   []   |   []   |   []   |   []   |   []   |   []   |   [][] 
+ []
+
+[14]
+
+LaTeX Warning: Reference `intercoder_ag' on page 15 undefined on input line 509
+.
+
+
+LaTeX Warning: Reference `intercoder_ag' on page 15 undefined on input line 509
+.
+
+
+LaTeX Warning: Reference `intercoder_queries' on page 15 undefined on input lin
+e 509.
+
+
+LaTeX Warning: Reference `intercoder_webpages' on page 15 undefined on input li
+ne 509.
+
+[15] [16]
+
+LaTeX Warning: Reference `descript1' on page 17 undefined on input line 572.
+
+
+LaTeX Warning: Reference `descript2' on page 17 undefined on input line 572.
+
+[17
+
+] [18]
+
+LaTeX Warning: Reference `state_coverage' on page 19 undefined on input line 62
+6.
+
+
+LaTeX Warning: Reference `year_coverage' on page 19 undefined on input line 626
+.
+
+
+Overfull \hbox (5.11208pt too wide) in paragraph at lines 626--627
+[]|   []   |   []   |   []   |   []   |   []   |   []   |   []   |   []   |   [
+]   |   []   |   []   |   []   |   []   |   []   |   []
+ []
+
+<state_coverage.pdf, id=148, 794.97pt x 614.295pt>
+File: state_coverage.pdf Graphic file (type pdf)
+ <use state_coverage.pdf>
+Package pdftex.def Info: state_coverage.pdf used on input line 630.
+(pdftex.def)             Requested size: 452.9679pt x 350.02992pt.
+
+<yearly_coverage.pdf, id=149, 794.97pt x 614.295pt>
+File: yearly_coverage.pdf Graphic file (type pdf)
+ <use yearly_coverage.pdf>
+Package pdftex.def Info: yearly_coverage.pdf used on input line 638.
+(pdftex.def)             Requested size: 452.9679pt x 350.02992pt.
+
+[19
+
+ <./state_coverage.pdf>] [20 <./yearly_coverage.pdf>]
+
+LaTeX Warning: Reference `descript3' on page 21 undefined on input line 667.
+
+[21]
+
+Package natbib Warning: Citation `king_and_zeng_2001' on page 22 undefined on i
+nput line 698.
+
+
+LaTeX Warning: Reference `table:coefficients_a1' on page 22 undefined on input 
+line 710.
+
+
+LaTeX Warning: Reference `table:coefficients_parents' on page 22 undefined on i
+nput line 718.
+
+[22] [23]
+
+LaTeX Warning: Reference `table:coefficients_a2' on page 24 undefined on input 
+line 761.
+
+[24
+
+]
+
+LaTeX Warning: Reference `mothers_a1' on page 25 undefined on input line 805.
+
+
+LaTeX Warning: Reference `fathers_a1' on page 25 undefined on input line 805.
+
+<Exp_A1_Fathers.jpeg, id=206, 589.20125pt x 426.59375pt>
+File: Exp_A1_Fathers.jpeg Graphic file (type jpg)
+
+<use Exp_A1_Fathers.jpeg>
+Package pdftex.def Info: Exp_A1_Fathers.jpeg used on input line 809.
+(pdftex.def)             Requested size: 271.7835pt x 196.77577pt.
+ <Exp_A1_Mothers.jpeg, id=207, 531.9875pt x 385.44pt>
+File: Exp_A1_Mothers.jpeg Graphic file (type jpg)
+
+<use Exp_A1_Mothers.jpeg>
+Package pdftex.def Info: Exp_A1_Mothers.jpeg used on input line 817.
+(pdftex.def)             Requested size: 271.7835pt x 196.9188pt.
+
+
+LaTeX Warning: Reference `table:race_coefficients' on page 25 undefined on inpu
+t line 855.
+
+
+Package natbib Warning: Citation `breiman_2001random' on page 25 undefined on i
+nput line 905.
+
+
+Package natbib Warning: Citation `kuhn_2008' on page 25 undefined on input line
+ 905.
+
+
+Package natbib Warning: Citation `kuhn_and_johnson_2013' on page 25 undefined o
+n input line 905.
+
+
+LaTeX Warning: Reference `house_rf' on page 25 undefined on input line 905.
+
+[25 <./Exp_A1_Fathers.jpeg>] [26 <./Exp_A1_Mothers.jpeg>] [27]
+
+LaTeX Warning: Reference `classif1' on page 28 undefined on input line 925.
+
+
+LaTeX Warning: Reference `classif1' on page 28 undefined on input line 927.
+
+<house_flu_rf_varimp.jpeg, id=226, 877.2775pt x 660.4675pt>
+File: house_flu_rf_varimp.jpeg Graphic file (type jpg)
+
+<use house_flu_rf_varimp.jpeg>
+Package pdftex.def Info: house_flu_rf_varimp.jpeg used on input line 931.
+(pdftex.def)             Requested size: 317.07614pt x 238.71544pt.
+ [28] [29 <./house_flu_rf_varimp.jpeg>] [30
+
+]
+<alternative_fathers.jpeg, id=244, 679.53876pt x 435.6275pt>
+File: alternative_fathers.jpeg Graphic file (type jpg)
+
+<use alternative_fathers.jpeg>
+Package pdftex.def Info: alternative_fathers.jpeg used on input line 987.
+(pdftex.def)             Requested size: 317.07614pt x 203.26263pt.
+ [31 <./alternative_fathers.jpeg>]
+
+Package natbib Warning: Citation `le_and_mikolov_2014' on page 32 undefined on 
+input line 1004.
+
+
+LaTeX Warning: Reference `intercoder_bing' on page 32 undefined on input line 1
+006.
+
+
+LaTeX Warning: Reference `intercoder_bing_confusion' on page 32 undefined on in
+put line 1006.
+
+
+LaTeX Warning: Reference `bing_all_stemmed' on page 32 undefined on input line 
+1006.
+
+
+LaTeX Warning: Reference `bing_a1_stemmed' on page 32 undefined on input line 1
+006.
+
+[32] [33]
+
+Package natbib Warning: Citation `gelman_and_little_1997' on page 34 undefined 
+on input line 1098.
+
+
+Package natbib Warning: Citation `park_gelman_bafumi_2004' on page 34 undefined
+ on input line 1098.
+
+
+Overfull \hbox (53.84958pt too wide) in paragraph at lines 1110--1117
+[]|   []
+ []
+
+
+Overfull \hbox (36.22476pt too wide) in paragraph at lines 1110--1117
+[][]|   []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1110--1117
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1118--1119
+
+ []
+
+
+Overfull \hbox (121.28998pt too wide) in paragraph at lines 1122--1138
+[]|   []   [][]|   []   [][]|   []
+ []
+
+
+Overfull \hbox (140.46898pt too wide) in paragraph at lines 1122--1138
+[][]|   []   [][]|   []
+ []
+
+
+Package natbib Warning: Citation `buttice_and_highton_2013' on page 34 undefine
+d on input line 1141.
+
+[34
+
+]
+
+Package natbib Warning: Citation `yang_etal_2015inference' on page 35 undefined
+ on input line 1148.
+
+
+Package natbib Warning: Citation `bates_etal_2015' on page 35 undefined on inpu
+t line 1153.
+
+
+Overfull \hbox (4.48799pt too wide) in paragraph at lines 1165--1173
+[]|   []   |   []   |   []   [][]|   []
+ []
+
+
+Overfull \hbox (132.5863pt too wide) in paragraph at lines 1165--1173
+|   []   |   []   [][]|   []   |   []   |   []
+ []
+
+
+Package natbib Warning: Citation `box_etal_2015' on page 35 undefined on input 
+line 1178.
+
+
+Package natbib Warning: Citation `box_etal_2015' on page 35 undefined on input 
+line 1180.
+
+
+Package natbib Warning: Citation `yang_etal_2015inference' on page 35 undefined
+ on input line 1180.
+
+
+Package natbib Warning: Citation `yang_etal_2015' on page 35 undefined on input
+ line 1180.
+
+
+Overfull \hbox (10.20105pt too wide) in paragraph at lines 1176--1182
+[]\OT1/cmr/m/n/12 for the sea-sonal ARIMA model with ex-oge-nous vari-ables ([]
+|   []
+ []
+
+[35] <NM_h_1_Abs_error.pdf, id=285, 505.89pt x 505.89pt>
+File: NM_h_1_Abs_error.pdf Graphic file (type pdf)
+
+<use NM_h_1_Abs_error.pdf>
+Package pdftex.def Info: NM_h_1_Abs_error.pdf used on input line 1196.
+(pdftex.def)             Requested size: 203.83417pt x 203.8345pt.
+
+./diff.tex:1196: Misplaced alignment tab character &.
+l.1196 ...[width=.45\linewidth]{NM_h_1_Abs_error}&
+                                                  
+? r
+OK, entering \nonstopmode...
+<NY_h_1_Abs_error.pdf, id=286, 505.89pt x 505.89pt>
+File: NY_h_1_Abs_error.pdf Graphic file (type pdf)
+ <use NY_h_1_Abs_error.pdf>
+Package pdftex.def Info: NY_h_1_Abs_error.pdf used on input line 1197.
+(pdftex.def)             Requested size: 203.83417pt x 203.8345pt.
+
+<DC_h_1_Abs_error.pdf, id=287, 505.89pt x 505.89pt>
+File: DC_h_1_Abs_error.pdf Graphic file (type pdf)
+ <use DC_h_1_Abs_error.pdf>
+Package pdftex.def Info: DC_h_1_Abs_error.pdf used on input line 1198.
+(pdftex.def)             Requested size: 203.83417pt x 203.8345pt.
+
+./diff.tex:1198: Misplaced alignment tab character &.
+l.1198 ...[width=.45\linewidth]{DC_h_1_Abs_error}&
+                                                  
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+<DE_h_1_Abs_error.pdf, id=288, 505.89pt x 505.89pt>
+File: DE_h_1_Abs_error.pdf Graphic file (type pdf)
+ <use DE_h_1_Abs_error.pdf>
+Package pdftex.def Info: DE_h_1_Abs_error.pdf used on input line 1199.
+(pdftex.def)             Requested size: 203.83417pt x 203.8345pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: Reference `fig:State_Abs_Errs' on page 36 undefined on input lin
+e 1207.
+
+[36]
+Overfull \hbox (7.17038pt too wide) in paragraph at lines 1274--1275
+|   []   |   []   |   []   |   []   |   []   |   []   |   []   |   []   |   [] 
+  |   []   |   []   |   []   |   []
+ []
+
+[37pdfTeX warning (ext4): destination with the same identifier (name{section.7}
+) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.1275 
+        <./NM_h_1_Abs_error.pdf> <./NY_h_1_Abs_error.pdf> <./DC_h_1_Abs_error.p
+df> <./DE_h_1_Abs_error.pdf>]
+No file diff.bbl.
+
+Package natbib Warning: There were undefined citations.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1285.
+[38]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1285.
+ (./diff.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1285.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1285.
+
+
+
+Package rerunfilecheck Warning: File `diff.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `diff.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  4B1EE4C9A2F496AC9629FA67892E0B03;1971.
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1285.
+ ) 
+Here is how much of TeX's memory you used:
+ 9133 strings out of 493089
+ 129500 string characters out of 6134842
+ 269597 words of memory out of 5000000
+ 12325 multiletter control sequences out of 15000+600000
+ 20555 words of font info for 76 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 41i,12n,35p,1487b,865s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><
+/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></u
+sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr
+/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/l
+ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/loc
+al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local
+/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/te
+xlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texli
+ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/
+2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2
+015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/201
+5/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2015/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2015/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2015/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2015/texm
+f-dist/fonts/type1/public/amsfonts/latxfont/lasy6.pfb>
+Output written on diff.pdf (38 pages, 484908 bytes).
+PDF statistics:
+ 416 PDF objects out of 1000 (max. 8388607)
+ 336 compressed objects within 4 object streams
+ 116 named destinations out of 1000 (max. 500000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
+

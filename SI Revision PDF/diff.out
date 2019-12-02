@@ -1,0 +1,26 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Sources of Data}{}% 2
+\BOOKMARK [1][-]{section.3}{Survey Recruitment and Fielding}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Source Vendor Panel and Sampling}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{Survey Fielding Timeline}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.3}{Survey Questions}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.4}{Survey Recall}{section.3}% 7
+\BOOKMARK [1][-]{section.4}{Information from Healthcare Providers vs. the Internet}{}% 8
+\BOOKMARK [1][-]{section.5}{Query and Web Page Labeling}{}% 9
+\BOOKMARK [2][-]{subsection.5.1}{Overview of Labeling}{section.5}% 10
+\BOOKMARK [2][-]{subsection.5.2}{Labeling Scheme}{section.5}% 11
+\BOOKMARK [2][-]{subsection.5.3}{Codebook: Descriptions of Labels}{section.5}% 12
+\BOOKMARK [2][-]{subsection.5.4}{Labeling Queries and Pages from Respondent Browsing History}{section.5}% 13
+\BOOKMARK [1][-]{section.6}{Query Data Geographic and Temporal Coverage}{}% 14
+\BOOKMARK [2][-]{subsection.6.1}{Predicting Internet Behavior Based on Reported Symptoms}{section.6}% 15
+\BOOKMARK [3][-]{subsubsection.6.1.1}{Descriptive Relationship}{subsection.6.1}% 16
+\BOOKMARK [3][-]{subsubsection.6.1.2}{Regression Model and Case-Control Design}{subsection.6.1}% 17
+\BOOKMARK [2][-]{subsection.6.2}{Demographic Groups and Queries}{section.6}% 18
+\BOOKMARK [2][-]{subsection.6.3}{Classifying Flu Cases}{section.6}% 19
+\BOOKMARK [2][-]{subsection.6.4}{Robustness Checks: Alternative Panel Models}{section.6}% 20
+\BOOKMARK [2][-]{subsection.6.5}{Takeaways from Panel Analysis}{section.6}% 21
+\BOOKMARK [2][-]{subsection.6.6}{Accounting for Demographics: Query Smoothing and Re-weighting}{section.6}% 22
+\BOOKMARK [2][-]{subsection.6.7}{More Discussion of Forecasting Results}{section.6}% 23
+\BOOKMARK [2][-]{subsection.6.8}{State Flu Data Preprocessing and Setup}{section.6}% 24
+\BOOKMARK [1][-]{section.7}{}{}% 25
+\BOOKMARK [1][-]{section.7}{}{}% 26
