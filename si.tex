@@ -49,28 +49,29 @@ David Lazer\footnote{Northeastern and Harvard Universities}}
 
 \section{Introduction}
 
-In the main paper, we describe a method for analyzing survey data and search history for real-time tracking of Influenza-like Illness (ILI). This supporting document outlines in detail the steps we took to implement the survey, analyze it, and build a flu-tracking model from it. We first describe the process for labeling queries according to whether they reflect an underlying flu-like experience. We use the labeled searches and survey responses to discern differences between users in the onset of ILI symptoms and flu search behavior. We then use insights from this analysis to build an aggregate-level flu-tracking model. 
+We describe a method for analyzing survey data and search history for real-time tracking of Influenza-like Illness (ILI). This supporting document outlines in detail the steps we took to implement the survey, analyze it, and build a flu-tracking model from it. We first describe the process for labeling queries according to whether they reflect an underlying flu-like experience. We use these labeled searches and survey responses to discern differences between users in the onset of ILI symptoms and flu search behavior. We then use insights from this analysis to build an aggregate-level flu-tracking model. 
 
-\section{Sources of Data:}
+\section{Sources of Data}
 Data from this study come from the following sources:
 \begin{itemize}
-\item Survey data from a panel individual users coupled with search and browsing history
-\item Census data on demographic distributions at the zip code level
+\item Survey data from a panel individual users coupled with Internet search and browsing history
+\item Census data on demographic distributions at the zip code level (largely from the American Community Survey)
 \item Daily anonymized search queries at the zip code level from the Bing search engine
 \item Weekly flu reports from the Centers for Disease Control (CDC)
 \end{itemize}
 
-\section{Additional Panel Survey Information}
+\section{Survey Recruitment and Fielding}
 
-\subsection{Attributes of Panel Survey}
 
-We partnered with a survey vendor, Luth Research, who works on an ongoing basis with Microsoft Research conducting opinion research. Their ongoing panel includes approximately 20,000 individuals with personal computers  \footnote{Luth Research conducted recruitment for the panel, adheres to a strict privacy policy, and complies with ISO standards of data security and HIPPA regulations.}. These individuals are considered by the vendor to be broadly representative of the U.S. public. All individuals agreed to participate in marketing research in return for monetary compensation. This agreement included installing a program to track their web browsing and search activities while also responding to questionnaires. All survey and panel data are purged of any personally identifiable information before they are received for analysis. 
+\subsection{Source Vendor Panel and Sampling}
+We partnered with a survey vendor, Luth Research, who works periodically with Microsoft Research conducting opinion research. Their ongoing panel includes approximately 20,000 individuals with personal computers  \footnote{Luth Research conducted recruitment for the panel, adheres to a strict privacy policy, and complies with ISO standards of data security and HIPPA regulations.}. Luth research recruits users based on a quota system to construct a panel that is representative of Internet-connected US adults. All individuals agreed to participate in marketing research in return for monetary compensation. This agreement included installing a program to track their web browsing and search activities while also responding to questionnaires. All survey and panel data are purged of any personally identifiable information before they are received for analysis.  
 
 We selected two subsets from the full 20,000 panel to participate in our research. One set of participants met the following criteria: 1) they had executed queries in any search engine (incl. Bing, Google, Yahoo), 2) these queries included predefined flu-related keywords (e.g. `flu', `fever', `influenza', `swollen', `cough', `pneumonia', `sore throat'), or these users visited flu-related URLs (e.g. on WebMD, CDC, Wikipedia). The second group was a comparison group that did not execute a flu-related query or visit a flu-related web site. 
 
 Using the 2014-2015 flu season we collected all query data starting November 2014 through February 2015 to use as a benchmark in matching users. Individuals in our sample who made flu-related searches had, on average, much higher search volumes than those who did not. To account for this uneven mixture, we matched users on their search volume quantiles. The dataset was set up into 7 quantiles based on the level of search volumes and non-flu-search cases were paired with flu search cases on a 4:1 basis. 
 
-In total we had 1,180 in the search group and 4,000 in the non-search group. After this matching, there was no statistically significant difference in mean search volume between the groups (p = 0.77). From these individuals, we collected demographic information and collected survey results to a total of 654 individuals, of which 11 did not have any reported search volume in the sample period (see table \ref{tab: Descriptives}). This left us with 262 who had searched a flu-related keyword or site and 382 who did not. 
+In total we had 1,180 in the search group and 4,000 in the non-search group. After this matching, there was no statistically significant difference in mean search volume between the groups (p = 0.77). From these individuals, we collected demographic information and collected survey results from a total of 654 individuals, of which 10 did not have any reported search volume in the sample period (see table \ref{tab: Descriptives}). This left us with 262 who had searched a flu-related keyword or site and 382 who did not (omitting the 10 with zero search volume). 
+
 
 \begin{table}[!htbp] \centering 
   \caption{Age} 
@@ -155,13 +156,64 @@ Child ILI & 206 & 0.422 & 0.495 & 0 & 1 \\
 \end{tabular} 
 \end{table} 
 
-We fielded our flu survey in the spring of 2015. Our survey questionnaire asked respondents for demographic, household, and flu-related information. With regard to the flu, we were interested in whether respondents, or a member of their household, recently had a flu-like experience, which we inferred from a combination of symptoms, including fever and cough. We asked respondents about all symptoms of influenza-like illness since November 2015, followed by a question in which we ask in which month these were experienced (see wording below). We repeated these questions separately, asking about children and other adults in the household (including spouses). We further followed up by asking which sources\footnote{Health care provider, health website, search engine, book, friend or none} (if any) these individuals used when seeking information about these symptoms and health care provider diagnoses (if relevant). %We then compared the survey response results between those who searched for a flu related term and those who did not.
+\subsection{Survey Fielding Timeline}
+We fielded our flu survey in the spring of 2015. We fielded a first wave of the survey from March 19th to March 27th 2015, then followed up with a second wave in the field from April 27th to April 31 to supplement sample size. This field period was largely after the flu season had peaked - the flu season typically peaks in February, but sometimes peaks in December, January, and March. During the 2014-2015 season, the flu peaked in December \url{https://www.cdc.gov/flu/pastseasons/1415season.htm}. We collected accompanying browsing data when a user completed the survey. The earliest query or page visit containing key words associated with flu was 10-31-2014 and the latest was 3-31-15. 
+
+\subsection{Survey Questions}
+
+Our survey questionnaire asked respondents for demographic, household, and flu-related information. With regard to the flu, we were interested in whether respondents, or a member of their household, recently had a flu-like experience, which we inferred from a combination of self-reported symptoms. We asked respondents about all symptoms of influenza-like illness since November 2015, followed by a question about which month these were experienced (see wording below). We repeated these questions separately for different members of the household, asking about children and other adults in the household (including spouses). Respondents indicating they experienced both fever and cough were labeled as having a flu-like experience (though we also tested our models using a label of fever + cough or fever + sore throat as the label, see section 6.4). 
+
+We then followed up by asking which sources\footnote{Health care provider, health website, search engine, book, friend or none} (if any) respondents used when seeking information about these symptoms and health care provider diagnoses (if relevant). %We then compared the survey response results between those who searched for a flu related term and those who did not.
 
 With regard to demographics, we asked about respondent gender (male/female/unknown), age, marital status, and number of children in the home. See table \ref{tab: Descriptives} for means and standard errors of survey variables of interest. `Volume' in the table refers to the logged number of searches by a respondent, and `ILI' (Influenza-like Illness) is defined as when respondents report both fever and cough for themselves or family members.
 
 We saved the entire browsing history of all panel users, enabling us to examine web page visits and search queries simultaneously - since some users save health pages such as `WebMD' in their browsers for convenience. Incorporating information about flu-related web visits in addition to queries allows us a more complete picture of user behavior in the presence of flu-like symptoms.  
 
-\subsubsection*{Survey Question Wording}
+\subsection{Survey Recall}
+
+As we noted in the main text, one potential limitation of this analysis is that we asked respondents to recall symptoms over the course of the flu season. Rubin and Baddeley (1989) describe the problems of recall relating to the length of time between the event and the survey. Memory is more effective for recent events, creating a recency effect. Dating error increases in a linear fashion as period increases - though remains unbiased. In other words, respondents are unlikely to systematically overreport or underreport symptoms, though they are increasingly likely to make recall errors as the time window increases. Another potential issue is boundary effects - where asking respondents whether they experienced flu or cough from November 1, 2014, to the present, they make errors in judgment that can only be later in time than the start and earlier in time than the beginning of the interval - so they may pile up near the center of the interval. 
+
+We checked whether respondents who completed the survey closer to the start of the season were more or less likely to report flu symptoms personally or in the household \footnote{We thank an anonymous reviewer for suggesting this analysis}. Since we fielded an initial survey wave from March 19th to March 27th 2015, then a second wave from April 27th to April 31 surveys prior to April 15 2015, we looked at differences between these two survey waves. We did not see differences in the rates that early responders reported symptoms of themselves or the household relative to late responders. We checked whether controlling for respondent timing of submission affected our main result, but it did not substantively alter the coefficient on the household flu variable. 
+
+\begin{table}
+\begin{center}
+\begin{tabular}{l c c c }
+\hline
+ & Household flu & Respondent flu & Spouse flu \\
+\hline
+(Intercept)         & $-0.82$       & $-1.05$       & $-1.13$     \\
+                    & $(0.53)$      & $(0.57)$      & $(0.74)$    \\
+Volume              & $0.05$        & $0.10$        & $0.03$      \\
+                    & $(0.06)$      & $(0.06)$      & $(0.08)$    \\
+Female              & $0.24$        & $0.08$        & $-0.45$     \\
+                    & $(0.19)$      & $(0.20)$      & $(0.24)$    \\
+Parent              & $1.34^{***}$  & $0.53^{**}$   & $0.25$      \\
+                    & $(0.18)$      & $(0.19)$      & $(0.24)$    \\
+Age                 & $-0.23^{***}$ & $-0.23^{***}$ & $-0.19^{*}$ \\
+                    & $(0.07)$      & $(0.07)$      & $(0.09)$    \\
+Early Response      & $0.39$        & $0.19$        & $0.51$      \\
+                    & $(0.24)$      & $(0.25)$      & $(0.34)$    \\
+\hline
+AIC                 & 758.25        & 701.23        & 471.15      \\
+BIC                 & 785.05        & 728.03        & 496.52      \\
+Log Likelihood      & -373.12       & -344.61       & -229.58     \\
+Deviance            & 746.25        & 689.23        & 459.15      \\
+Num. obs.           & 644           & 644           & 507         \\
+\hline
+\multicolumn{4}{l}{\scriptsize{$^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$}}
+\end{tabular}
+\caption{Analysis comparing early responders with late responders in reported flu-like symptoms. The outcome variable is self-reported flu-like experience in the household, for the respondent, and for a spouse.}
+\label{table:coefficients}
+\end{center}
+\end{table}
+
+\clearpage
+
+\subsubsection*{Survey Question Variables and Wording}
+
+This section presents the survey response options and survey questions asked. 
+
+\textbf{Demographics}
 
 \emph{Gender}
 \begin{itemize}
@@ -187,7 +239,8 @@ We saved the entire browsing history of all panel users, enabling us to examine 
 \item widowed
 \item single
 \end{itemize}
-
+ 
+ 
 \emph{What is the highest level of education you have obtained?}
 \begin{itemize}
 \item some high school
@@ -326,21 +379,36 @@ We saved the entire browsing history of all panel users, enabling us to examine 
 
 % we will need a thorough discussion of the matching routine for the SI before sending out. 
 
+\section{Information from Healthcare Providers vs. the Internet}
+
+Do people search online for health-related information when they have symptoms? Or do they exclusively ask health providers for information? Existing methods from the CDC rely on reporting from health providers to make estimates of flu prevalence. If online searches are to supplant reporting from providers as a method for tracking flu, it must be shown that online searches for symptoms are a common approach to finding illness information. 
+
+To answer this question, we looked at differences in the number of respondents who reported seeking information about symptoms from a healthcare provider versus the Internet. 26\% reported looking online and asking their healthcare provider for information. We found that only 6\% of respondents asked for information from their healthcare provider and did not look online. 33\% reported looking for information online and did not ask their provider. 
+
+\begin{figure}[!htbp]
+\begin{centering}
+   \includegraphics[width=.6\textwidth]{info_source.pdf}
+  \caption{Far more respondents reported looking for information from Internet Sources compared with their healthcare provider}
+\label{info_source}
+\end{centering}
+\end{figure}
+
+
 \section{Query and Web Page Labeling}
 
-\subsection*{Overview of Labeling}
+\subsection{Overview of Labeling}
 We used a hybrid human-computation method for labeling queries in the context of flu experience. We first define a labeling scheme for search queries. The scheme is designed to capture important differences in what the searcher is experiencing at the moment of executing a query|specifically flu-like experiences versus other experiences. 
 We used simple flu-related key words to isolate a subset of queries and web pages from each respondent's web history to be labeled by trained coders. Coders labeled each candidate query and page, then we joined those labels back to the survey data. This allows us to analyze the effects of different combinations of symptoms and demographics on flu search rates among respondents. This process reduced the number of queries and webpages to be labeled and resulted in high levels of intercoder agreement and reliability (see table ~\ref{intercoder_ag}).
 
 Then, in order to generate an expansive list of flu-like queries for forecasting, we compute semantic distances between the positively-labeled set of queries and other queries executed in the Bing search engine. Based on this comparison, we retain all semantically-related queries from Bing and label them according to our scheme. This allows us to identify additional flu-like queries for our time-series forecasting models. We also computed intercoder agreement and reliability scores for this set (see table ~\ref{intercoder_bing}). 
 
-\subsection*{Labeling Scheme}
+\subsection{Labeling Scheme}
 
 In order to define a flu-related query or web page, we developed a labeling scheme to indicate whether each query or web page was likely related to a flu-like experience, versus experiences related to an array of non-flu infections (including the common cold), news, personal interest, and social trends. In our scheme, we differentiate flu-like experience queries from queries that are unrelated to a flu-like experience but nonetheless contain flu terms. For example, searches like `fever and cough 5 days', or `high fever body aches' would qualify as flu-like experience queries. By contrast, `flu pandemic', 'sore throat obama', or `1918 flu', would qualify as research-oriented and unrelated to a flu experience. Similarly, web pages containing information about flu-like symptoms (e.g. `fever' and `cough') would qualify as page visits related to flu-like experiences. 
 
 Among queries or pages that convey a flu-like experience, we further identify two forms: experiences of primary flu symptoms, in which one experiences the most common symptoms of flu  - fever and cough, and experiences of secondary symptoms, in which one experiences secondary (and less common) symptoms of flu (body aches, diarrhea, vomiting). Queries and web pages that appear consistent with a primary flu-like experience receive an `A1' label, and queries and pages consistent with secondary flu-like experiences receive a `B1' label. Queries and pages that appear related to flu but not deemed to be a flu-like experience (journalistic interest or research) receive an `A2' designation. `A1' labels capture the primary flu-like experience that we are interested in tracking and are the basis of our subsequent forecasting model. The remainder of the labels serve primarily as gut-checks to validate our data and results. 
 
-\subsection*{Codebook: Descriptions of Labels}
+\subsection{Codebook: Descriptions of Labels}
 \begin{itemize}
 \item A1. Related to experienced ILI – symptoms of canonical flu definition (cough or fever [can be in combination with other symptoms), treatments for flu, generic flu searches/pages (as if from someone searching re how to diagnose or treat).
 
@@ -368,7 +436,7 @@ Examples: searches – ``can adults get croup'', ``whooping cough'', ``swollen t
 Examples: searches – “cat cough”, “frozen fever” “acdc rock or bust tour”, “marisa coughlan feet”, “saturday night fever soundtrack”; web pages – “Pflugerville, Texas - Wikipedia, the free encyclopedia”; “Influence and reception of Søren Kierkegaard - Wikipedia, the free encyclopedia”
 \end{itemize}
 
-\subsection*{Labeling Queries and Pages from Respondent Browsing History}
+\subsection{Labeling Queries and Pages from Respondent Browsing History}
 
 Once we had a scheme for labeling queries and pages, we developed a strategy for locating candidate A1 queries from the survey data, given that each user in our panel executed anywhere from dozens to hundreds of queries during the survey period, and it would be inefficient to code every one of them. 
 
@@ -496,6 +564,29 @@ The top 10 stemmed words from the respondent set of queries can be observed in t
 \end{tabular} 
 \end{table} 
 
+\clearpage
+
+\section{Query Data Geographic and Temporal Coverage}
+ 
+Search query data provided in partnership with Bing cover years from 2012 to 2017 for all 50 states plus the District of Columbia. While we are unable to share overall rates of searches from Bing, we can share relative coverage rates for the states and years included. For the state rates, we counted the number of queries in each year, then normalized by population to generate a query rate per capita measure. We then subtracted the state average and divided by the standard error to generate a z-score. We did this separately for the overall query count, flu queries (queries that were flagged as likely related to flu based on our DOC2VEC expansion), and the A1 query count. 
+
+For the yearly rates, we calculated the average query count in each year, then subtracted the overall yearly mean and divided by the standard deviation to arrive at the z-score. The figures below show the calculated z-scores by state and year (see figures \ref{state_coverage} and \ref{year_coverage}). 
+
+\begin{figure}[!htbp]
+\begin{centering}
+   \includegraphics[width=1\textwidth]{state_coverage.pdf}
+  \caption{State coverage of Bing queries 2012-2017}
+\label{state_coverage}
+\end{centering}
+\end{figure}
+
+\begin{figure}[!htbp]
+\begin{centering}
+   \includegraphics[width=1\textwidth]{yearly_coverage.pdf}
+  \caption{Yearly coverage of Bing queries 2012-2017}
+\label{year_coverage}
+\end{centering}
+\end{figure}
 
 \subsection{Predicting Internet Behavior Based on Reported Symptoms}
 
@@ -563,7 +654,7 @@ We calculated the relative risk (RR) and risk difference (RD) of search activity
 %\end{centering}
 %\end{figure}
 
-We find a heightened tendency to make both A1 and A2  searches/visits when there is an occurrence of flu symptoms in the household. In figure 1 in the main paper, the means of $ = Pr(Y=1|x_1, \pi)$ and $ Pr(Y=1|x_0, \pi) $ are shown with dark vertical lines. The estimated Risk Ratio (RR) is 1.57, meaning that those with flu symptoms execute almost 60\% more A1 searches compared to those exhibiting no symptoms at all (see table ~\ref{table:coefficients_a1}). However, since the base rate is very low, this amounts to a Risk Difference (RD) of about 5.41e-06, which relates to a very small change in the overall probability of an A1 search given flu symptoms. Nonetheless, the risk difference is statistically significant (p$<$.05). 
+We find a heightened tendency to make both A1 and A2  searches/visits when there is an occurrence of flu symptoms in the household. In figure 1 in the main paper, the means of $ = Pr(Y=1|x_1, \pi)$ and $ Pr(Y=1|x_0, \pi) $ are shown with dark vertical lines. The estimated Risk Ratio (RR) is 1.57 (95\% CI = 1.05, 2.34), meaning that those with flu symptoms execute almost 60\% more A1 searches compared to those exhibiting no symptoms at all (see table ~\ref{table:coefficients_a1}). However, since the base rate is very low, this amounts to a Risk Difference (RD) of about 5.41e-06 (95\% CI = 5.57e-07, 1.09e-05), which relates to a very small change in the overall probability of an A1 search given flu symptoms. Nonetheless, the risk difference is statistically significant (p$<$.05). 
 
  %Using these data in combination with the A1 query categorizations above,  %Table XX presents these regressions. 
 
@@ -658,7 +749,7 @@ Num. obs.      & 607            & 191            & 607            & 476         
 
 We find that flu-related searches are more likely among particular subgroups, specifically heavy searchers, women, and parents. A1 searches are correlated with having higher search volumes, and people who search more will end up making A1 or A2 searches/visits by chance. Women tend to make more A1 and A2 searches/visits on average, and make many more `asymptomatic' searches compared to men (where a flu search occurs but no symptoms are reported). 
 
-Among parents, younger parents are more likely to make A1 searches/visits in the context of a child sick with flu and less likely to make A2 searches/visits than older parents. To estimate these effects, we isolated the data to respondents who claimed to be the primary users of their devices (coded as those who claim to use their devices 80\% or more of the time relative to spouses and others in the household). We did this to ensure that search activity was limited to the parent and not the child, although the effects are substantial and significant in the broader sample as well. We found that fathers and mothers have different behaviors in reaction to perceived child illness. We find fathers to be much more likely to make A1 searches when their children have an ILI, whereas mothers tend to have a high baseline tendency to make such searches regardless of child illness (see figure ~\ref{mothers_a1}). Fathers more than 8 times as many A1 searches when their children exhibit ILI symptoms compared to when they are symptom-free (RR = 8.75), which amounts to a risk difference of RD=1.95e-05 (see figure ~\ref{fathers_a1}). By contrast, we find no such moderating effects for A2 queries - mothers and fathers tend not to exhibit statistically significant differences in A2 search behavior when their children are ill with ILI.  
+Among parents, younger parents are more likely to make A1 searches/visits in the context of a child sick with flu and less likely to make A2 searches/visits than older parents. To estimate these effects, we isolated the data to respondents who claimed to be the primary users of their devices (coded as those who claim to use their devices 80\% or more of the time relative to spouses and others in the household). We did this to ensure that search activity was limited to the parent and not the child, although the effects are substantial and significant in the broader sample as well. We found that fathers and mothers have different behaviors in reaction to perceived child illness. We find fathers to be much more likely to make A1 searches when their children have an ILI, whereas mothers tend to have a high baseline tendency to make such searches regardless of child illness (see figure ~\ref{mothers_a1}). Fathers more than 8 times as many A1 searches when their children exhibit ILI symptoms compared to when they are symptom-free (RR = 8.75, 95\% CI = 2.21, 42.36), which amounts to a risk difference of RD=1.95e-05 (95\% CI = 5.16-06, 4.53e-05) (see figure ~\ref{fathers_a1}). By contrast, we find no such moderating effects for A2 queries - mothers and fathers tend not to exhibit statistically significant differences in A2 search behavior when their children are ill with ILI.  
 
 \begin{figure}[!htbp]
 \begin{centering}
@@ -834,9 +925,9 @@ Num. obs.      & 644            & 203            & 644            & 507         
 \end{center}
 \end{table}
 
-The results are similar and consistent with our findings above - rates of flu search are variable across different types of users but are associated with flu symptoms. When flu is reported at the household level, RR = 1.55, which amounts to a risk difference of RD=5.22e-06, and these differences are statistically significant.   
+The results are similar and consistent with our findings above - rates of flu search are variable across different types of users but are associated with flu symptoms. When flu is reported at the household level, RR = 1.55 (95\% CI = 1.042, 2.32), which amounts to a risk difference of RD=5.22e-06 (95\% CI = 4.52e-07 1.04e-05), and these differences are statistically significant.   
 
-When reexamining the differential effects of mothers and fathers using this alternative measure of flu, when find that fathers have a greater likelihood of flu search in the presence of child flu-like illness compared to mothers|similar to the results presented earlier. In the figure below, we plot this effect. For fathers, we find RR = 7.61 and RD = 1.60e-5. These effects are slightly milder than those observed above, but we also see somewhat wider variation of the effect under this alternative measurement regime. %We suspect this is due to a high prevalence of sore throat occurring in non-flu illnesses. 
+When reexamining the differential effects of mothers and fathers using this alternative measure of flu, when find that fathers have a greater likelihood of flu search in the presence of child flu-like illness compared to mothers|similar to the results presented earlier. In the figure below, we plot this effect. For fathers, we find RR = 7.61 (95\% CI = 1.97, 36.76) and RD = 1.60e-5 (95\% CI = 3.91e-06 3.70e-05). These effects are slightly milder than those observed above, but we also see somewhat wider variation of the effect under this alternative measurement regime. %We suspect this is due to a high prevalence of sore throat occurring in non-flu illnesses. 
 
 \begin{figure}[!htbp]
 \begin{centering}
@@ -957,47 +1048,51 @@ The MRP method leverages a property of multilevel modeling, ``shrinkage'', to re
 
 The MRP model is constructed as follows:
 
-$Pr(y_i = 1) = logit^{-1}( \beta_0  + \beta_{1[i]}^{Income}
+$Pr(y_i = 1) = logit^{-1}( \beta_0  + \beta_{[i]}^{Income}
 + \alpha_{j[i]}^{State}  
-+ \alpha_{k[i]}^{Education}  \\
-+ \alpha_{p[i]}^{Age} 
-+ \alpha_{q[i]}^{Child-per-House}
-+ \alpha_{k[i],p[i]}^{Education*Age} $
++ \alpha_{j[i]}^{Education}  
++ \alpha_{j[i]}^{Age} \\
++ \alpha_{j[i]}^{Child-per-House}
++ \alpha_{j[i]}^{Education*Age} $
 \\
 
 Effect are assumed to be drawn from a normal distribution and estimated variance. \\
 
-\noindent
-$\alpha_j^{State} \sim  N (0, \sigma_{State}^2), \forall h = 1, ...., 52  $ \\
-$\alpha_k^{Education} \sim  N (0, \sigma_{Education}^2), \forall q = 1, ..., 4  $ \\
-$\alpha_p^{Age} \sim  N (0, \sigma_{Age}^2), for l = 1, ..., 4 $ \\
-$\alpha_q^{Child-per-house} \sim  N (0, \sigma_{Child-per-house}^2), \forall s = 1, ..., 5  $ \\
-$\alpha_{k,p}^{Education*Age} \sim  N (0, \sigma_{Education*Age}^2), \forall k = 1, ..., 4 \textit{ and } p = 1,...,4  $ \\
+%\noindent
+%$\alpha_j^{State} \sim  N (0, \sigma_{State}^2), \forall h = 1, ...., 52  $ \\
+%$\alpha_k^{Education} \sim  N (0, \sigma_{Education}^2), \forall q = 1, ..., 4  $ %\\
+%$\alpha_p^{Age} \sim  N (0, \sigma_{Age}^2), for l = 1, ..., 4 $ \\
+%$\alpha_q^{Child-per-house} \sim  N (0, \sigma_{Child-per-house}^2), \forall s = %1, ..., 5  $ \\
+%$\alpha_{k,p}^{Education*Age} \sim  N (0, \sigma_{Education*Age}^2), \forall k = %1, ..., 4 \textit{ and } p = 1,...,4  $ \\
 
 Where $\beta_0$ is the fixed baseline intercept of the fraction of A1 queries over all queries matching our sample. 
 
-$\beta_{1[i]}^{Income}$ is a fixed coefficient corresponding to the median income in that zip code (ACS 2016 one-year data). We chose this predictor because there is evidence that income is associated with an individual's relationship with the Internet (\url{http://www.pewinternet.org/fact-sheet/internet-broadband/}). We also wanted at least one fixed predictor in order to improve the performance of our MRP model \citep{buttice_and_highton_2013}.
+$\beta_{1[i]}^{Income}$ is a fixed coefficient corresponding to the median income in that zip code (ACS 2016 one-year data). We chose this predictor because there is evidence that income is associated with an individual's relationship with the Internet (\url{http://www.pewinternet.org/fact-sheet/internet-broadband/}). We wanted at least one fixed predictor in order to improve the performance of the MRP model \citep{buttice_and_highton_2013}.
 
 Each of the $\alpha$ variables are random effects and binned by quantiles in order to make them categorical. The random effects are strata to be re-weighted in the MRP setup. This part of the model uses the proportion of residents who had completed a post-high school degree program, age, and the number of children per household.
 
-The variables education, age, and the number of children per house came from the American Community Survey. They were downloaded via the American Community Survey Application Programming Interface (API) using the \emph{acs} package in R (\url{https://cran.r-project.org/web/packages/acs/acs.pdf}). Education is a binned (by quantile) measure of the proportion of individuals in each zip code who had completed a post-high school degree program, divided by the population of the zip code (these came from the 2014 5-year ACS estimates). Age is a binned (by quantile) measure of the median age in a zip code (from 2014 5-year ACS estimates). Finally, the number of children per house is a binned quantile measure of the average number of children in each household within a zip code (also from the 2014 5-year ACS estimates). 
+The variables education, age, and the number of children per house came from the American Community Survey. They were downloaded via the American Community Survey Application Programming Interface (API) using the \emph{acs} package in R (\url{https://cran.r-project.org/web/packages/acs/acs.pdf}). Education is a binned (by quantile) measure of the proportion of individuals in each zip code who had completed a post-high school degree program, divided by the population of the zip code (these came from the 2014 5-year ACS estimates). Age is a binned (by quantile) measure of the median age in a zip code (from 2014 5-year ACS estimates). Finally, the number of children per house is a binned quantile measure of the average number of children in each household within a zip code (also from the 2014 5-year ACS estimates). These data are available within the replication file. 
 
-We use a three-day moving window to construct our MRP estimates (we also tested a 1-day moving window). The results were similar, although a single-day window was noisier. A three-day window gave us enough data to make our estimates while still capturing temporal shifts in search behavior (see \citet{yang_etal_2015inference}). \footnote{This window likely induces some ARIMA relationships in the data, but it does so while also capturing a significant amount of the underlying flu rates, as we show in the next section.} 
+We use a three-day moving window to construct our MRP estimates (we also tested a 7-day moving window). The results were similar, although a single-day window was noisier. A three-day window gave us enough data to make our estimates while still capturing temporal shifts in search behavior (see \citet{yang_etal_2015inference}). \footnote{This window likely induces some ARIMA relationships in the data, but it does so while also capturing a significant amount of the underlying flu rates, as we show in the next section.} 
+
+All MRP models are estimated jointly with no spatial dependence parameters apart from the state indicator in the models using the Lme4 package in R \citep{bates_etal_2015}. A prediction is made for each zip code type, scaled by the proportion of the population in the region of interest (US or state), then summed to produce an estimate for the region(s) of interest. For the US as a whole, the prediction for each zipcode type is multiplied by the proportion of the total population it represents, then summed. 
 
 %As an additional test estimate, we also construct a `smoothed MRP' estimate which utilizes a non-parametric temporal loess smoother to further reduce signal noise (Wang and Ye, 2010). For a comparison estimate, we also create a simple sum of A1 searches on each day in each state, which we denote the `raw' estimate. 
 
+
 \subsection{More Discussion of Forecasting Results}
 
-The following models were then considered
+The following forecasting models are considered in this paper:
 \begin{itemize}
-\item SARIMA-HIST - $\phi_p(B)\Phi_P(B^s)Y^{\text{ILI}}(t) = \theta_q(B)\Theta_Q(B^s)\epsilon(t)$ \item SARIMA-MRP - $\phi_p(B)\Phi_P(B^s)Y^{\text{ILI}}(t) =  \theta_q(B)\Theta_Q(B^s)\epsilon(t) + \phi_1 X_{\text{mrp}}(t)$ 
-\item SARIMA-A1 - $\phi_p(B)\Phi_P(B^s)Y^{\text{ILI}}(t) =  \theta_q(B)\Theta_Q(B^s)\epsilon(t) + \phi_1 \sum_{j=1}^m \frac{X_j^{\text{A1}}(t)}{m}$ 
-\item LASSO-HIST - $Y^{\text{ILI}}(t) = \sum_{i=1}^p \theta_i Y^{\text{ILI}}(t-i)+\epsilon(t)$
-\item LASSO-A1 - $Y^{\text{ILI}}(t) = \sum_{i=1}^p \theta_i Y^{\text{ILI}}(t-i) +  \sum_{j=1}^m \phi_j X_j^{\text{A1}}(t) + \epsilon(t)$
+\item SARIMA-X \\
+$\phi_p(B)\Phi_P(B^s)Y^{\text{ILI}}(t) =  \theta_q(B)\Theta_Q(B^s)\epsilon(t) + I_X\phi_1 X_{\text{mrp}}(t)$
+\item LASSO-A1 \\
+$Y^{\text{ILI}}(t) = \sum_{i=1}^p \theta_i Y^{\text{ILI}}(t-i) +  I_X\sum_{j=1}^m \phi_j X_j^{\text{A1}}(t) + \epsilon(t)$
 \end{itemize}
-for the seasonal ARIMA model with exogenous variables (SARIMA-MRP/SARIMA-A1) or without (SARIMA-HIST) the notation refers to a ARIMA$(p,d,q)\times(P,D,Q)_s$ model in the Box-Jenkins terminology \cite{box_etal_2015}. The LASSO-A1/LASSO-HIST models were estimated using a Lasso penalty. ARGO \cite{yang_etal_2015inference, yang_etal_2015} is an example in the context of ILI prediction.  
 
-For SARIMA based models we chose the appropriate orders ($p,P,q,Q$) for the model using AIC as a criterion. We set $p=52$ in the LASSO based models to account for the seasonal effect in ILI rates, but, since we were using the Lasso penalty, the coefficients of most of these lags did not appear in the final model. This approach also served to select the appropriate lag in modeling ILI rates. Finally, we provided predictions for the $2015-2017$ seasons by using a rolling three year period to train and predict.
+for the seasonal ARIMA model with exogenous variables (SARIMA-X) the notation in this paper refers to a ARIMA$(p,d,q)\times(P,D,Q)_s$ model in the Box-Jenkins terminology \citep{box_etal_2015}. We estimate the LASSO-A1 model using a Lasso penalty. This is essentially a class of models referred to as AR-X (Auto-regressive with exogenous). ARGO \cite{yang_etal_2015inference, yang_etal_2015} is an example of this in the context of ILI prediction. The indicator variable $I_X$ refers to the inclusion ($I_X=1$) or exclusion ($I_X=0$) of exogenous signals. Pure history based models with $I_X=0$ serve as a benchmark we compare our models to (no exogenous signals). 
+
+For SARIMA-X we selected the appropriate orders ($p,P,q,Q$) for the model using AIC as a criterion. We set $p=52$ in the Lasso-A1 model to account for seasonal effects in ILI rates. However, since we are using the Lasso penalty the coefficients of most of these lags will not appear in the final model. This approach also serves to select the appropriate lag in modeling ILI rates. Finally, we provide predictions for the $2015-2017$ seasons by using a rolling three year period to train and predict.
 
 We also estimate and test the SARIMA models with the MRP and the normalized total volume of A1 queries as exogenous signals on the States of New Mexico, New York, DC and Delaware. 
 
@@ -1006,19 +1101,6 @@ We also estimate and test the SARIMA models with the MRP and the normalized tota
 We collected flu data on the number of positive influenza swabs from the states of DE, DC, NM, and NY. To do so, we downloaded each state's data in PDF form and put it into machine-readable format. These states were selected because they 1) collect and publicly post current flu prevalence rates on their official health pages, and 2) make historical flu prevalence data available for long enough time spans to be useful for prediction. However, unlike the CDC data these states do not provide a total number of hospital visits as the denominator to the ILI-rate. Thus we only look at the raw counts of the ILI positive cases. Since we are predicting state level ILI-rates the exogenous search signals are often very noisy due to low volumes partly due to Bing's smaller search marketshare (compared to Google). 
 
 Based on data availability we use a rolling $2-3$ year period to train and predict our models. To compare the different methods we use RMSE as a metric after selecting the model parameters based on the AIC (Akaike Information Criterion). We tested the performance of our model on rolling $1$ and $2$-week ahead forecasts using exogenous signal at the most predictive lag.
-\begin{figure}[h!]
- \centering
- \includegraphics[width=.45\linewidth]{NM_h_1_Abs_error}&
-  \includegraphics[width=.45\linewidth]{NY_h_1_Abs_error}\\
-    \includegraphics[width=.45\linewidth]{DC_h_1_Abs_error}&
-        \includegraphics[width=.45\linewidth]{DE_h_1_Abs_error}
- \caption{a) h=1 indicates week ahead absolute errors for history against the MRP signal for NM,  NY, DC and DE.}
-  \label{fig:State_Abs_Errs}
-\end{figure}
-\subsection*{State Level Findings}
-
-It apperars from Figure \ref{fig:State_Abs_Errs} that incorporating the MRP signal in the SARIMA-X model controls the variance in the prediction error (the absolute errors are less spiky) . It seems as a general approach for predicting time dependent metrics, the inclusion of appropriate exogenous signals can have a considerable beneficial impact on the prediction quality.
-
 
 %\subsection{Results and Forecast Analysis}
 
@@ -1073,13 +1155,12 @@ It apperars from Figure \ref{fig:State_Abs_Errs} that incorporating the MRP sign
 
 % In addition, when the MRP improves over the Raw, we can see the Raw does more poorly even than history (examples Mountain, New England, South Atlantic). However, when the MRP does worse than the Raw, the MRP still does better than history, suggesting that the MRP performs consistently better than history. 
 
-\section{Limitations}
+%\section{Limitations}
 
-\section{Discussion}
 
-In this paper, we tackle a subset of the problems of ILI prediction in the context of search query data. We offer two primary advances. First, we use survey data and human-machine ensembles to select positive predictors of flu experiences. Next, we leverage these insights and integrate demographic data to account for the uneven propensity of flu search. We use these data to model the social and demographic drivers of flu searches. Our method forecasts ILI prevalence at the national and state levels using demographically smoothed (noise-reduced) and re-weighted (bias-reduced) estimates of flu-like query volumes. This approach has potentially wide applicability to problems of forecasting time series of small to medium length using search query or social media data. 
+%In this paper, we tackle a subset of the problems of ILI prediction in the context of search query data. We offer two primary advances. First, we use survey data and human-machine ensembles to select positive predictors of flu experiences. Next, we leverage these insights and integrate demographic data to account for the uneven propensity of flu search. We use these data to model the social and demographic drivers of flu searches. Our method forecasts ILI prevalence at the national and state levels using demographically smoothed (noise-reduced) and re-weighted (bias-reduced) estimates of flu-like query volumes. This approach has potentially wide applicability to problems of forecasting time series of small to medium length using search query or social media data. 
 
-We test our model on state-level ILI rates from 4 states and national CDC rates. Our model substantially improves fit over history alone, and yields similar improvements across the US as a whole, states, and flu seasons. Our results suggest that a combination of demographically re-weighted search signals and human-aided query labeling produces an accurate and near real-time model of flu prevalence at the state level. The evidence suggests that by constructing a model which takes into account demographics and social factors of search behavior, we can improve over raw search volumes and flu history alone. This provides important lessons for query and social media-based flu tracking systems. 
+%We test our model on state-level ILI rates from 4 states and national CDC rates. Our model substantially improves fit over history alone, and yields similar improvements across the US as a whole, states, and flu seasons. Our results suggest that a combination of demographically re-weighted search signals and human-aided query labeling produces an accurate and near real-time model of flu prevalence at the state level. The evidence suggests that by constructing a model which takes into account demographics and social factors of search behavior, we can improve over raw search volumes and flu history alone. This provides important lessons for query and social media-based flu tracking systems. 
 
 \singlespace
 \bibliography{flu_citations}
