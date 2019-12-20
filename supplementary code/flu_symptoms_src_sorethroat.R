@@ -1,7 +1,7 @@
-#Report on Flu Project
+#Replication file for Flu Project
 #Stefan Wojcik
-# Results originally produce for a report on 9/22/2015
-# This file will simply create the appropriate data file for analysis
+# This file will simply create the appropriate data file for robustness analysis using
+# sore throat as additional symptom of flu
 
 #Load libraries
 library(foreign)

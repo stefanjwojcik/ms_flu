@@ -1,7 +1,5 @@
 #Report on Flu Project
-#Stefan Wojcik
-# Results originally produce for a report on 9/22/2015
-# This file will simply create the appropriate data file for analysis
+# This file will simply create the appropriate data file for main analysis
 
 #Load libraries
 library(foreign)
