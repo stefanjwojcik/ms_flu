@@ -1,6 +1,6 @@
 # Example MRP smoothing algo file
 
-setwd("~/Google Drive/papers/Working Projects/Lazer Lab/Flu/Clean Data/")
+setwd("~/Documents/ms_flu/")
 #setwd("/home/stefanwojcik/flu")
 
 dat <- readRDS("zipcodeCensusData_v2.rds")
@@ -35,7 +35,7 @@ createMRPcensusweights <- function(natsamp){
 }
 mrpweights <- createMRPcensusweights(natsamp = dat) #create census weights based on population sizes
 
-qdat = read.csv("~/Documents/ms_flu/data/mrp_example_data.csv")
+qdat = read.csv("data/mrp_example_data.csv")
 
 
 dates <- sort(unique(qdat$date))
