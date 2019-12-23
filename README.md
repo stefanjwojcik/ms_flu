@@ -57,10 +57,18 @@ This R file produces figures and images for the main survey analysis - including
 * `panel_demographics.csv`: more limited survey data with searches, demographics, and symptoms of users
 * `main_flu_dat_sorethroat.rds`: survey data with searches, demographics, and symptoms of users (using alternative definition of flu) 
 * `panel_demographics_sorethroat.csv`:more limited survey data with searches, demographics, and symptoms of users (using alternative definition of flu
-
  
+### MRP smoothing example file
+File name: `demo_MRP_smoother.R`
 
-###
+This file does an example smoothing and reweighting procedure, identical to the one we did in the paper, but using a query data file that is not the real query data (we do not provide these data by request of MS). This file was created by taking the actual query data used in the paper, isolating a single short period of time, and sampling roughly 100 zip codes. Then, the actual queries executed in these zipcodes on a given day are re-shuffled with those in other zip codes. As a result, the queries on a given day are real, but they do not acccurately depict the true behavior in that zip code. 
+
+This file opens on the following files:
+
+* `zipcodeCensusData_v2.rds`: Zipcode demographic data from the Census
+* `mrp_example_data.csv`: Example query data, reshuffled 
+
+
 
 
 
