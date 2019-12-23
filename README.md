@@ -41,12 +41,9 @@ loaded via a namespace (and not attached):
 The version of LME-4 used to generate the MRP estimates: lme4_1.1-12
 
 
-## Demo:
-
-### The main analysis file 
-File name: `Main_Replication_Code.R`
-
-This R file produces figures and images for the main survey analysis - including the main rates of searching in the presence of flu-like symptoms and none. It sources the following supplementary code files:
+## Part 1: Survey and MRP (located in Survey and MRP folder)
+ 
+`Main_Replication_Code.R` produces the results of the survey analysis and query coding. This R file produces figures and images for the main survey analysis - including the main rates of searching in the presence of flu-like symptoms and none. It sources the following supplementary code files:
 
 * `main_flu_dat.rds`: survey data, each row is a survey response, columns describe each respondent, id column is RID
 * `queries.rds`: query data from respondents, each row is a query, id column is QID2
@@ -69,6 +66,12 @@ This file opens on the following files:
 * `mrp_example_data.csv`: Example query data, reshuffled 
 
 
+## Part 2: Forecasting (located in 'Forecasting)
+
+The following scripts are important:
+
+* `main_State.R`: produces main state-level forecast
+* `USFluPredictionUpdated_ann.R`: produces main national flu forecast
 
 
 
