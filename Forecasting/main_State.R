@@ -1,6 +1,8 @@
 rm(list=ls()) 
-setwd("C:/Users/avbijral/Desktop/FluForecasting/")
 
+# Asssumes you have set the working directory to .../ms_flu
+# You will need to have 'forecast' and 'TSA' installed
+setwd("Forecasting/")
 
 source("StateFluPrediction_routine.R")
 

@@ -1,5 +1,5 @@
 rm(list=ls()) 
-setwd("C:/Users/avbijral/Desktop/FluForecasting/")
+setwd("Forecasting/")
 
 
 source("Supp.R")
