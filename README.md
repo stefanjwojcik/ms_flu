@@ -1,7 +1,7 @@
 # Survey Data and Human Computation for Improved Flu Tracking
 Submission to Nature Comms
 
-## The R Session Info for the main survey analysis: 
+## The R Session Info for the main survey analysis: (Allow 5-10 minutes for package installation)
 ```R version 3.5.2 (2018-12-20)
 Platform: x86_64-apple-darwin15.6.0 (64-bit)
 Running under: macOS High Sierra 10.13.6
@@ -41,9 +41,11 @@ loaded via a namespace (and not attached):
 The version of LME-4 used to generate the MRP estimates: lme4_1.1-12
 
 
-## Part 1: Survey and MRP (located in Survey and MRP folder)
+## Part 1: Survey and MRP (located in Survey and MRP folder) (Runs in less than five minutes)
+
+Expected result includes numbers, tables, and figures in the survey sections of the main text and supplementary file. 
  
-`Main_Replication_Code.R` produces the results of the survey analysis and query coding. This R file produces figures and images for the main survey analysis - including the main rates of searching in the presence of flu-like symptoms and none. It sources the following supplementary code files:
+Run `Main_Replication_Code.R` to produce the results of the survey analysis and query coding. This R file produces figures and images for the main survey analysis - including the main rates of searching in the presence of flu-like symptoms and none. It sources the following supplementary code files:
 
 * `main_flu_dat.rds`: survey data, each row is a survey response, columns describe each respondent, id column is RID
 * `queries.rds`: query data from respondents, each row is a query, id column is QID2
@@ -55,8 +57,10 @@ The version of LME-4 used to generate the MRP estimates: lme4_1.1-12
 * `main_flu_dat_sorethroat.rds`: survey data with searches, demographics, and symptoms of users (using alternative definition of flu) 
 * `panel_demographics_sorethroat.csv`:more limited survey data with searches, demographics, and symptoms of users (using alternative definition of flu
  
-### MRP smoothing example file
+### MRP smoothing example file (runs in less than five minutes)
 File name: `demo_MRP_smoother.R`
+
+Run `demo_MRP_smoother.R` to replicate the MRP smoothing and reweighting method from the main paper. 
 
 This file does an example smoothing and reweighting procedure, identical to the one we did in the paper, but using a query data file that is not the real query data (we do not provide these data by request of MS). This file was created by taking the actual query data used in the paper, isolating a single short period of time, and sampling roughly 100 zip codes. Then, the actual queries executed in these zipcodes on a given day are re-shuffled with those in other zip codes. As a result, the queries on a given day are real, but they do not acccurately depict the true behavior in that zip code. 
 
@@ -66,12 +70,10 @@ This file opens on the following files:
 * `mrp_example_data.csv`: Example query data, reshuffled 
 
 
-## Part 2: Forecasting (located in 'Forecasting)
+## Part 2: Forecasting (located in 'Forecasting') (runs in 10-15 minutes)
 
-The following scripts are important:
+Run `main_State.R` and `USFluPredictionUpdated_ann.R` to produce the main forecasting results. `main_State.R`: produces main state-level forecast and `USFluPredictionUpdated_ann.R`: produces main national flu forecast. The source data files are located in `Forecasting/Data`. 
 
-* `main_State.R`: produces main state-level forecast
-* `USFluPredictionUpdated_ann.R`: produces main national flu forecast
 
 
 
