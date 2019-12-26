@@ -1,5 +1,5 @@
 # Survey Data and Human Computation for Improved Flu Tracking
-Submission to Nature Comms
+Submission to Nature Communications - Authors: Wojcik, Bijral, Johnston, Lavista, King, Kennedy, Vespignani, and Lazer
 
 ## The R Session Info for the main survey analysis: (Allow 5-10 minutes for package installation)
 ```R version 3.5.2 (2018-12-20)
