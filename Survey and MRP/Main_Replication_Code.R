@@ -11,8 +11,8 @@ library(SnowballC)
 library(data.table)
 library(irr)
 
-setwd("~/Google Drive/")
-d1 = readRDS("~/Documents/ms_flu/data/main_flu_dat.rds")
+# ASSUMES you have set the source file location to the ms_flu root directory:
+d1 = readRDS("Survey and MRP/data/main_flu_dat.rds")
 
 # Percent in respondents of age categories:
 Age = factor(d1$age, labels = c("Below 18", 
@@ -61,7 +61,7 @@ rm(d1)
 ##
 
 # - Load panel queries here
-queries = readRDS("~/Documents/ms_flu/data/queries.rds")
+queries = readRDS("Survey and MRP/data/queries.rds")
 
 # Tidying and calculating the word frequencies in the queries for the whole panel
 panelqueries = data.table(text = queries$query, n_query = 1:nrow(queries))
@@ -100,7 +100,7 @@ queries_agree = agree(queries[,c("Coder2", "Coder1")]) #Agreement
 ##
 
 # Read pages 
-pages = readRDS("~/Documents/ms_flu/data/pages.rds")
+pages = readRDS("Survey and MRP/data/pages.rds")
 
 # PAGES CONFUSION MATRIX
 pages_confusion_matrix = table(pages$Coder2, pages$Coder1)
@@ -111,7 +111,7 @@ pages_agree = agree(pages[,c("Coder2", "Coder1")]) #Agreement Carolina-Isys
 
 #
 # RELIABILITY OF EXPANDED QUERIES::
-exp_qs = readRDS("~/Documents/ms_flu/data/expanded_queries.rds")
+exp_qs = readRDS("Survey and MRP/data/expanded_queries.rds")
 #Intercoder Reliability
 bing_kappa = kappa2(exp_qs[,c("Coder1", "Coder2")]) #Cohen's Kappa 
 bing_agree = agree(exp_qs[,c("Coder1", "Coder2")]) #Agreement 
@@ -132,7 +132,7 @@ clean_bing_queries = head(clean_bing_queries, 10)
 bing_confusion_matrix = table(exp_qs$Coder1, exp_qs$Coder2)
 
 # bing queries stemmed - A1
-exp_qs_final = readRDS("~/Documents/ms_flu/data/expanded_queries_final.rds")
+exp_qs_final = readRDS("Survey and MRP/data/expanded_queries_final.rds")
 bing_A1_queries = data.table(text = as.character(exp_qs_final$query[exp_qs_final$code=="a1"]), n_query = 1:nrow(exp_qs_final[exp_qs_final$code=="a1", ]))
 bing_A1_queries = bing_A1_queries %>% filter(!is.na(text))
 clean_bing_A1_queries <- bing_A1_queries %>%
@@ -175,7 +175,7 @@ stargazer(clean_bing_A1_queries, summary=F, title = "Top Stemmed words in A1 Que
 
 ##
 ## Descriptive Statistics of the Survey Data
-d1 = readRDS("~/Documents/ms_flu/data/main_flu_dat.rds")
+d1 = readRDS("Survey and MRP/data/main_flu_dat.rds")
 mod_names = names(d1)
 nice_names = c("A1", "A2", "B1", "B2", "Any.Flu.Term", "Search.Volume", 
                "Female", "Parent", "Spouse", "Age", "Household.Flu", 
@@ -194,7 +194,7 @@ d1 %>% group_by(A2) %>% summarise(mean(Household.Flu))
 ##
 
 ## Get tau value based on prior rate of search for an observed season::
-tau = readRDS("~/Documents/ms_flu/data/tau.rds")
+tau = readRDS("Survey and MRP/data/tau.rds")
 tau = tau$numer/tau$denom
 ##
 
@@ -331,14 +331,14 @@ g + geom_vline(xintercept = mean(mflu)) + geom_vline(xintercept = mean(mnoflu))
 ## Classification
 # REOPEN QUERIES AND PAGES
 #Queries:
-queries <- readRDS("~/Documents/ms_flu/data/queries.rds")
+queries <- readRDS("Survey and MRP/data/queries.rds")
 # Pages:
-pages <- readRDS("~/Documents/ms_flu/data/pages.rds")
+pages <- readRDS("Survey and MRP/data/pages.rds")
 ##
 
 ##
 #open panel demographics:
-dat = read.csv("~/Documents/ms_flu/data/panel_demographics.csv")
+dat = read.csv("Survey and MRP/data/panel_demographics.csv")
 # the query data
 full = rbind(na.omit(pages[, c("QID2", "Final.Code")]), na.omit(queries[, c("QID2", "Final.Code")]))
 ##
@@ -396,7 +396,7 @@ plot(varImp(mod_house))
 ## Alternative models that incorporate sore throat in panel analysis and classification ####
 
 ## ALTERNATIVE
-d1 = readRDS("~/Documents/ms_flu/data/main_flu_dat_sorethroat.rds")
+d1 = readRDS("Survey and MRP/data/main_flu_dat_sorethroat.rds")
 table(d1$a1)/nrow(d1)
 table(d1$a2)/nrow(d1)
 table(d1$b1)/nrow(d1)
@@ -406,7 +406,7 @@ rm(d1)
 
 ## ALTERNATIVE
 ## Descriptive Statistics of the Survey Data
-d1 = readRDS("~/Documents/ms_flu/data/main_flu_dat_sorethroat.rds")
+d1 = readRDS("Survey and MRP/data/main_flu_dat_sorethroat.rds")
 mod_names = names(d1)
 nice_names = c("A1", "A2", "B1", "B2", "Any.Flu.Term", "Search.Volume", 
                 "Female", "Parent", "Spouse", "Age", "Household.Flu", 
@@ -423,7 +423,7 @@ stargazer(d1, type="latex", header=F)
 ##
 
 ##ALTERNATIVE
-tau = readRDS("~/Documents/ms_flu/data/tau.rds")
+tau = readRDS("Survey and MRP/data/tau.rds")
 tau = tau$numer/tau$denom
 ##
 
@@ -520,18 +520,18 @@ g + geom_vline(xintercept = mflu) + geom_vline(xintercept = mnoflu)
 ## ALTERNATIVE
 #open panel demographics:
 #Pages
-pages <- readRDS("~/Documents/ms_flu/data/pages.rds")
+pages <- readRDS("Survey and MRP/data/pages.rds")
 ##
 
 ## ALTERNATIVE
 #Queries:
-queries <- readRDS("~/Documents/ms_flu/data/queries.rds")
+queries <- readRDS("Survey and MRP/data/queries.rds")
 ##
 
 ## We re-run the classification model in similar fashion as above
 
 # load fresh data
-dat = read.csv("~/Documents/ms_flu/data/panel_demographics_sorethroat.csv")
+dat = read.csv("Survey and MRP/data/panel_demographics_sorethroat.csv")
 # the query data
 full = rbind(na.omit(pages[, c("QID2", "Final.Code")]), na.omit(queries[, c("QID2", "Final.Code")]))
 # Initial merge to match respondents to queries
