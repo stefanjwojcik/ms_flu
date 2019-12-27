@@ -152,8 +152,8 @@ mdlr <- mdl_r_auto
 rmse1step_m_auto <- nStepAheadAuto(Ysub = Ysub_mrp, mdlx, mdlh, ahead=1, method = method, season=season, T2=T2,incl_mean = F, incl_mean_hist = F)
 rmse2step_m_auto <- nStepAheadAuto(Ysub = Ysub_mrp, mdlx, mdlh, ahead=2, method = method, season=season, T2=T2,incl_mean = F, incl_mean_hist = F)
 
-rmse1step_r_auto <- nStepAheadAuto(Ysub = Ysub_raw, mdlr, mdl_h, ahead=1, method = method,season=season, T2=T2, incl_mean = F, incl_mean_hist = F)
-rmse2step_r_auto <- nStepAheadAuto(Ysub = Ysub_raw, mdlr, mdl_h, ahead=2, method = method,season=season, T2=T2, incl_mean = F, incl_mean_hist = F)
+rmse1step_r_auto <- nStepAheadAuto(Ysub = Ysub_raw, mdlr, mdlh, ahead=1, method = method,season=season, T2=T2, incl_mean = F, incl_mean_hist = F)
+rmse2step_r_auto <- nStepAheadAuto(Ysub = Ysub_raw, mdlr, mdlh, ahead=2, method = method,season=season, T2=T2, incl_mean = F, incl_mean_hist = F)
 
 
 
