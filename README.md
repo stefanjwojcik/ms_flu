@@ -70,9 +70,13 @@ This file opens on the following files:
 * `mrp_example_data.csv`: Example query data, reshuffled 
 
 
-## Part 2: Forecasting (located in 'Forecasting') (runs in 10-15 minutes)
+## Part 2: Forecasting (located in 'Forecasting') (runs in 15-25 minutes)
 
-Run `main_State.R` and `USFluPredictionUpdated_ann.R` to produce the main forecasting results. `main_State.R`: produces main state-level forecast and `USFluPredictionUpdated_ann.R`: produces main national flu forecast. The source data files are located in `Forecasting/Data`. 
+Run `main_State.R` and `USFluPredictionUpdated_ann.R` to produce the main forecasting results. The source data files are located in `Forecasting/Data`. 
+
+`main_State.R`: produces the four state-level forecasts. This file should take between 5 and 10 minutes to run from start to finish. 
+
+`USFluPredictionUpdated_ann.R`: produces main national flu forecast. This file should take between 10 and 20 minutes to run from start to finish. 
 
 
 
