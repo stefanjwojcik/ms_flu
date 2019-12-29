@@ -72,12 +72,42 @@ This file opens on the following files:
 
 ## Part 2: Forecasting (located in 'Forecasting') (runs in 15-25 minutes)
 
+
+
 Run `main_State.R` and `USFluPredictionUpdated_ann.R` to produce the main forecasting results. The source data files are located in `Forecasting/Data`. 
 
 `main_State.R`: produces the four state-level forecasts. This file should take between 5 and 10 minutes to run from start to finish. 
 
-`USFluPredictionUpdated_ann.R`: produces main national flu forecast. This file should take between 10 and 20 minutes to run from start to finish. 
+`USFluPredictionUpdated_ann.R`: produces main national flu forecast. This file should take between 10 and 20 minutes to run from start to finish, depending on your machine. A test run on a 2014 Macbook Air with 8gb of RAM finishes in less than 15 minutes.  
 
 
+### The session info for the forecasting analysis is as follows: 
 
+```
+R version 3.5.2 (2018-12-20)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS High Sierra 10.13.6
 
+Matrix products: default
+BLAS: /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] ggplot2_3.1.0   argo_2.0.0      xts_0.11-2      forecast_8.10   TSA_1.2         lubridate_1.7.4 zoo_1.8-5      
+
+loaded via a namespace (and not attached):
+ [1] locfit_1.5-9.1    tidyselect_0.2.5  purrr_0.2.5       urca_1.3-0        lattice_0.20-38   colorspace_1.3-2  mgcv_1.8-26      
+ [8] XML_3.98-1.20     rlang_0.3.1       pillar_1.3.1      withr_2.1.2       glue_1.3.0        TTR_0.23-6        bindrcpp_0.2.2   
+[15] foreach_1.4.4     bindr_0.1.1       plyr_1.8.4        quantmod_0.4-15   stringr_1.3.1     timeDate_3043.102 munsell_0.5.0    
+[22] gtable_0.2.0      codetools_0.2-15  leaps_3.0         labeling_0.3      tseries_0.10-47   lmtest_0.9-37     parallel_3.5.2   
+[29] curl_3.3          Rcpp_1.0.0        scales_1.0.0      fracdiff_1.5-0    stringi_1.2.4     dplyr_0.7.8       grid_3.5.2       
+[36] quadprog_1.5-8    tools_3.5.2       magrittr_1.5      glmnet_2.0-16     lazyeval_0.2.1    tibble_2.0.0      crayon_1.3.4     
+[43] pkgconfig_2.0.2   Matrix_1.2-15     iterators_1.0.10  assertthat_0.2.0  rstudioapi_0.9.0  R6_2.3.0          boot_1.3-20      
+[50] nnet_7.3-12       nlme_3.1-137      compiler_3.5.2   
+```
