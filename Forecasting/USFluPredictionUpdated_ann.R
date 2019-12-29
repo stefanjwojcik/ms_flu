@@ -41,6 +41,19 @@ Yr <- Yr$V1
 
 Ym <- na.approx(log(Ymrp[,3]))
 
+
+# Baseline correlations: pre_modeling
+#2016
+t_2016 = which(Ymrp$year==2016)
+mrp_2016 = with(Ymrp, US[t_2016])
+flu_2016 = with(Z, Total[t_2016+1])
+cor(mrp_2016, flu_2016)
+#2017
+t_2017 = which(Ymrp$year==2017)
+mrp_2017 = with(Ymrp, US[t_2017])
+flu_2017 = with(Z, Total[t_2017+1])
+cor(mrp_2017, flu_2017, use="complete.obs")
+
 # Train
 # Regress at Lag
 lag_m = 0  # US
@@ -176,6 +189,24 @@ rmse_m_2step_auto <- sqrt(mean((y_actual[2:length(y_actual)]-rmse2step_m_auto[,2
 rmse_h_1step_auto <- sqrt(mean((y_actual[1:length(y_actual)]-rmse1step_m_auto[,3])^2))
 rmse_h_2step_auto <- sqrt(mean((y_actual[2:length(y_actual)]-rmse2step_m_auto[,3])^2))
 
+# Create absolute error plot:
+lasso_A1 = abs(y_actual - pred_argo_all)
+lasso_hist = abs(y_actual - pred_argo_hist)
+sarima_hist = abs(y_actual[1:length(y_actual)]-rmse1step_m_auto[,3])
+sarima_mrp = abs(y_actual-rmse1step_m_auto[,2])
+
+out = data.frame(cbind(lasso_A1, lasso_hist, sarima_hist, sarima_mrp))
+out = stack(out)
+p = ggplot(out, aes(ind, values, fill=ind)) + geom_boxplot()
+
+# National ILI prediction vs. actual (2017) PLOT
+sarima_hist_2017 = tail(rmse1step_m_auto[ ,3], 36)[1:35]
+mrp__2017 = tail(rmse2step_m_auto[ ,2], 35)
+y_2017_actual = tail(y_actual, 35)
+week = seq(from = as.Date("2016-10-01"), to = as.Date("2017-05-31"), by = "week")
+qplot(week, y_2017_actual, geom="line") + geom_line(aes(week, mrp__2017), linetype="dashed", col="orange") +
+  geom_line(aes(week, sarima_hist_2017), linetype="dashed", col="green")
+
 ## ARGO 
 
 pred_argo_hist <- na.omit(as.numeric(mdl_argo_hist$pred))
@@ -197,6 +228,14 @@ mrp_acc_2 <- accuracy(rmse2step_m_auto[,2],y_actual[2:length(y_actual)]) #SARIMA
 raw_acc_2 <- accuracy(rmse2step_r_auto[,2],y_actual[2:length(y_actual)]) #SARIMA-A1
 hist_acc_2 <- accuracy(rmse2step_r_auto[,3],y_actual[2:length(y_actual)]) # SARIMA-HIST
 
+# 2016 season only:
+mrp_acc_2016 <- accuracy(rmse1step_m_auto[ (t_2016-(T2+1)) ,2],y_actual[(t_2016-(T2))]) #SARIMA-MRP
+cor(rmse2step_m_auto[ (t_2016-(T2+1)) ,2],y_actual[(t_2016-(T2))])
+
+# 2017 season only:
+mrp_acc_2017 <- accuracy(rmse1step_m_auto[ (t_2017-(T2+1)) ,2],y_actual[(t_2017-(T2))]) #SARIMA-MRP
+cor(rmse2step_m_auto[ (t_2017-(T2+1)) ,2],y_actual[(t_2017-(T2))])
+
 #save("US_2_14_2018.RData")
 
 #resultsdf <- cbind.data.frame(Actual=y_actual, Hist=rmse1step_r_auto[,3], MRP=rmse1step_m_auto[,2], RAW = rmse1step_r_auto[,2], ARGO = pred_argo_all)
@@ -205,3 +244,17 @@ hist_acc_2 <- accuracy(rmse2step_r_auto[,3],y_actual[2:length(y_actual)]) # SARI
 #save.image(filen)
 
 
+## Table 2
+get_metric = function(x, metric){
+  x[colnames(x)==metric]
+}
+
+cnames = c("Method", "RMSE", "MAPE", "MAE")
+row1 = c("Sarima-HIST", get_metric(hist_acc, "RMSE"), get_metric(hist_acc, "MAPE"), get_metric(hist_acc, "MAE"))
+row2 = c("Sarima-MRP", get_metric(mrp_acc, "RMSE"), get_metric(mrp_acc, "MAPE"), get_metric(mrp_acc, "MAE"))
+row3 = c("Lasso-HIST", get_metric(argo_hist_acc, "RMSE"), get_metric(argo_hist_acc, "MAPE"), get_metric(argo_hist_acc, "MAE"))
+row4 = c("Lasso-A1", get_metric(argo_a1_acc, "RMSE"), get_metric(argo_a1_acc, "MAPE"), get_metric(argo_a1_acc, "MAE"))
+
+tbl2 = data.frame(rbind(row1, row2, row3, row4))
+names(tbl2) = cnames
+tbl2[, c("RMSE", "MAPE", "MAE")] = apply(tbl2[, c("RMSE", "MAPE", "MAE")], 2, function(x) substr(as.character(x), 1, 5))
