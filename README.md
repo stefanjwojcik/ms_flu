@@ -1,6 +1,17 @@
 # Survey Data and Human Computation for Improved Flu Tracking
 Submission to Nature Communications - Authors: Wojcik, Bijral, Johnston, Lavista, King, Kennedy, Vespignani, and Lazer
 
+**What this replication file includes:**
+- Replication of individual-level survey data findings using actual data (including tables, numbers, and figures)
+- Replication of MRP smoothing technique using example data
+- Replication of Time-series tracking technique using actual data
+- Relative rates of flu search by region and by year
+
+**What this replication file does not include:**
+- Replication of tables, numbers, and figures based on proprietary vendor panel data (for example, invitees vs. responded vs. whole panel)
+- Raw search query data
+
+
 ## The R Session Info for the main survey analysis: (Allow 5-10 minutes for package installation)
 ```R version 3.5.2 (2018-12-20)
 Platform: x86_64-apple-darwin15.6.0 (64-bit)
