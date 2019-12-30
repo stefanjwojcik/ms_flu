@@ -190,6 +190,43 @@ write.csv(resultsdf,filen,row.names = F)
 filen <- paste(State, "2.csv", sep="")
 write.csv(results2df,filen,row.names = F)
 
+## PLot Absolute Errors
+T2 = ceiling(2*nrow(Ysub_mrp)/3)
+Dates <- Z$Week.Ending
+ahead <- 1
+T2 = T2 + ahead-1
+showlen <- 32
+ypredm <- tail(rmse1step_m_auto[,2],showlen)
+ypredx <- tail(rmse1step_r_auto[,2],showlen)
+ypredh <- tail(rmse1step_r_auto[,3],showlen)
+ytrue <-  tail(rmse1step_m_auto[,1],showlen)
+
+df1 <- data.frame(cbind.data.frame(Prediction=ypredm, Signal = rep("mrp",length(ypredm)), Week.Ending=tail(Dates,showlen)),stringsAsFactors = F)
+df3 <- data.frame(cbind.data.frame(Prediction=ypredh, Signal = rep("history",length(ypredh)), Week.Ending=tail(Dates,showlen)),stringsAsFactors = F)
+df4 <- data.frame(cbind.data.frame(Prediction=ytrue, Signal = rep("actual",length(ytrue)), Week.Ending=tail(Dates,showlen)), stringsAsFactors = F)
+require(reshape2)
+df <- rbind.data.frame(df1,df3)
+df_act <- rbind.data.frame(df4,df4)
+df$Error <- abs(as.numeric(df$Prediction)-as.numeric(df_act$Prediction))
+df$Year <- year(df$Week.Ending)
+df$Week.Ending <- as.Date(df$Week.Ending,format="%Y-%m-%d")
+require(ggplot2)
+
+cbbPalette <- c("#D55E00","#000000")
+
+p <- ggplot(data=df, aes(x=Week.Ending, y=Error, group = Signal, colour = Signal)) +  
+  geom_line(aes(linetype=Signal),size=1.0) + ggtitle(paste(State,"(h=1)",sep=" "))
+p <- p + scale_color_manual(values=cbbPalette) + scale_x_date() + xlab("Date") + ylab("Absolute Error")
+#p <- p + scale_color_manual(values=cbbPalette) + xlab("Date")
+
+
+p <- p + theme(axis.text=element_text(size=12,face="bold"),
+               axis.title=element_text(size=16,face="bold"), plot.title = element_text(size=16,face="bold"), legend.text=element_text(size=12,face="bold")) 
+print(p)
+
+ggsave(paste(State,"_h_1_Abs_error.pdf",sep=""), width = 7, height = 7)
+
+
 return(list(mrp=mrp_acc, mrp_2=mrp_acc_2, hist=hist_acc, hist_2=hist_acc_2, raw=raw_acc, raw_2=raw_acc_2))
 
 
