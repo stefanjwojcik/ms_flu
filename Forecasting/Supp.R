@@ -48,7 +48,13 @@ nStepAheadAuto <- function(Ysub, mdlx, mdlhist, ahead, method, season=0, T2, inc
   yforex <- rep(0, length(c((T2 + ahead):T)))
   yforeh <- rep(0, length(c((T2 + ahead):T)))
   yforexonly <- rep(0, length(c((T2 + ahead):T)))
-
+  
+  yforex95upper <- rep(0, length(c((T2 + ahead):T)))
+  yforeh95upper <- rep(0, length(c((T2 + ahead):T)))
+  
+  yforex95lower <- rep(0, length(c((T2 + ahead):T)))
+  yforeh95lower <- rep(0, length(c((T2 + ahead):T)))
+  
   require(forecast)
   for (hh in 1:length(c((T2 + ahead):T))) {
     
@@ -59,25 +65,37 @@ nStepAheadAuto <- function(Ysub, mdlx, mdlhist, ahead, method, season=0, T2, inc
     model     <- try(Arima(ts(Ysub[hh:(T2 + hh - 1), 1],frequency=season), order = c(mdlhist$p, mdlhist$d, mdlhist$q), seasonal = list(order = c(mdlhist$sp, mdlhist$sd, mdlhist$sq), period = season), method = method, include.mean = incl_mean_hist))
     
     if(ncol(Ysub)>2) {
-      tempxlag <- predict(modelxlag, n.ahead = ahead, newxreg = data.frame(Xt1=Ysub[c((T2 + hh):(T2 + hh + ahead-1)), 2] , Xt2=Ysub[c((T2 + hh):(T2 + hh + ahead-1)), 3]))
+      #tempxlag <- predict(modelxlag, n.ahead = ahead, newxreg = data.frame(Xt1=Ysub[c((T2 + hh):(T2 + hh + ahead-1)), 2] , Xt2=Ysub[c((T2 + hh):(T2 + hh + ahead-1)), 3]))
+      tempxlag <- forecast(modelxlag, h = ahead, level = c(95), xreg = cbind2(Ysub[c((T2 + hh):(T2 + hh + ahead-1)), 2] , Ysub[c((T2 + hh):(T2 + hh + ahead-1)), 3]))
+      
     }
     if(ncol(Ysub)==2) {
-      tempxlag <- predict(modelxlag, n.ahead = ahead, newxreg = data.frame(Xt1=Ysub[c((T2 + hh):(T2 + hh + ahead-1)), 2]))
+      #tempxlag <- predict(modelxlag, n.ahead = ahead, newxreg = data.frame(Xt1=Ysub[c((T2 + hh):(T2 + hh + ahead-1)), 2]))
+      tempxlag <- forecast(modelxlag, h = ahead, level = c(95), xreg = as.matrix(Ysub[c((T2 + hh):(T2 + hh + ahead-1)), 2]))
     }
-    temph <- predict(model, n.ahead = ahead)
+    #temph <- predict(model, n.ahead = ahead)
+    temph <- forecast(model, h = ahead, level = c(95))
     
-    yforex[hh]  <- tempxlag$pred[ahead]
-    yforeh[hh]  <- temph$pred[ahead]
+    #yforex[hh]  <- tempxlag$pred[ahead]
+    #yforeh[hh]  <- temph$pred[ahead]
+    yforeh[hh]  <- temph$mean[ahead]
+    yforex[hh]  <- tempxlag$mean[ahead]
+
+    yforex95upper[hh]  <- tempxlag$upper[ahead]
+    yforeh95upper[hh]  <- temph$upper[ahead]
+    
+    yforex95lower[hh]  <- tempxlag$lower[ahead]
+    yforeh95lower[hh]  <- temph$lower[ahead]
     
     
   }
   Yte = as.matrix(Ysub[(T2+ahead):(T),1])
-  rmseX = sqrt(mean((yforex - Yte) ^ 2))
-  mapeX = mean(abs((yforex - Yte)/Yte))
-  rmsehist = sqrt(mean((yforeh - Yte) ^ 2))
-  mapehist = mean(abs((yforeh - Yte)/Yte))
+#  rmseX = sqrt(mean((yforex - Yte) ^ 2))
+#  mapeX = mean(abs((yforex - Yte)/Yte))
+#  rmsehist = sqrt(mean((yforeh - Yte) ^ 2))
+#  mapehist = mean(abs((yforeh - Yte)/Yte))
   
-  return(cbind(ytrue =Yte, yforex = yforex, yforeh = yforeh, rmseX=rmseX, rmsehist = rmsehist, mapeX = mapeX, mapehist = mapehist))
+  return(cbind.data.frame(ytrue =Yte, yforex = yforex, yforeh = yforeh, yforexupper=yforex95upper, yforexlower=yforex95lower,yforehupper = yforeh95upper, yforehlower = yforeh95lower))
   
 }
 
