@@ -236,6 +236,9 @@ cor(rmse2step_m_auto[ (t_2016-(T2+1)) ,2],y_actual[(t_2016-(T2))])
 mrp_acc_2017 <- accuracy(rmse1step_m_auto[ (t_2017-(T2+1)) ,2],y_actual[(t_2017-(T2))]) #SARIMA-MRP
 cor(rmse2step_m_auto[ (t_2017-(T2+1)) ,2],y_actual[(t_2017-(T2))])
 
+# REPORTED IN TRACKING SECTION
+main_tracking_model_correlation = c(cor(rmse2step_m_auto[ (t_2016-(T2+1)) ,2],y_actual[(t_2016-(T2))]), 
+                                    cor(rmse2step_m_auto[ (t_2017-(T2+1)) ,2],y_actual[(t_2017-(T2))]))
 #save("US_2_14_2018.RData")
 
 #resultsdf <- cbind.data.frame(Actual=y_actual, Hist=rmse1step_r_auto[,3], MRP=rmse1step_m_auto[,2], RAW = rmse1step_r_auto[,2], ARGO = pred_argo_all)
@@ -257,4 +260,7 @@ row4 = c("Lasso-A1", get_metric(argo_a1_acc, "RMSE"), get_metric(argo_a1_acc, "M
 
 tbl2 = data.frame(rbind(row1, row2, row3, row4))
 names(tbl2) = cnames
-tbl2[, c("RMSE", "MAPE", "MAE")] = apply(tbl2[, c("RMSE", "MAPE", "MAE")], 2, function(x) substr(as.character(x), 1, 5))
+
+# MAIN TABLE 2
+Main_Table2 = tbl2[, c("RMSE", "MAPE", "MAE")] = apply(tbl2[, c("RMSE", "MAPE", "MAE")], 2, function(x) substr(as.character(x), 1, 5))
+
