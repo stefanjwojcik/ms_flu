@@ -205,7 +205,14 @@ ma1 <- zelig(a1~household.flu+volume+female+parent+age, model="relogit", tau=tau
 ma2 <- zelig(a1~ch.flu+volume+female+age, model="relogit", tau=tau, data=d1, cite=F)
 ma3 <- zelig(a1~r.flu+volume+female+parent+age, model="relogit", tau=tau, data=d1, cite=F)
 ma4 <- zelig(a1~s.flu+volume+female+age, model="relogit", tau=tau, data=d1, cite=F) #
-SI_Table14 = texreg(c(ma1, ma2, ma3, ma4))
+# Getting p-values of the models
+pvals = lapply(c(ma1, ma2, ma3, ma4), function(x) extract(x)@pvalues)
+# Getting se's of the models for tricking the output
+sevals = lapply(c(ma1, ma2, ma3, ma4), function(x) extract(x)@se)
+
+SI_Table14 = texreg(c(ma1, ma2, ma3, ma4), ci.test=NULL,
+                    override.ci.low = sevals, 
+                    override.ci.up  = pvals)
 ##
 
 # Alternative A2 model:
@@ -213,17 +220,37 @@ ma12 <- zelig(a2~household.flu+volume+female+parent+age, model="relogit", tau=ta
 ma22 <- zelig(a2~ch.flu+volume+female+age, model="relogit", tau=tau, data=d1, cite=F)
 ma32 <- zelig(a2~r.flu+volume+female+parent+age, model="relogit", tau=tau, data=d1, cite=F)
 ma42 <- zelig(a2~s.flu+volume+female+age, model="relogit", tau=tau, data=d1, cite=F) #
-SI_Table15 = texreg(c(ma12, ma22, ma32, ma42))
+###
+# Getting p-values of the models
+pvals = lapply(c(ma12, ma22, ma32, ma42), function(x) extract(x)@pvalues)
+# Getting se's of the models for tricking the output
+sevals = lapply(c(ma12, ma22, ma32, ma42), function(x) extract(x)@se)
+
+SI_Table15 = texreg(c(ma12, ma22, ma32, ma42), ci.test=NULL,
+                    override.ci.low = sevals, 
+                    override.ci.up  = pvals)
+
+#SI_Table15 = texreg(c(ma12, ma22, ma32, ma42))
 
 # Alternative models with race and education
 ma5 <- zelig(a1~household.flu+education+race, model="relogit", tau=tau, data=d1, cite=F) 
-SI_Table17 = texreg(ma5)
+pvals = extract(ma5)@pvalues
+sevals = extract(ma5)@se
+SI_Table17 = texreg(ma5, ci.test=NULL, override.ci.low = sevals, override.ci.up = pvals)
 
 # Alternative models with early response
 ma6a <- zelig(household.flu~volume+female+parent+age+early_response, model = "logit", data=d1, cite=F)
 ma6b <- zelig(r.flu~volume+female+parent+age+early_response, model = "logit", data=d1, cite=F)
 ma6c <- zelig(s.flu~volume+female+parent+age+early_response, model = "logit", data=d1, cite=F)
-SI_Table6 = texreg(c(ma6a, ma6b, ma6c))
+
+# Getting p-values of the models
+pvals = lapply(c(ma6a, ma6b, ma6c), function(x) extract(x)@pvalues)
+# Getting se's of the models for tricking the output
+sevals = lapply(c(ma6a, ma6b, ma6c), function(x) extract(x)@se)
+
+SI_Table6 = texreg(c(ma6a, ma6b, ma6c), ci.test=NULL,
+                   override.ci.low = sevals, 
+                   override.ci.up  = pvals)
 
 # Alternative models with seeking info from healthcare provider
 # the idea that it helps to prove the value of the model
@@ -260,9 +287,13 @@ d1$Parent.Gender <- factor(d1$female, labels=c("Dads", "Moms"))
 ma2 <- zelig(a1~ch.flu*Parent.Gender+volume+age, model="relogit", tau=tau, data=subset(d1, prm.user==T))
 ma4 <- zelig(a2~ch.flu*Parent.Gender+volume+age, model="relogit", tau=tau, data=subset(d1, prm.user==T)) 
 ##
+pvals = lapply(c(ma2, ma4), function(x) extract(x)@pvalues)
+# Getting se's of the models for tricking the output
+sevals = lapply(c(ma2, ma4), function(x) extract(x)@se)
 
-##
-SI_Table16 = texreg(c(ma2, ma4))
+SI_Table16 = texreg(c(ma2, ma4), ci.test=NULL,
+                    override.ci.low = sevals, 
+                    override.ci.up  = pvals)
 # PLOTTING MA2 - DADS
 require(scales)
 set.seed(765)
@@ -385,7 +416,14 @@ ma1 <- zelig(a1~household.flu+volume+female+parent+age, model="relogit", tau=tau
 ma2 <- zelig(a1~ch.flu+volume+female+age, model="relogit", tau=tau, data=d1)
 ma3 <- zelig(a1~r.flu+volume+female+parent+age, model="relogit", tau=tau, data=d1)
 ma4 <- zelig(a1~s.flu+volume+female+age, model="relogit", tau=tau, data=d1) #
-SI_Table19 = texreg(c(ma1, ma2, ma3, ma4))
+# Get pvals
+pvals = lapply(c(ma1, ma2, ma3, ma4), function(x) extract(x)@pvalues)
+# Getting se's of the models for tricking the output
+sevals = lapply(c(ma1, ma2, ma3, ma4), function(x) extract(x)@se)
+
+SI_Table19 = texreg(c(ma1, ma2, ma3, ma4), ci.test=NULL,
+                    override.ci.low = sevals, 
+                    override.ci.up = pvals)
 ##
 
 # Alternative models with race and education
