@@ -50,7 +50,7 @@ loaded via a namespace (and not attached):
 ```
 
 The version of LME-4 used to generate the MRP estimates: lme4_1.1-12
-
+The classification model presented in the supplementary materials uses randomForest version 4.6-12.
 
 ## Part 1: Survey and MRP (located in Survey and MRP folder) (Runs in less than five minutes)
 
