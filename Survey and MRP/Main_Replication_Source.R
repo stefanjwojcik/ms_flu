@@ -247,12 +247,39 @@ Main_Fig1 = g + geom_vline(xintercept = mean(mflu)) + geom_vline(xintercept = me
 
 ##
 # RR:
-mean(mflu)/mean(mnoflu)
-quantile(mflu/mnoflu, probs=c(.025, .975))
+main_RR = mean(mflu)/mean(mnoflu)
+main_RR_CI = quantile(mflu/mnoflu, probs=c(.025, .975))
 # RD: 
-mean(mflu)-mean(mnoflu)
-quantile(mflu-mnoflu, probs=c(.025, .975))
+main_RD = mean(mflu)-mean(mnoflu)
+main_RD_CI = quantile(mflu-mnoflu, probs=c(.025, .975))
 ##
+
+# PLOTTING THE EFFECT OF VOLUME:
+#### Estimating THE EFFECT OF VOLUME
+set.seed(765)
+#volume <- c(5.88, 9.49)  #from median to max
+summary(d1$volume)
+volume <- c(4.852, 6.661)  #from third quartile to first
+ma1X <-setx(ma1, volume = volume)  # Simulate quantities of interest 
+ma1sim <- sim(ma1, x = ma1X)  # Extract expected values from simulations 
+df = zelig_qi_to_df(ma1sim)
+#lo_vol = mean(df$expected_value[df$volume==5.88])
+#hi_vol = mean(df$expected_value[df$volume==9.49])
+lo_vol = mean(df$expected_value[df$volume==4.852])
+hi_vol = mean(df$expected_value[df$volume==6.661])
+lo_vol = df$expected_value[df$volume==4.852]
+hi_vol = df$expected_value[df$volume==6.661]
+
+##
+# RR:
+VOL_RR = mean(hi_vol)/mean(lo_vol)
+VOL_RR_CI = quantile(hi_vol/lo_vol, probs=c(.025, .975))
+# RD: 
+VOL_RD = mean(hi_vol)-mean(lo_vol)
+VOL_RD_CI = quantile(hi_vol-lo_vol, probs=c(.025, .975))
+##
+##
+
 
 ##
 #Primary users? - Looking at Dads and Moms who are the only users of the computer
@@ -279,11 +306,11 @@ g = g + geom_density(alpha=.5) + xlab("Expected A1 Search Rate - Fathers") + yla
 g = g + geom_vline(xintercept = mean(mflu)) + geom_vline(xintercept = mean(mnoflu))
 SI_Fig7 = g + scale_x_continuous(labels = scientific) # change to labels = comma for non-scientific notation
 # RR:
-mean(mflu)/mean(mnoflu)
-quantile(mflu/mnoflu, probs=c(.025, .975))
+DAD_RR = mean(mflu)/mean(mnoflu)
+DAD_RR_CI = quantile(mflu/mnoflu, probs=c(.025, .975))
 # RD: 
-mean(mflu)-mean(mnoflu)
-quantile(mflu-mnoflu, probs=c(.025, .975))
+DAD_RD = mean(mflu)-mean(mnoflu)
+DAD_RD_CI = quantile(mflu-mnoflu, probs=c(.025, .975))
 ##
 
 ##
@@ -331,13 +358,14 @@ table(hfull$hflu[te])/nrow(hfull[te,])
 ##
 trC = trainControl(method="boot")
 mod_house = train(hflu~., data=hfull[tr, predictors], method="rf", trControl=trC, tuneGrid=expand.grid(mtry=2))
+class_mod_training_acc = mod_house$results$Accuracy
 #postResample(predict(mod_house, newdata=hfull[te, predictors]), hfull$hflu[te])
 ##
 
 ##
 # Confusion matrix of testing data
-confusionMatrix(predict(mod_house, newdata=hfull[te, predictors]), hfull$hflu[te], positive="flu")
-plot(varImp(mod_house))
+confmat = confusionMatrix(predict(mod_house, newdata=hfull[te, predictors]), hfull$hflu[te], positive="flu")
+SI_ranef_plot = plot(varImp(mod_house))
 ##
 
 ## Alternative models that incorporate sore throat in panel analysis and classification ####
@@ -514,3 +542,6 @@ plot(varImp(mod_house))
 ##
 
 
+## POWER ANALYSIS
+#library(pwr)
+#pwr.f2.test(u=7, v=644, sig.level=.05, power=.8)
