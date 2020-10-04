@@ -28,25 +28,29 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] irr_0.84.1        lpSolve_5.6.13.2  data.table_1.11.8 SnowballC_0.6.0   tidytext_0.2.2   
- [6] dplyr_0.7.8       texreg_1.36.23    noncensus_0.1     Zelig_5.1.6.1     survival_2.43-3  
-[11] effects_4.1-0     carData_3.0-2     stargazer_5.2.2   ggplot2_3.1.0    
+ [1] randomForest_4.6-12 caret_6.0-73        lattice_0.20-38     SnowballC_0.6.0     tidytext_0.2.2      texreg_1.36.23     
+ [7] Zelig_5.1.6.1       survival_2.43-3     effects_4.1-0       carData_3.0-2       stargazer_5.2.2     scales_1.0.0       
+[13] reshape2_1.4.3      forecast_8.10       TSA_1.2             lubridate_1.7.4     zoo_1.8-5           pwr_1.3-0          
+[19] irr_0.84.1          lpSolve_5.6.13.2    bindrcpp_0.2.2      dplyr_0.7.8         ggplot2_3.1.0       data.table_1.11.8  
+[25] reshape_0.8.8       noncensus_0.1      
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.0         lattice_0.20-38    zoo_1.8-5          assertthat_0.2.0   lmtest_0.9-37     
- [6] R6_2.3.0           cellranger_1.1.0   plyr_1.8.4         MatrixModels_0.4-1 stats4_3.5.2      
-[11] MatchIt_3.0.2      Amelia_1.7.5       survey_3.35        coda_0.19-3        AER_1.2-7         
-[16] pillar_1.3.1       miscTools_0.6-22   geepack_1.2-1      rlang_0.3.1        lazyeval_0.2.1    
-[21] curl_3.3           readxl_1.2.0       rstudioapi_0.9.0   minqa_1.2.4        SparseM_1.77      
-[26] car_3.0-3          nloptr_1.2.1       Matrix_1.2-15      splines_3.5.2      lme4_1.1-19       
-[31] foreign_0.8-71     munsell_0.5.0      janeaustenr_0.1.5  compiler_3.5.2     pkgconfig_2.0.2   
-[36] maxLik_1.3-6       mcmc_0.9-6         nnet_7.3-12        tidyselect_0.2.5   tibble_2.0.0      
-[41] rio_0.5.16         crayon_1.3.4       withr_2.1.2        MASS_7.3-51.1      grid_3.5.2        
-[46] nlme_3.1-137       jsonlite_1.6       gtable_0.2.0       magrittr_1.5       tokenizers_0.2.1  
-[51] scales_1.0.0       zip_2.0.3          stringi_1.2.4      bindrcpp_0.2.2     generics_0.0.2    
-[56] sandwich_2.5-0     openxlsx_4.1.0.1   Formula_1.2-3      tools_3.5.2        forcats_0.3.0     
-[61] glue_1.3.0         purrr_0.2.5        hms_0.4.2          abind_1.4-5        colorspace_1.3-2  
-[66] VGAM_1.1-1         bindr_0.1.1        haven_2.0.0        quantreg_5.51      MCMCpack_1.4-4    
+ [1] VGAM_1.1-1          minqa_1.2.4         colorspace_1.3-2    class_7.3-14        ISOcodes_2019.04.22 rio_0.5.16         
+ [7] rstudioapi_0.9.0    MatrixModels_0.4-1  fansi_0.4.0         codetools_0.2-15    splines_3.5.2       leaps_3.0          
+[13] Formula_1.2-3       jsonlite_1.6        nloptr_1.2.1        mcmc_0.9-6          geepack_1.2-1       compiler_3.5.2     
+[19] assertthat_0.2.0    Matrix_1.2-15       lazyeval_0.2.1      survey_3.35         cli_1.0.1           quantreg_5.51      
+[25] tools_3.5.2         coda_0.19-3         gtable_0.2.0        glue_1.3.0          Rcpp_1.0.0          cellranger_1.1.0   
+[31] fracdiff_1.5-0      Amelia_1.7.5        urca_1.3-0          nlme_3.1-137        iterators_1.0.10    lmtest_0.9-37      
+[37] timeDate_3043.102   stringr_1.3.1       stopwords_1.0       openxlsx_4.1.0.1    lme4_1.1-19         MASS_7.3-51.1      
+[43] miscTools_0.6-22    hms_0.4.2           parallel_3.5.2      sandwich_2.5-0      SparseM_1.77        quantmod_0.4-15    
+[49] curl_3.3            stringi_1.2.4       tokenizers_0.2.1    tseries_0.10-47     foreach_1.4.4       e1071_1.7-0        
+[55] AER_1.2-7           TTR_0.23-6          zip_2.0.3           rlang_0.3.1         pkgconfig_2.0.2     purrr_0.2.5        
+[61] bindr_0.1.1         labeling_0.3        tidyselect_0.2.5    plyr_1.8.4          magrittr_1.5        R6_2.3.0           
+[67] generics_0.0.2      pillar_1.3.1        haven_2.0.0         foreign_0.8-71      withr_2.1.2         mgcv_1.8-26        
+[73] xts_0.11-2          abind_1.4-5         nnet_7.3-12         tibble_2.0.0        janeaustenr_0.1.5   crayon_1.3.4       
+[79] car_3.0-3           utf8_1.1.4          maxLik_1.3-6        locfit_1.5-9.1      grid_3.5.2          readxl_1.2.0       
+[85] forcats_0.3.0       ModelMetrics_1.2.2  digest_0.6.18       MCMCpack_1.4-4      MatchIt_3.0.2       stats4_3.5.2       
+[91] munsell_0.5.0       quadprog_1.5-8      
 ```
 
 The version of LME-4 used to generate the MRP estimates: lme4_1.1-12
