@@ -98,16 +98,19 @@ year_level = data.frame(Year = c(as.character(flu_qyears$Year), as.character(all
                          value = c(flu_qyears$value, all_qyears$all_queries))
 
 # PLOT STATE DATA the data as a dot plot
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
 o = order((state_level %>% group_by(State) %>% summarise(mean(value)))$`mean(value)`)
 state_level$State = factor(state_level$State, 
                            levels = state_level$State[o])
-ggplot(state_level, aes(y = State, x = value, col = variable, fill=variable)) +  
-  geom_point(alpha=.5, size=2) + xlab("Avg Annual Query Counts Normalized by State Population, Converted to Z-score (2012-2017)")
+p = ggplot(state_level, aes(y = State, x = value, col = variable, fill=variable)) +  
+  geom_point(alpha=.5, size=2) + xlab("Avg Annual Query Counts Normalized by State Population, Converted to Z-score (2012-2017)") 
+p + scale_colour_manual(values=cbbPalette)
 
 # PLOT YEAR DATA the data as a dot plot
-ggplot(year_level, aes(y = Year, x = value, col = variable, fill=variable)) +  
-  geom_point(alpha=.5, size=5) + xlab("Avg Annual Query Counts, Converted to Z-score (2012-2017)")
-
+p = ggplot(year_level, aes(y = Year, x = value, col = variable, fill=variable)) +  
+  geom_point(alpha=.5, size=5) + xlab("Avg Annual Query Counts, Converted to Z-score (2012-2017)") 
+p + scale_colour_manual(values=cbbPalette)
 
 # VOLUME OF A1 and Non-A1 (those that contained a related doc2vec term)
 nrow(qdat)
