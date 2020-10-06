@@ -50,7 +50,7 @@ SI_Table5 = stargazer(SI_Table5, type="latex", header=F)
 # Reported seeking information from health care provider versus online source (search or web site)
 
 # Comparing sources where symptom information were sought:
-SI_figure1 = ggplot(d1, aes(x = info_source)) +  
+SI_fig1 = ggplot(d1, aes(x = info_source)) +  
   geom_bar(aes(y = (..count..)/sum(..count..), fill=d1$info_source)) + xlab("Source") + ylab("Proportion of Respondents") + 
   ggtitle("Proportion of respondents who looked for information from Health provider or Internet") +
   theme(legend.position = "none")
@@ -259,6 +259,8 @@ table(d1$a1, d1$info_source)
 
 ##
 #### PLOTTING THE EFFECT OF THE FLU - Household Flu
+# color blind friendly palette
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 set.seed(765)
 household.flu.r <- c(0, 1) 
 ma1X <-setx(ma1, household.flu = household.flu.r)  # Simulate quantities of interest 
@@ -269,7 +271,7 @@ mnoflu = df$expected_value[df$household.flu==0]
 df$HouseholdFlu = as.factor(df$household.flu)
 g = ggplot(df, aes(x=expected_value, fill=HouseholdFlu)) 
 g = g + geom_density(alpha=.5) + xlab("Expected A1 Search Rate") + ylab("Density")
-Main_Fig1 = g + geom_vline(xintercept = mean(mflu)) + geom_vline(xintercept = mean(mnoflu))
+Main_Fig1 = g + geom_vline(xintercept = mean(mflu)) + geom_vline(xintercept = mean(mnoflu)) + scale_fill_manual(values=cbbPalette)
 ##
 
 ##
@@ -335,7 +337,7 @@ df$childflu = as.factor(df$ch.flu)
 g = ggplot(df, aes(x=expected_value, fill=childflu)) 
 g = g + geom_density(alpha=.5) + xlab("Expected A1 Search Rate - Fathers") + ylab("Density")
 g = g + geom_vline(xintercept = mean(mflu)) + geom_vline(xintercept = mean(mnoflu))
-SI_Fig7 = g + scale_x_continuous(labels = scientific) # change to labels = comma for non-scientific notation
+SI_Fig4 = g + scale_x_continuous(labels = scientific) + scale_fill_manual(values=cbbPalette) # change to labels = comma for non-scientific notation
 # RR:
 DAD_RR = mean(mflu)/mean(mnoflu)
 DAD_RR_CI = quantile(mflu/mnoflu, probs=c(.025, .975))
@@ -357,7 +359,7 @@ mnoflu = mean(df$expected_value[df$ch.flu==0])
 df$childflu = as.factor(df$ch.flu)
 g = ggplot(df, aes(x=expected_value, fill=childflu)) 
 g = g + geom_density(alpha=.5) + xlab("Expected A1 Search Rate - Mothers") + ylab("Density")
-SI_Fig5 = g + geom_vline(xintercept = mean(mflu)) + geom_vline(xintercept = mean(mnoflu))
+SI_Fig5 = g + geom_vline(xintercept = mean(mflu)) + geom_vline(xintercept = mean(mnoflu)) + scale_fill_manual(values=cbbPalette)
 ##
 
 ## Classification
@@ -396,7 +398,7 @@ class_mod_training_acc = mod_house$results$Accuracy
 ##
 # Confusion matrix of testing data
 confmat = confusionMatrix(predict(mod_house, newdata=hfull[te, predictors]), hfull$hflu[te], positive="flu")
-SI_ranef_plot = plot(varImp(mod_house))
+SI_Fig6 = plot(varImp(mod_house))
 ##
 
 ## Alternative models that incorporate sore throat in panel analysis and classification ####
@@ -503,7 +505,7 @@ mnoflu = df$expected_value[df$ch.flu==0]
 df$childflu = as.factor(df$ch.flu)
 g = ggplot(df, aes(x=expected_value, fill=childflu)) 
 g = g + geom_density(alpha=.5) + xlab("Expected A1 Search Rate - Fathers") + ylab("Density")
-SI_Fig7 = g + geom_vline(xintercept = mean(mflu)) + geom_vline(xintercept = mean(mnoflu))
+SI_Fig7 = g + geom_vline(xintercept = mean(mflu)) + geom_vline(xintercept = mean(mnoflu)) + scale_fill_manual(values=cbbPalette)
 # RR:
 mean(mflu)/mean(mnoflu)
 quantile(mflu/mnoflu, probs=c(.025, .975))
