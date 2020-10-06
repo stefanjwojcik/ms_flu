@@ -58,11 +58,14 @@ SI_Table21
 SI_Table22
 SI_Table23
 # SI Figures 
+SI_fig1
+# SI_figures 2 and 3 generated separately with restricted data
+SI_Fig4
 SI_Fig5
+SI_Fig6
 SI_Fig7
 
 # Classification
 class_mod_training_acc
 confmat$table
 confmat$overall[["Accuracy"]]
-SI_ranef_plot
