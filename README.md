@@ -1,5 +1,7 @@
 # Survey Data and Human Computation for Improved Flu Tracking
-Submission to Nature Communications - Authors: Wojcik, Bijral, Johnston, Lavista, King, Kennedy, Vespignani, and Lazer
+Paper in Nature Communications - Authors: Wojcik, Bijral, Johnston, Lavista, King, Kennedy, Vespignani, and Lazer
+
+Link: https://www.nature.com/articles/s41467-020-20206-z
 
 **What this replication file includes:**
 - Replication of individual-level survey data findings using actual data (including tables, numbers, and figures)
